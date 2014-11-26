@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E557AA581A25734F0093AEB6 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E557AA571A25734F0093AEB6 /* ZhugeConfig.m */; };
+		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
+		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
+		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
+		E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51621A242BF100ED0263 /* DiscoveryViewController.m */; };
+		E55E51661A242BF100ED0263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E55E51641A242BF100ED0263 /* Main.storyboard */; };
+		E55E51681A242BF100ED0263 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55E51671A242BF100ED0263 /* Images.xcassets */; };
+		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
+		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
+		E55E518A1A242DBA00ED0263 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51891A242DBA00ED0263 /* Zhuge.m */; };
+		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E55E51711A242BF100ED0263 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E55E514C1A242BF100ED0263 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E55E51531A242BF100ED0263;
+			remoteInfo = HelloZhuge;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		E557AA561A25734F0093AEB6 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = ../Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
+		E557AA571A25734F0093AEB6 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = ../Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
+		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E55E515B1A242BF100ED0263 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		E55E515C1A242BF100ED0263 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		E55E515E1A242BF100ED0263 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		E55E515F1A242BF100ED0263 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
+		E55E51611A242BF100ED0263 /* DiscoveryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DiscoveryViewController.h; sourceTree = "<group>"; };
+		E55E51621A242BF100ED0263 /* DiscoveryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DiscoveryViewController.m; sourceTree = "<group>"; };
+		E55E51651A242BF100ED0263 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E55E51671A242BF100ED0263 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E55E516A1A242BF100ED0263 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		E55E51701A242BF100ED0263 /* HelloZhugeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloZhugeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E55E51751A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
+		E55E51881A242DBA00ED0263 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zhuge.h; path = Zhuge/Zhuge.h; sourceTree = "<group>"; };
+		E55E51891A242DBA00ED0263 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = Zhuge/Zhuge.m; sourceTree = "<group>"; };
+		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E55E51511A242BF100ED0263 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E55E516D1A242BF100ED0263 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E55E514B1A242BF100ED0263 = {
+			isa = PBXGroup;
+			children = (
+				E55E51871A242D4700ED0263 /* Zhuge */,
+				E55E51561A242BF100ED0263 /* HelloZhuge */,
+				E55E51731A242BF100ED0263 /* HelloZhugeTests */,
+				E55E51551A242BF100ED0263 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E55E51551A242BF100ED0263 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E55E51541A242BF100ED0263 /* HelloZhuge.app */,
+				E55E51701A242BF100ED0263 /* HelloZhugeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E55E51561A242BF100ED0263 /* HelloZhuge */ = {
+			isa = PBXGroup;
+			children = (
+				E55E515B1A242BF100ED0263 /* AppDelegate.h */,
+				E55E515C1A242BF100ED0263 /* AppDelegate.m */,
+				E55E515E1A242BF100ED0263 /* HomeViewController.h */,
+				E55E515F1A242BF100ED0263 /* HomeViewController.m */,
+				E55E51611A242BF100ED0263 /* DiscoveryViewController.h */,
+				E55E51621A242BF100ED0263 /* DiscoveryViewController.m */,
+				E55E518B1A24842E00ED0263 /* ProfileViewController.h */,
+				E55E518C1A24842E00ED0263 /* ProfileViewController.m */,
+				E55E51641A242BF100ED0263 /* Main.storyboard */,
+				E55E51671A242BF100ED0263 /* Images.xcassets */,
+				E55E51691A242BF100ED0263 /* LaunchScreen.xib */,
+				E55E51571A242BF100ED0263 /* Supporting Files */,
+			);
+			path = HelloZhuge;
+			sourceTree = "<group>";
+		};
+		E55E51571A242BF100ED0263 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E55E51581A242BF100ED0263 /* Info.plist */,
+				E55E51591A242BF100ED0263 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E55E51731A242BF100ED0263 /* HelloZhugeTests */ = {
+			isa = PBXGroup;
+			children = (
+				E55E51761A242BF100ED0263 /* HelloZhugeTests.m */,
+				E55E51741A242BF100ED0263 /* Supporting Files */,
+			);
+			path = HelloZhugeTests;
+			sourceTree = "<group>";
+		};
+		E55E51741A242BF100ED0263 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E55E51751A242BF100ED0263 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E55E51871A242D4700ED0263 /* Zhuge */ = {
+			isa = PBXGroup;
+			children = (
+				E55E51881A242DBA00ED0263 /* Zhuge.h */,
+				E55E51891A242DBA00ED0263 /* Zhuge.m */,
+				E557AA561A25734F0093AEB6 /* ZhugeConfig.h */,
+				E557AA571A25734F0093AEB6 /* ZhugeConfig.m */,
+			);
+			name = Zhuge;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E55E51531A242BF100ED0263 /* HelloZhuge */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E55E517A1A242BF100ED0263 /* Build configuration list for PBXNativeTarget "HelloZhuge" */;
+			buildPhases = (
+				E55E51501A242BF100ED0263 /* Sources */,
+				E55E51511A242BF100ED0263 /* Frameworks */,
+				E55E51521A242BF100ED0263 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HelloZhuge;
+			productName = HelloZhuge;
+			productReference = E55E51541A242BF100ED0263 /* HelloZhuge.app */;
+			productType = "com.apple.product-type.application";
+		};
+		E55E516F1A242BF100ED0263 /* HelloZhugeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E55E517D1A242BF100ED0263 /* Build configuration list for PBXNativeTarget "HelloZhugeTests" */;
+			buildPhases = (
+				E55E516C1A242BF100ED0263 /* Sources */,
+				E55E516D1A242BF100ED0263 /* Frameworks */,
+				E55E516E1A242BF100ED0263 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E55E51721A242BF100ED0263 /* PBXTargetDependency */,
+			);
+			name = HelloZhugeTests;
+			productName = HelloZhugeTests;
+			productReference = E55E51701A242BF100ED0263 /* HelloZhugeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E55E514C1A242BF100ED0263 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = 37degree;
+				TargetAttributes = {
+					E55E51531A242BF100ED0263 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					E55E516F1A242BF100ED0263 = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = E55E51531A242BF100ED0263;
+					};
+				};
+			};
+			buildConfigurationList = E55E514F1A242BF100ED0263 /* Build configuration list for PBXProject "HelloZhuge" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E55E514B1A242BF100ED0263;
+			productRefGroup = E55E51551A242BF100ED0263 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E55E51531A242BF100ED0263 /* HelloZhuge */,
+				E55E516F1A242BF100ED0263 /* HelloZhugeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E55E51521A242BF100ED0263 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E55E51661A242BF100ED0263 /* Main.storyboard in Resources */,
+				E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */,
+				E55E51681A242BF100ED0263 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E55E516E1A242BF100ED0263 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E55E51501A242BF100ED0263 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
+				E55E518A1A242DBA00ED0263 /* Zhuge.m in Sources */,
+				E557AA581A25734F0093AEB6 /* ZhugeConfig.m in Sources */,
+				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
+				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
+				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
+				E55E515A1A242BF100ED0263 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E55E516C1A242BF100ED0263 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E55E51721A242BF100ED0263 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E55E51531A242BF100ED0263 /* HelloZhuge */;
+			targetProxy = E55E51711A242BF100ED0263 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		E55E51641A242BF100ED0263 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E55E51651A242BF100ED0263 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E55E51691A242BF100ED0263 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E55E516A1A242BF100ED0263 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		E55E51781A242BF100ED0263 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E55E51791A242BF100ED0263 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E55E517B1A242BF100ED0263 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HelloZhuge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E55E517C1A242BF100ED0263 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = HelloZhuge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E55E517E1A242BF100ED0263 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HelloZhugeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HelloZhuge.app/HelloZhuge";
+			};
+			name = Debug;
+		};
+		E55E517F1A242BF100ED0263 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HelloZhugeTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HelloZhuge.app/HelloZhuge";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E55E514F1A242BF100ED0263 /* Build configuration list for PBXProject "HelloZhuge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E55E51781A242BF100ED0263 /* Debug */,
+				E55E51791A242BF100ED0263 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E55E517A1A242BF100ED0263 /* Build configuration list for PBXNativeTarget "HelloZhuge" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E55E517B1A242BF100ED0263 /* Debug */,
+				E55E517C1A242BF100ED0263 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E55E517D1A242BF100ED0263 /* Build configuration list for PBXNativeTarget "HelloZhugeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E55E517E1A242BF100ED0263 /* Debug */,
+				E55E517F1A242BF100ED0263 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E55E514C1A242BF100ED0263 /* Project object */;
+}
