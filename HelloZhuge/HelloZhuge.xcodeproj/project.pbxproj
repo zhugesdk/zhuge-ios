@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E557AA581A25734F0093AEB6 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E557AA571A25734F0093AEB6 /* ZhugeConfig.m */; };
+		E557AA691A25E2EE0093AEB6 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E557AA661A25E2EE0093AEB6 /* Zhuge.m */; };
+		E557AA6A1A25E2EE0093AEB6 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -16,7 +17,6 @@
 		E55E51681A242BF100ED0263 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E55E51671A242BF100ED0263 /* Images.xcassets */; };
 		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
 		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
-		E55E518A1A242DBA00ED0263 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51891A242DBA00ED0263 /* Zhuge.m */; };
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -31,8 +31,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E557AA561A25734F0093AEB6 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = ../Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
-		E557AA571A25734F0093AEB6 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = ../Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
+		E557AA651A25E2ED0093AEB6 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zhuge.h; path = Zhuge/Zhuge.h; sourceTree = "<group>"; };
+		E557AA661A25E2EE0093AEB6 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = Zhuge/Zhuge.m; sourceTree = "<group>"; };
+		E557AA671A25E2EE0093AEB6 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
+		E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -48,8 +50,6 @@
 		E55E51701A242BF100ED0263 /* HelloZhugeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloZhugeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51751A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
-		E55E51881A242DBA00ED0263 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zhuge.h; path = Zhuge/Zhuge.h; sourceTree = "<group>"; };
-		E55E51891A242DBA00ED0263 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = Zhuge/Zhuge.m; sourceTree = "<group>"; };
 		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,10 +139,10 @@
 		E55E51871A242D4700ED0263 /* Zhuge */ = {
 			isa = PBXGroup;
 			children = (
-				E55E51881A242DBA00ED0263 /* Zhuge.h */,
-				E55E51891A242DBA00ED0263 /* Zhuge.m */,
-				E557AA561A25734F0093AEB6 /* ZhugeConfig.h */,
-				E557AA571A25734F0093AEB6 /* ZhugeConfig.m */,
+				E557AA651A25E2ED0093AEB6 /* Zhuge.h */,
+				E557AA661A25E2EE0093AEB6 /* Zhuge.m */,
+				E557AA671A25E2EE0093AEB6 /* ZhugeConfig.h */,
+				E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */,
 			);
 			name = Zhuge;
 			sourceTree = "<group>";
@@ -248,10 +248,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
-				E55E518A1A242DBA00ED0263 /* Zhuge.m in Sources */,
-				E557AA581A25734F0093AEB6 /* ZhugeConfig.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
+				E557AA6A1A25E2EE0093AEB6 /* ZhugeConfig.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
+				E557AA691A25E2EE0093AEB6 /* Zhuge.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
 			);
