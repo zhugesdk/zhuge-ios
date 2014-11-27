@@ -37,19 +37,21 @@
 }
 
 - (IBAction)identify:(id)sender {
+    NSNumber *uid = @(round([[NSDate date] timeIntervalSince1970]));
+
     NSMutableDictionary *user = [NSMutableDictionary dictionary];
-    user[@"name"] = @"zhuge";
+    user[@"name"] = [NSString stringWithFormat:@"zhuge-%@", uid];
     user[@"gender"] = @"男";
     user[@"birthday"] = @"2014/11/11";
     user[@"avatar"] = @"http://tp2.sinaimg.cn/2885710157/180/5637236139/1";
-    user[@"email"] = @"hello@zhuge.io";
+    user[@"email"] = [NSString stringWithFormat:@"zhuge-%@@zhuge.io", uid];
     user[@"mobile"] = @"18901010101";
-    user[@"qq"] = @"91919";
-    user[@"weixin"] = @"121212";
-    user[@"weibo"] = @"122222";
-    user[@"location"] = @"北京朝阳区";
+    user[@"qq"] = [NSString stringWithFormat:@"%@", uid];
+    user[@"weixin"] = [NSString stringWithFormat:@"wx%@", uid];
+    user[@"weibo"] = [NSString stringWithFormat:@"wb%@", uid];
+    user[@"location"] = @"北京 朝阳区";
     user[@"公司"] = @"37degree";
-    [[Zhuge sharedInstance] identify:@"1234" properties:user];
+    [[Zhuge sharedInstance] identify:[NSString stringWithFormat:@"%@", uid] properties:user];
 
 }
 
