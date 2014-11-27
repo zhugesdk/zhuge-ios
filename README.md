@@ -1,5 +1,5 @@
 ### 快速开始
-
+---------------
 1、 安装[CocoaPods](http://cocoapods.org/): 
 ```shell
 gem install cocoapods
