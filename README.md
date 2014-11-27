@@ -10,13 +10,17 @@ gem install cocoapods
 pod 'Zhuge'
 ```
 
-3、 下载安装Zhuge SDK，并打开工作区
+3、 在项目目录下执行下面脚本，CocoaPods会下载安装Zhuge SDK
 ```shell
 pod install
-open {YOUR-PROJECT}.xcworkspace # 不要打开项目文件*.xcodeproj
 ```
 
-4、 向`AppDelegate.m`文件中添加诸葛启动代码:
+4、打开工作区文件`*.xcworkspace`，不要打开原来的项目文件`*.xcodeproj`
+```shell
+open {YOUR-PROJECT}.xcworkspace 
+```
+
+5、 向`AppDelegate.m`文件中添加诸葛启动代码:
 ```objc
 #import <Zhuge/Zhuge.h>
 
@@ -24,7 +28,7 @@ open {YOUR-PROJECT}.xcworkspace # 不要打开项目文件*.xcodeproj
     [[Zhuge sharedInstance] startWithAppKey:@"Your App Key"];
 }
 ```
-5、 开始追踪用户行为:
+6、 开始追踪用户行为:
 
 ```objc
 [[Zhuge sharedInstance] track:@"分享" properties:@{@"渠道":@"微博"}];
