@@ -1,6 +1,6 @@
 **快速开始**
 
-1、 安装 [CocoaPods](http://cocoapods.org/): 
+1、 安装[CocoaPods](http://cocoapods.org/): 
 ```shell
 gem install cocoapods
 ```
@@ -10,12 +10,12 @@ gem install cocoapods
 pod 'Zhuge'
 ```
 
-3、 在项目目录下执行下面脚本，CocoaPods会下载安装Zhuge SDK
+3、 在项目目录下执行下面脚本，CocoaPods会自动下载安装Zhuge SDK，并生成工作区文件:
 ```shell
 pod install
 ```
 
-4、打开工作区文件`*.xcworkspace`，不要打开原来的项目文件`*.xcodeproj`
+4、打开工作区文件`*.xcworkspace`，不要打开原来的项目文件`*.xcodeproj`:
 ```shell
 open {YOUR-PROJECT}.xcworkspace 
 ```
