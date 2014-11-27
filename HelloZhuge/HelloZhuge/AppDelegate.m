@@ -31,8 +31,8 @@
     // 设置上报策略
     //[zhuge.config setPolicy:SEND_ON_START]; // 启动时发送(默认)
     [zhuge.config setPolicy:SEND_REALTIME]; // 实时发送
-    [zhuge.config setPolicy:SEND_INTERVAL]; // 按时间间隔发送
-    [zhuge.config setSendInterval:30]; //默认间隔是10秒发送一次，最大不能超过一天(86400)
+    //[zhuge.config setPolicy:SEND_INTERVAL]; // 按时间间隔发送
+    //[zhuge.config setSendInterval:30]; //默认间隔是10秒发送一次，最大不能超过一天(86400)
 
     // 打开SDK日志打印
     [zhuge.config setIsLogEnabled:YES]; // 默认关闭

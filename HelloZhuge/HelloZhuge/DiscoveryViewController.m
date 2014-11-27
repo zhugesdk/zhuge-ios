@@ -47,6 +47,6 @@
 }
 
 - (IBAction)shopping:(id)sender {
-    [[Zhuge sharedInstance] track:@"朋友圈" properties: @{@"商家":@"京东"}];
+    [[Zhuge sharedInstance] track:@"购物" properties: @{@"商家":@"京东"}];
 }
 @end
