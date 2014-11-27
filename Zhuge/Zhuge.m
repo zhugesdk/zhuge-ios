@@ -126,6 +126,7 @@ static Zhuge *sharedInstance = nil;
 
     [self setupListeners];
     [self unarchive];
+    [self sessionStart];
 
     // 崩溃报告
     if (self.config.isCrashReportEnabled) {
