@@ -430,7 +430,7 @@ static Zhuge *sharedInstance = nil;
 // 会话开始
 - (void)sessionStart {
     NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-    if (!self.sessionId || ([self.sessionId intValue] - [ts intValue]) > self.config.sessionInterval) {
+    if (!self.sessionId || ([ts intValue] - [self.sessionId intValue]) > self.config.sessionInterval) {
         self.sessionId = ts;
         if(self.config.isLogEnabled) {
             NSLog(@"会话开始(ID:%@)", self.sessionId);
@@ -440,7 +440,9 @@ static Zhuge *sharedInstance = nil;
         e[@"et"] = @"ss";
         e[@"sid"] = self.sessionId;
         e[@"vn"] = self.config.appVersion;
-
+        e[@"net"] = self.net;
+        e[@"radio"] = self.radio;
+        
         [self enqueueEvent:e];
     }
 }
