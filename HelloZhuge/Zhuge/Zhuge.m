@@ -1013,7 +1013,9 @@ static Zhuge *sharedInstance = nil;
     NSError *error;
     
     NSData *aData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    
+    if (aData == nil) {
+        return @"";
+    }    
     NSMutableDictionary *json = [[NSMutableDictionary alloc]init];
     json = (NSMutableDictionary*)[NSJSONSerialization JSONObjectWithData:aData options:kNilOptions error:&error];
     
