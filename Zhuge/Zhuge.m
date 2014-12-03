@@ -508,7 +508,7 @@ static Zhuge *sharedInstance = nil;
     
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"pg";
-    e[@"pg"] = page;
+    e[@"pn"] = page;
     e[@"sid"] = self.sessionId;
     e[@"pid"] = page;
     e[@"ref"] = self.lastPage;
