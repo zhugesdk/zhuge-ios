@@ -38,11 +38,11 @@
     [zhuge.config setIsLogEnabled:YES]; // 默认关闭
     
     // 可以自定义版本和渠道
-    [zhuge.config setAppVersion:@"0.9-beta"]; // 默认是info.plist中CFBundleShortVersionString值
-    [zhuge.config setChannel:@"My App Store"]; // 默认是@"App Store"
+    [zhuge.config setAppVersion:@"1.0-beta"]; // 默认是info.plist中CFBundleShortVersionString值
+    [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
 
     // 开启行为追踪
-    [zhuge startWithAppKey:@"0a824f87315749a49c16fcbaea277707"];
+    [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8"];
 
     return YES;
 }

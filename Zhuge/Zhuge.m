@@ -515,12 +515,15 @@ static Zhuge *sharedInstance = nil;
     
     self.lastPage = page;
 
+    NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
     NSNumber *startTime = self.pages[page];
     if (startTime) {
         [self.pages removeObjectForKey:page];
-        NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-        e[@"dr"] = [NSString stringWithFormat:@"%d", [ts intValue] - [startTime intValue]];
+    } else {
+        startTime = self.sessionId;
     }
+    //e[@"ts"] = @([startTime intValue]);
+    e[@"dr"] = [NSString stringWithFormat:@"%d", [ts intValue] - [startTime intValue]];
 
     [self enqueueEvent:e];
 }
@@ -813,7 +816,9 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)syncEnqueueEvent:(NSMutableDictionary *)event {
-    event[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
+    if (!event[@"ts"]) {
+        event[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
+    }
     
     if(self.config.isLogEnabled) {
         NSLog(@"产生事件: %@", event);
@@ -1012,11 +1017,10 @@ static Zhuge *sharedInstance = nil;
     NSURLResponse *response;
     NSError *error;
     
-    NSData *aData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];   
-   if (aData == nil) {
+    NSData *aData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    if (aData == nil) {
         return @"";
-    }
-
+    }    
     NSMutableDictionary *json = [[NSMutableDictionary alloc]init];
     json = (NSMutableDictionary*)[NSJSONSerialization JSONObjectWithData:aData options:kNilOptions error:&error];
     
