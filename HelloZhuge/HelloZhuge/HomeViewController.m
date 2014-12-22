@@ -26,14 +26,14 @@
     [super viewWillAppear:animated];
     
     //页面开始
-    [[Zhuge sharedInstance] pageStart:@"首页"];
+//    [[Zhuge sharedInstance] pageStart:@"首页"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     //页面结束
-    [[Zhuge sharedInstance] pageEnd:@"首页"];
+//    [[Zhuge sharedInstance] pageEnd:@"首页"];
 }
 
 

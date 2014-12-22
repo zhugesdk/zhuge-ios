@@ -11,5 +11,7 @@
 - (IBAction)scan:(id)sender;
 - (IBAction)feed:(id)sender;
 - (IBAction)shopping:(id)sender;
+- (IBAction)showMiniNotice:(id)sender;
+- (IBAction)showTakeoverNotice:(id)sender;
 @end
 

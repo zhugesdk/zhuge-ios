@@ -1,6 +1,8 @@
+#if ! __has_feature(objc_arc)
+#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
+#endif
 //
 //  ZhugeConfig.h
-//  HelloZhuge
 //
 //  Copyright (c) 2014 37degree. All rights reserved.
 //
@@ -8,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"1.0"
+#define ZG_SDK_VERSION @"2.0"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]

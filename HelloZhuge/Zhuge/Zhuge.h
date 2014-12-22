@@ -1,3 +1,6 @@
+#if ! __has_feature(objc_arc)
+#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
+#endif
 //
 //  Zhuge.h
 //
@@ -7,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
+#import "ZGNotification.h"
 
 @interface Zhuge : NSObject
 
@@ -57,5 +61,12 @@
  */
 - (void)pageStart:(NSString *)page;
 - (void)pageEnd:(NSString *)page;
+
+
+#pragma mark - 通知
+- (void)showNotification;
+- (void)showNotificationWithID:(NSUInteger)ID;
+- (void)showNotificationWithType:(NSString *)type;
+- (void)showNotificationWithObject:(ZGNotification *)notification;
 
 @end

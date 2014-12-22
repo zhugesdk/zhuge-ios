@@ -1,6 +1,8 @@
+#if ! __has_feature(objc_arc)
+#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
+#endif
 //
 //  ZhugeConfig.m
-//  HelloZhuge
 //
 //  Copyright (c) 2014 37degree. All rights reserved.
 //
