@@ -43,7 +43,6 @@
 
 // 配置文件
 @property (nonatomic, strong)ZhugeConfig *config;
-@property (nonatomic, strong)ZGNotificationManager *noticeMgr;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic) NSUInteger sendCount;
 
@@ -55,6 +54,13 @@
 
 // 崩溃报告
 - (void)trackCrash:(NSString *)stackTrace;
+
+// 推送通知
+@property (nonatomic, strong)ZhugeNoticeManager *noticeMgr;
+
+// PING
+@property (nonatomic, strong) NSTimer *pingTimer;
+
 @end
 
 // 异常处理
@@ -91,7 +97,7 @@ static Zhuge *sharedInstance = nil;
             sharedInstance.apiURL = @"http://apipool.37degree.com/APIPOOL/";
             sharedInstance.confURL = @"http://zhuge.io/config.jsp";
             sharedInstance.config = [[ZhugeConfig alloc] init];
-            sharedInstance.noticeMgr = [[ZGNotificationManager alloc] init];
+            sharedInstance.noticeMgr = [[ZhugeNoticeManager alloc] init];
         });
         
         return sharedInstance;
@@ -104,11 +110,15 @@ static Zhuge *sharedInstance = nil;
     return _config;
 }
 
-- (ZGNotificationManager *)noticeMgr {
+- (ZhugeNoticeManager *)noticeMgr {
     return _noticeMgr;
 }
 
-- (void)startWithAppKey:(NSString *)appKey {
+- (void) registerDeviceToken:(NSString *)deviceToken {
+    [self.noticeMgr registerDeviceToken:deviceToken];
+}
+
+- (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions {
     if (appKey == nil || [appKey length] == 0) {
         NSLog(@"%@ appKey不能为空。", self);
         return;
@@ -136,13 +146,21 @@ static Zhuge *sharedInstance = nil;
     [self setupListeners];
     [self unarchive];
     [self sessionStart];
+    
+    [self.noticeMgr openWithAppKey:self.appKey andDeviceId:self.deviceId];
 
     // 崩溃报告
     if (self.config.isCrashReportEnabled) {
         NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     }
     
-    [self.noticeMgr openWithAppKey:@"10000" andDeviceId:@"did_zyz"];
+    if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+        [self trackPushNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
+    }
+    
+    if (self.config.isPingEnabled) {
+        [self startPing];
+    }
     
 }
 
@@ -658,6 +676,25 @@ static Zhuge *sharedInstance = nil;
     [self enqueueEvent:e];
 }
 
+// 跟踪推送通知
+- (void)trackPushNotification:(NSDictionary *)userInfo {
+    if(self.config.isLogEnabled) {
+        NSLog(@"跟踪推送通知: %@", userInfo);
+    }
+    if (userInfo && userInfo[@"zg"]) {
+        NSDictionary *payload = userInfo[@"zg"];
+        
+        if ([payload isKindOfClass:[NSDictionary class]] && payload[@"m"] && payload[@"c"]) {
+            [self track:@"$app_open" properties:@{@"campaign_id": payload[@"c"],
+                                           @"message_id": payload[@"m"]}];
+        } else {
+            if(self.config.isLogEnabled) {
+                NSLog(@"推送通知格式不正确: %@", payload);
+            }
+        }
+    }
+}
+
 // 崩溃报告
 - (void)trackCrash:(NSString *)stackTrace {
     NSMutableDictionary *pr = [NSMutableDictionary dictionary];
@@ -869,39 +906,43 @@ static Zhuge *sharedInstance = nil;
         }
         
         NSString *requestData = [self encodeAPIData:[self wrapEvents:events]];
-        NSString *postBody = [NSString stringWithFormat:@"method=event_statis_srv.upload&event=%@", requestData];
-        NSURL *URL = [NSURL URLWithString:self.apiURL];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-        [request setHTTPMethod:@"POST"];
-        [request setHTTPBody:[[postBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
-        if(self.config.isLogEnabled) {
-            NSLog(@"API请求: %@&%@", URL, postBody);
-        }
+
         NSError *error = nil;
-        
-        [self updateNetworkActivityIndicator:YES];
-        
-        NSURLResponse *urlResponse = nil;
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
-        
-        [self updateNetworkActivityIndicator:NO];
-        
-        
+        [self httpRequestWithData:requestData andError:error];
         if (error) {
             if(self.config.isLogEnabled) {
                 NSLog(@"上报失败: %@", error);
             }
             break;
         }
-
-        NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        if(self.config.isLogEnabled) {
-            NSLog(@"API响应: %@", response);
-        }
         
         self.sendCount += sendBatchSize;
        [queue removeObjectsInArray:events];
+    }
+}
+
+
+- (void) httpRequestWithData:(NSString *)requestData andError:(NSError *)error {
+    NSString *postBody = [NSString stringWithFormat:@"method=event_statis_srv.upload&event=%@", requestData];
+    NSURL *URL = [NSURL URLWithString:self.apiURL];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[[postBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
+    if(self.config.isLogEnabled) {
+        NSLog(@"API请求: %@&%@", URL, postBody);
+    }
+    
+    [self updateNetworkActivityIndicator:YES];
+    
+    NSURLResponse *urlResponse = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+    
+    [self updateNetworkActivityIndicator:NO];
+    
+    NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+    if(self.config.isLogEnabled) {
+        NSLog(@"API响应: %@", response);
     }
 }
 
@@ -1064,5 +1105,36 @@ static Zhuge *sharedInstance = nil;
     [self.config updateOnlineConfig:confString];
 }
 
+#pragma mark - PING
+
+// PING
+- (void)startPing {
+    self.pingTimer = [NSTimer scheduledTimerWithTimeInterval:self.config.pingInterval
+                                                      target:self
+                                                    selector:@selector(ping)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    
+}
+- (void)ping {
+    NSMutableDictionary *evt = [NSMutableDictionary dictionary];
+    evt[@"type"] = @"ping";
+    evt[@"sdk"] = @"ios";
+    evt[@"sdkv"] = self.config.sdkVersion;
+    evt[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
+    evt[@"ak"] = self.appKey;
+    evt[@"did"] = self.deviceId;
+    
+    NSString *requestData = [self encodeAPIData:evt];
+    
+    NSError *error = nil;
+    [self httpRequestWithData:requestData andError:error];
+    if (error) {
+        if(self.config.isLogEnabled) {
+            NSLog(@"PING失败: %@", error);
+        }
+    }
+
+}
 
 @end

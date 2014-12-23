@@ -56,4 +56,10 @@ typedef enum {
 @property (nonatomic) BOOL isOnlineConfigEnabled;
 
 - (void) updateOnlineConfig:(NSString *) configString;
+
+// 是否开启PING(默认:关闭)
+@property (nonatomic) BOOL isPingEnabled;
+// PING时间间隔(默认:30秒)
+@property (nonatomic) NSUInteger pingInterval;
+
 @end

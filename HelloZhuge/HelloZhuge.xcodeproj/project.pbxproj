@@ -18,15 +18,7 @@
 		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
 		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
-		E5CCCB631A415C6400C3EF0E /* ZGNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CCCB621A415C6400C3EF0E /* ZGNotification.m */; };
-		E5CCCB6C1A41617800C3EF0E /* ZGNotification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5CCCB691A41617800C3EF0E /* ZGNotification.storyboard */; };
-		E5CCCB6D1A41617800C3EF0E /* ZGNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CCCB6B1A41617800C3EF0E /* ZGNotificationViewController.m */; };
-		E5CCCB751A41625B00C3EF0E /* UIColor+ZGColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CCCB701A41625B00C3EF0E /* UIColor+ZGColor.m */; };
-		E5CCCB761A41625B00C3EF0E /* UIImage+ZGAverageColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CCCB721A41625B00C3EF0E /* UIImage+ZGAverageColor.m */; };
-		E5CCCB771A41625B00C3EF0E /* UIImage+ZGImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CCCB741A41625B00C3EF0E /* UIImage+ZGImageEffects.m */; };
-		E5CCCB7A1A4164D700C3EF0E /* ZGCloseBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = E5CCCB781A4164D700C3EF0E /* ZGCloseBtn.png */; };
-		E5CCCB7B1A4164D700C3EF0E /* ZGCloseBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E5CCCB791A4164D700C3EF0E /* ZGCloseBtn@2x.png */; };
-		E5F584901A480C53007FC642 /* ZGNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5F5848F1A480C53007FC642 /* ZGNotificationManager.m */; };
+		E5BC2A8A1A492376001A0F69 /* ZhugeNoticeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,21 +53,8 @@
 		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
 		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		E5CCCB611A415C6400C3EF0E /* ZGNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZGNotification.h; path = Zhuge/ZGNotification.h; sourceTree = "<group>"; };
-		E5CCCB621A415C6400C3EF0E /* ZGNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZGNotification.m; path = Zhuge/ZGNotification.m; sourceTree = "<group>"; };
-		E5CCCB691A41617800C3EF0E /* ZGNotification.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ZGNotification.storyboard; path = Zhuge/ZGNotification.storyboard; sourceTree = "<group>"; };
-		E5CCCB6A1A41617800C3EF0E /* ZGNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZGNotificationViewController.h; path = Zhuge/ZGNotificationViewController.h; sourceTree = "<group>"; };
-		E5CCCB6B1A41617800C3EF0E /* ZGNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZGNotificationViewController.m; path = Zhuge/ZGNotificationViewController.m; sourceTree = "<group>"; };
-		E5CCCB6F1A41625B00C3EF0E /* UIColor+ZGColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+ZGColor.h"; path = "Zhuge/UIColor+ZGColor.h"; sourceTree = "<group>"; };
-		E5CCCB701A41625B00C3EF0E /* UIColor+ZGColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+ZGColor.m"; path = "Zhuge/UIColor+ZGColor.m"; sourceTree = "<group>"; };
-		E5CCCB711A41625B00C3EF0E /* UIImage+ZGAverageColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ZGAverageColor.h"; path = "Zhuge/UIImage+ZGAverageColor.h"; sourceTree = "<group>"; };
-		E5CCCB721A41625B00C3EF0E /* UIImage+ZGAverageColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ZGAverageColor.m"; path = "Zhuge/UIImage+ZGAverageColor.m"; sourceTree = "<group>"; };
-		E5CCCB731A41625B00C3EF0E /* UIImage+ZGImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ZGImageEffects.h"; path = "Zhuge/UIImage+ZGImageEffects.h"; sourceTree = "<group>"; };
-		E5CCCB741A41625B00C3EF0E /* UIImage+ZGImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ZGImageEffects.m"; path = "Zhuge/UIImage+ZGImageEffects.m"; sourceTree = "<group>"; };
-		E5CCCB781A4164D700C3EF0E /* ZGCloseBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZGCloseBtn.png; path = Zhuge/ZGCloseBtn.png; sourceTree = "<group>"; };
-		E5CCCB791A4164D700C3EF0E /* ZGCloseBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ZGCloseBtn@2x.png"; path = "Zhuge/ZGCloseBtn@2x.png"; sourceTree = "<group>"; };
-		E5F5848E1A480C53007FC642 /* ZGNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGNotificationManager.h; sourceTree = "<group>"; };
-		E5F5848F1A480C53007FC642 /* ZGNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGNotificationManager.m; sourceTree = "<group>"; };
+		E5BC2A881A492376001A0F69 /* ZhugeNoticeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeNoticeManager.h; path = ../Zhuge/ZhugeNoticeManager.h; sourceTree = "<group>"; };
+		E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeNoticeManager.m; path = ../Zhuge/ZhugeNoticeManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,21 +146,8 @@
 				E557AA661A25E2EE0093AEB6 /* Zhuge.m */,
 				E557AA671A25E2EE0093AEB6 /* ZhugeConfig.h */,
 				E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */,
-				E5CCCB611A415C6400C3EF0E /* ZGNotification.h */,
-				E5CCCB621A415C6400C3EF0E /* ZGNotification.m */,
-				E5CCCB691A41617800C3EF0E /* ZGNotification.storyboard */,
-				E5F5848E1A480C53007FC642 /* ZGNotificationManager.h */,
-				E5F5848F1A480C53007FC642 /* ZGNotificationManager.m */,
-				E5CCCB6A1A41617800C3EF0E /* ZGNotificationViewController.h */,
-				E5CCCB6B1A41617800C3EF0E /* ZGNotificationViewController.m */,
-				E5CCCB781A4164D700C3EF0E /* ZGCloseBtn.png */,
-				E5CCCB791A4164D700C3EF0E /* ZGCloseBtn@2x.png */,
-				E5CCCB6F1A41625B00C3EF0E /* UIColor+ZGColor.h */,
-				E5CCCB701A41625B00C3EF0E /* UIColor+ZGColor.m */,
-				E5CCCB711A41625B00C3EF0E /* UIImage+ZGAverageColor.h */,
-				E5CCCB721A41625B00C3EF0E /* UIImage+ZGAverageColor.m */,
-				E5CCCB731A41625B00C3EF0E /* UIImage+ZGImageEffects.h */,
-				E5CCCB741A41625B00C3EF0E /* UIImage+ZGImageEffects.m */,
+				E5BC2A881A492376001A0F69 /* ZhugeNoticeManager.h */,
+				E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */,
 			);
 			name = Zhuge;
 			sourceTree = "<group>";
@@ -266,11 +232,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E5CCCB6C1A41617800C3EF0E /* ZGNotification.storyboard in Resources */,
-				E5CCCB7B1A4164D700C3EF0E /* ZGCloseBtn@2x.png in Resources */,
 				E55E51661A242BF100ED0263 /* Main.storyboard in Resources */,
 				E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */,
-				E5CCCB7A1A4164D700C3EF0E /* ZGCloseBtn.png in Resources */,
 				E55E51681A242BF100ED0263 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,16 +255,11 @@
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
 				E557AA6A1A25E2EE0093AEB6 /* ZhugeConfig.m in Sources */,
-				E5CCCB6D1A41617800C3EF0E /* ZGNotificationViewController.m in Sources */,
-				E5CCCB631A415C6400C3EF0E /* ZGNotification.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
-				E5CCCB761A41625B00C3EF0E /* UIImage+ZGAverageColor.m in Sources */,
-				E5CCCB771A41625B00C3EF0E /* UIImage+ZGImageEffects.m in Sources */,
 				E557AA691A25E2EE0093AEB6 /* Zhuge.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
-				E5CCCB751A41625B00C3EF0E /* UIColor+ZGColor.m in Sources */,
-				E5F584901A480C53007FC642 /* ZGNotificationManager.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
+				E5BC2A8A1A492376001A0F69 /* ZhugeNoticeManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -413,7 +371,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -426,7 +384,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -441,7 +399,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

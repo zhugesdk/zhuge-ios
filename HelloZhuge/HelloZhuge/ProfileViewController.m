@@ -51,7 +51,7 @@
     user[@"weibo"] = [NSString stringWithFormat:@"wb%@", uid];
     user[@"location"] = @"北京 朝阳区";
     user[@"公司"] = @"37degree";
-//    [[Zhuge sharedInstance] identify:[NSString stringWithFormat:@"%@", uid] properties:user];
+    [[Zhuge sharedInstance] identify:[NSString stringWithFormat:@"%@", uid] properties:user];
 
 }
 

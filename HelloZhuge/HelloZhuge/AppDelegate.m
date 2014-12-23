@@ -7,10 +7,9 @@
 
 #import "AppDelegate.h"
 #import "Zhuge.h"
-#import "ZGNotificationManager.h"
+#import "ZhugeNoticeManager.h"
 
 @implementation AppDelegate
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     /*  
@@ -38,13 +37,34 @@
     // 可以自定义版本和渠道
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
+    
+    [zhuge.config setIsPingEnabled:YES];
+    [zhuge.config setPingInterval:10];
 
     // 开启行为追踪
-    [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8"];
-    
- 
+    [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
+
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+    [application registerForRemoteNotifications];
+  
     return YES;
 }
+
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *dt = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    dt = [dt stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSLog(@"deviceToken: %@", dt);
+    
+    [[Zhuge sharedInstance] registerDeviceToken:dt];
+
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    NSLog(@"Error %@",err);
+    
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
 

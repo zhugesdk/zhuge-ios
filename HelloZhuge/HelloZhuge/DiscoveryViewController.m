@@ -26,14 +26,14 @@
     [super viewWillAppear:animated];
     
     //页面开始
-    [[Zhuge sharedInstance] pageStart:@"发现"];
+//    [[Zhuge sharedInstance] pageStart:@"发现"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     //页面结束
-    [[Zhuge sharedInstance] pageEnd:@"发现"];
+//    [[Zhuge sharedInstance] pageEnd:@"发现"];
 }
 
 
@@ -50,34 +50,4 @@
     [[Zhuge sharedInstance] track:@"购物" properties: @{@"商家":@"京东"}];
 }
 
-- (IBAction)showMiniNotice:(id)sender {
-    
-    NSMutableDictionary *notice = [NSMutableDictionary dictionary];
-    notice[@"type"] = @"mini";
-    notice[@"id"] = [NSNumber numberWithInt:1217];
-    notice[@"message_id"] = [NSNumber numberWithInt:1217001];
-    notice[@"title"] = @"推荐有礼";
-    notice[@"body"] = @"推荐办卡送1000积分";
-    notice[@"image_url"] = @"http://37degree.com/img/fenxi-icon.png";
-    notice[@"cta"] = @"推荐给好友";
-    notice[@"cta_url"] = @"http://www.baidu.com";
-    
-    [[Zhuge sharedInstance].noticeMgr showNotificationWithObject:[ZGNotification notificationWithJSONObject: notice]];
-}
-
-- (IBAction)showTakeoverNotice:(id)sender {
-    
-    NSMutableDictionary *notice = [NSMutableDictionary dictionary];
-    notice[@"type"] = @"takeover";
-    notice[@"id"] = [NSNumber numberWithInt:1217];
-    notice[@"message_id"] = [NSNumber numberWithInt:1217001];
-    notice[@"title"] = @"推荐有礼";
-    notice[@"body"] = @"推荐办卡送1000积分";
-    notice[@"image_url"] = @"http://37degree.com/img/fenxi-icon.png";
-    notice[@"cta"] = @"推荐给好友";
-    notice[@"cta_url"] = @"http://www.baidu.com";
-    
-    [[Zhuge sharedInstance].noticeMgr showNotificationWithObject:[ZGNotification notificationWithJSONObject: notice]];
-
-}
 @end
