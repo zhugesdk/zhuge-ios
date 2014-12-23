@@ -3,6 +3,19 @@
 #endif
 
 #import "ZGNotificationManager.h"
+#import "ZGNotification.h"
+#import "ZGNotificationViewController.h"
+
+#import <UIKit/UIDevice.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
+
+#include <sys/socket.h>
+#include <sys/sysctl.h>
+#include <net/if.h>
+#include <net/if_dl.h>
+
 
 #define DEVICE_TYPE 2
 
@@ -59,7 +72,7 @@ typedef enum {
 
 #pragma mark - ZGNotificationManager
 
-@interface ZGNotificationManager()
+@interface ZGNotificationManager() <NSStreamDelegate, ZGNotificationViewControllerDelegate>
 
 @property (nonatomic) ZGNotificationManagerState readyState;
 
@@ -83,6 +96,17 @@ typedef enum {
 
 @property (nonatomic, strong) NSTimer *timer;
 
+
+// 通知
+@property (nonatomic) BOOL decideResponseCached;
+@property (atomic, copy) NSString *decideURL;
+@property (nonatomic, strong) NSArray *notifications;
+@property (nonatomic, strong) ZGNotification *currentlyShowingNotification;
+@property (nonatomic, strong) ZGNotificationViewController *notificationViewController;
+@property (nonatomic, strong) NSMutableSet *shownNotifications;
+@property (atomic) CGFloat miniNotificationPresentationTime;
+
+
 @end
 
 @implementation ZGNotificationManager {
@@ -105,6 +129,9 @@ NSOutputStream *_outputStream;
         
         self.seq = [NSNumber numberWithInt:1];
         self.ver = [NSNumber numberWithInt:1];
+        
+        self.miniNotificationPresentationTime = 6.0;
+
         
         _connectQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
     }
@@ -453,7 +480,11 @@ NSOutputStream *_outputStream;
                     }
                     break;
                 case ZGNoticeCmdMsg:
-                    NSLog(@"获取消息 msg: %@", ack[@"msg"]);
+                    NSLog(@"获取消息 msg: %@", NSStringFromClass([ack[@"msg"] class]));
+                    
+                    [self showMsg:ack[@"msg"]];
+            
+                    break;
                 default:
                     break;
             }
@@ -461,6 +492,15 @@ NSOutputStream *_outputStream;
             
         }
     }
+}
+
+-(void) showMsg:(NSString *) msgJson {
+    
+    NSDictionary *msg = [NSJSONSerialization JSONObjectWithData:[msgJson dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+
+    NSLog(@"showMsg: %@", msg);
+
+   [self showNotificationWithObject:[ZGNotification notificationWithJSONObject: msg]];
 }
 
 
@@ -527,6 +567,244 @@ NSOutputStream *_outputStream;
     [_inputStream close];
     [_outputStream close];
 }
+
+#pragma mark - 通知
+
++ (UIViewController *)topPresentedViewController {
+    UIViewController *controller = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (controller.presentedViewController) {
+        controller = controller.presentedViewController;
+    }
+    return controller;
+}
+
+- (void)checkForDecideResponseWithCompletion:(void (^)(NSArray *notifications))completion useCache:(BOOL)useCache {
+//    dispatch_async(self.serialQueue, ^{
+        NSLog(@"%@ decide check started", self);
+        
+        if (!useCache || !self.decideResponseCached) {
+            NSLog(@"%@ decide cache not found, starting network request", self);
+            NSString *params = [NSString stringWithFormat:@"version=1&lib=iphone&ak=%@&did=%@", self.appKey, self.did];
+            NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", self.decideURL, params]];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+            [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+            NSError *error = nil;
+            NSURLResponse *urlResponse = nil;
+            NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+            if (error) {
+                NSLog(@"%@ decide check http error: %@", self, error);
+                return;
+            }
+            NSDictionary *object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            if (error) {
+                NSLog(@"%@ decide check json error: %@, data: %@", self, error, [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+                return;
+            }
+            if (object[@"error"]) {
+                NSLog(@"%@ decide check api error: %@", self, object[@"error"]);
+                return;
+            }
+            
+            NSArray *rawNotifications = object[@"notifications"];
+            NSMutableArray *parsedNotifications = [NSMutableArray array];
+            
+            if (rawNotifications && [rawNotifications isKindOfClass:[NSArray class]]) {
+                for (id obj in rawNotifications) {
+                    ZGNotification *notification = [ZGNotification notificationWithJSONObject:obj];
+                    if (notification) {
+                        [parsedNotifications addObject:notification];
+                    }
+                }
+            } else {
+                NSLog(@"%@ in-app notifs check response format error: %@", self, object);
+            }
+            
+            
+            
+            self.notifications = [NSArray arrayWithArray:parsedNotifications];
+            
+            self.decideResponseCached = YES;
+        } else {
+            NSLog(@"%@ decide cache found, skipping network request", self);
+        }
+        
+        NSArray *unseenNotifications = [self.notifications objectsAtIndexes:[self.notifications indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
+            return [self.shownNotifications member:@(((ZGNotification *)obj).ID)] == nil;
+        }]];
+        
+        NSLog(@"%@ decide check found %lu available notifs out of %lu total: %@", self, (unsigned long)[unseenNotifications count],
+              (unsigned long)[self.notifications count], unseenNotifications);
+        
+        if (completion) {
+            completion(unseenNotifications);
+        }
+//    });
+}
+
+- (void)checkForNotificationsWithCompletion:(void (^)(NSArray *notifications))completion {
+    [self checkForDecideResponseWithCompletion:^(NSArray *notifications) {
+        if (completion) {
+            completion(notifications);
+        }
+    } useCache:YES];
+}
+
+
+- (void)showNotification {
+    [self checkForNotificationsWithCompletion:^(NSArray *notifications) {
+        if ([notifications count] > 0) {
+            [self showNotificationWithObject:notifications[0]];
+        }
+    }];
+}
+
+- (void)showNotificationWithType:(NSString *)type {
+    [self checkForNotificationsWithCompletion:^(NSArray *notifications) {
+        if (type != nil) {
+            for (ZGNotification *notification in notifications) {
+                if ([notification.type isEqualToString:type]) {
+                    [self showNotificationWithObject:notification];
+                    break;
+                }
+            }
+        }
+    }];
+}
+
+- (void)showNotificationWithID:(NSUInteger)ID {
+    [self checkForNotificationsWithCompletion:^(NSArray *notifications) {
+        for (ZGNotification *notification in notifications) {
+            if (notification.ID == ID) {
+                [self showNotificationWithObject:notification];
+                break;
+            }
+        }
+    }];
+}
+
+
+- (void)showNotificationWithObject:(ZGNotification *)notification {
+    NSData *image = notification.image;
+
+    // if images fail to load, remove the notification from the queue
+    if (!image) {
+        NSMutableArray *notifications = [NSMutableArray arrayWithArray:_notifications];
+        [notifications removeObject:notification];
+        self.notifications = [NSArray arrayWithArray:notifications];
+        return;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (self.currentlyShowingNotification) {
+            NSLog(@"%@ already showing in-app notification: %@", self, self.currentlyShowingNotification);
+        } else {
+            self.currentlyShowingNotification = notification;
+            BOOL shown = false;
+            if ([notification.type isEqualToString:ZGNotificationTypeMini]) {
+                shown = [self showMiniNotificationWithObject:notification];
+            } else {
+                shown = [self showTakeoverNotificationWithObject:notification];
+            }
+            
+            if (shown && ![notification.title isEqualToString:@"$ignore"]) {
+                [self markNotificationShown:notification];
+            }
+        }
+    });
+}
+
+- (BOOL)showTakeoverNotificationWithObject:(ZGNotification *)notification {
+    UIViewController *presentingViewController = [ZGNotificationManager topPresentedViewController];
+    
+    if (![presentingViewController isBeingPresented] && ![presentingViewController isBeingDismissed]) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"ZGNotification" bundle:nil];
+        ZGTakeoverNotificationViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"ZGNotificationViewController"];
+        
+        //controller.backgroundImage = [presentingViewController.view zg_snapshotImage];
+        controller.notification = notification;
+        controller.delegate = self;
+        self.notificationViewController = controller;
+        
+        [presentingViewController presentViewController:controller animated:NO completion:nil];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)showMiniNotificationWithObject:(ZGNotification *)notification {
+    ZGMiniNotificationViewController *controller = [[ZGMiniNotificationViewController alloc] init];
+    controller.notification = notification;
+    controller.delegate = self;
+    self.notificationViewController = controller;
+    
+    [controller showWithAnimation];
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.miniNotificationPresentationTime * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self notificationController:controller wasDismissedWithStatus:NO];
+    });
+    return YES;
+}
+
+- (void)notificationController:(ZGNotificationViewController *)controller wasDismissedWithStatus:(BOOL)status {
+    if (controller == nil || self.currentlyShowingNotification != controller.notification) {
+        return;
+    }
+    
+    void (^completionBlock)()  = ^void(){
+        self.currentlyShowingNotification = nil;
+        self.notificationViewController = nil;
+    };
+    
+    if (status && controller.notification.callToActionURL) {
+        NSLog(@"%@ opening URL %@", self, controller.notification.callToActionURL);
+        BOOL success = [[UIApplication sharedApplication] openURL:controller.notification.callToActionURL];
+        
+        [controller hideWithAnimation:!success completion:completionBlock];
+        
+        if (!success) {
+            NSLog(@"Mixpanel failed to open given URL: %@", controller.notification.callToActionURL);
+        }
+        
+        [self trackNotification:controller.notification event:@"$campaign_open"];
+    } else {
+        [controller hideWithAnimation:YES completion:completionBlock];
+    }
+}
+
+- (void)trackNotification:(ZGNotification *)notification event:(NSString *)event {
+    if (![notification.title isEqualToString:@"$ignore"]) {
+//        [self track:event properties:@{@"campaign_id": @(notification.ID),
+//                                       @"message_id": @(notification.messageID),
+//                                       @"message_type": @"inapp",
+//                                       @"message_subtype": notification.type}];
+    } else {
+        NSLog(@"%@ ignoring notif track for %@, %@", self, @(notification.ID), event);
+    }
+}
+
+- (void)markNotificationShown:(ZGNotification *)notification {
+    NSLog(@"%@ marking notification shown: %@, %@", self, @(notification.ID), _shownNotifications);
+    
+    [_shownNotifications addObject:@(notification.ID)];
+    
+    NSDictionary *properties = @{
+                                 @"$campaigns": @(notification.ID),
+                                 @"$notifications": @{
+                                         @"campaign_id": @(notification.ID),
+                                         @"message_id": @(notification.messageID),
+                                         @"type": @"inapp",
+                                         @"time": [NSDate date]
+                                         }
+                                 };
+    
+    //[self.people append:properties];
+    NSLog(@"%@" , properties);
+    
+    [self trackNotification:notification event:@"$campaign_delivery"];
+}
+
 
 @end
 

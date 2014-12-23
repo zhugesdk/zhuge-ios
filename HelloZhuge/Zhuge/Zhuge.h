@@ -10,7 +10,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
-#import "ZGNotification.h"
+#import "ZGNotificationManager.h"
+
 
 @interface Zhuge : NSObject
 
@@ -25,6 +26,11 @@
  获得诸葛配置实例。
  */
 - (ZhugeConfig *)config;
+
+/**
+ 获得诸葛通知管理器实例。
+ */
+- (ZGNotificationManager *)noticeMgr;
 
 #pragma mark - 开启统计
 
@@ -61,12 +67,5 @@
  */
 - (void)pageStart:(NSString *)page;
 - (void)pageEnd:(NSString *)page;
-
-
-#pragma mark - 通知
-- (void)showNotification;
-- (void)showNotificationWithID:(NSUInteger)ID;
-- (void)showNotificationWithType:(NSString *)type;
-- (void)showNotificationWithObject:(ZGNotification *)notification;
 
 @end

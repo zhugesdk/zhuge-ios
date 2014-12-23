@@ -3,6 +3,8 @@
 #endif
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "ZGNotification.h"
 
 typedef enum {
     ZGNotificationManagerStateConnecting = 0, // 正在连接
@@ -13,7 +15,7 @@ typedef enum {
 } ZGNotificationManagerState;
 
 
-@interface ZGNotificationManager : NSObject<NSStreamDelegate>
+@interface ZGNotificationManager : NSObject
 
 // 开启消息服务
 - (void)openWithAppKey:(NSString *)appkey andDeviceId:(NSString *)deviceId;
@@ -43,6 +45,13 @@ typedef enum {
 
 // 关闭消息服务
 - (void)close;
+
+#pragma mark - 通知
+- (void)showNotification;
+- (void)showNotificationWithID:(NSUInteger)ID;
+- (void)showNotificationWithType:(NSString *)type;
+- (void)showNotificationWithObject:(ZGNotification *)notification;
+
 @end
 
 

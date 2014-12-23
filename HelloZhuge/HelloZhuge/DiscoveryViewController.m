@@ -62,8 +62,7 @@
     notice[@"cta"] = @"推荐给好友";
     notice[@"cta_url"] = @"http://www.baidu.com";
     
-//    [[Zhuge sharedInstance] showNotificationWithObject:[ZGNotification notificationWithJSONObject: notice]];
-
+    [[Zhuge sharedInstance].noticeMgr showNotificationWithObject:[ZGNotification notificationWithJSONObject: notice]];
 }
 
 - (IBAction)showTakeoverNotice:(id)sender {
@@ -78,7 +77,7 @@
     notice[@"cta"] = @"推荐给好友";
     notice[@"cta_url"] = @"http://www.baidu.com";
     
-//    [[Zhuge sharedInstance] showNotificationWithObject:[ZGNotification notificationWithJSONObject: notice]];
+    [[Zhuge sharedInstance].noticeMgr showNotificationWithObject:[ZGNotification notificationWithJSONObject: notice]];
 
 }
 @end
