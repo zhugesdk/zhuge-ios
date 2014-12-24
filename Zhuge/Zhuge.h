@@ -1,3 +1,6 @@
+#if ! __has_feature(objc_arc)
+#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
+#endif
 //
 //  Zhuge.h
 //
@@ -7,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
+#import "ZhugeNoticeManager.h"
 
 @interface Zhuge : NSObject
 
@@ -22,6 +26,11 @@
  */
 - (ZhugeConfig *)config;
 
+/**
+ 获得诸葛配置实例。
+ */
+- (ZhugeNoticeManager *)noticeMgr;
+
 #pragma mark - 开启统计
 
 /**
@@ -29,7 +38,7 @@
  
  @param appKey 应用Key，网站上注册应用时自动获得
  */
-- (void)startWithAppKey:(NSString *)appKey;
+- (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions ;
 
 #pragma mark - 追踪用户行为
 
@@ -57,5 +66,12 @@
  */
 - (void)pageStart:(NSString *)page;
 - (void)pageEnd:(NSString *)page;
+
+/**
+ 注册 Device Token，推送通知时用。
+ 
+ @param deviceToken
+ */
+- (void) registerDeviceToken:(NSString *)deviceToken;
 
 @end

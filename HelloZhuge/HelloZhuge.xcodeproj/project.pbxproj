@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E557AA691A25E2EE0093AEB6 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E557AA661A25E2EE0093AEB6 /* Zhuge.m */; };
-		E557AA6A1A25E2EE0093AEB6 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -18,6 +16,8 @@
 		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
 		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
+		E5A1DB871A4A62C200D52286 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A1DB841A4A62C200D52286 /* Zhuge.m */; };
+		E5A1DB881A4A62C200D52286 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */; };
 		E5BC2A8A1A492376001A0F69 /* ZhugeNoticeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */; };
 /* End PBXBuildFile section */
 
@@ -32,10 +32,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E557AA651A25E2ED0093AEB6 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zhuge.h; path = Zhuge/Zhuge.h; sourceTree = "<group>"; };
-		E557AA661A25E2EE0093AEB6 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = Zhuge/Zhuge.m; sourceTree = "<group>"; };
-		E557AA671A25E2EE0093AEB6 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
-		E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -53,6 +49,10 @@
 		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
 		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		E5A1DB831A4A62C200D52286 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zhuge.h; path = ../Zhuge/Zhuge.h; sourceTree = "<group>"; };
+		E5A1DB841A4A62C200D52286 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = ../Zhuge/Zhuge.m; sourceTree = "<group>"; };
+		E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = ../Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
+		E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = ../Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
 		E5BC2A881A492376001A0F69 /* ZhugeNoticeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeNoticeManager.h; path = ../Zhuge/ZhugeNoticeManager.h; sourceTree = "<group>"; };
 		E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeNoticeManager.m; path = ../Zhuge/ZhugeNoticeManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,10 +142,10 @@
 		E55E51871A242D4700ED0263 /* Zhuge */ = {
 			isa = PBXGroup;
 			children = (
-				E557AA651A25E2ED0093AEB6 /* Zhuge.h */,
-				E557AA661A25E2EE0093AEB6 /* Zhuge.m */,
-				E557AA671A25E2EE0093AEB6 /* ZhugeConfig.h */,
-				E557AA681A25E2EE0093AEB6 /* ZhugeConfig.m */,
+				E5A1DB831A4A62C200D52286 /* Zhuge.h */,
+				E5A1DB841A4A62C200D52286 /* Zhuge.m */,
+				E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */,
+				E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */,
 				E5BC2A881A492376001A0F69 /* ZhugeNoticeManager.h */,
 				E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */,
 			);
@@ -253,13 +253,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
+				E5A1DB881A4A62C200D52286 /* ZhugeConfig.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
-				E557AA6A1A25E2EE0093AEB6 /* ZhugeConfig.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
-				E557AA691A25E2EE0093AEB6 /* Zhuge.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
 				E5BC2A8A1A492376001A0F69 /* ZhugeNoticeManager.m in Sources */,
+				E5A1DB871A4A62C200D52286 /* Zhuge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
