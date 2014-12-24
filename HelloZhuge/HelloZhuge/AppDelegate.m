@@ -37,9 +37,6 @@
     // 可以自定义版本和渠道
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
-    
-    [zhuge.config setIsPingEnabled:YES];
-    [zhuge.config setPingInterval:10];
 
     // 开启行为追踪
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
