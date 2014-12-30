@@ -27,6 +27,9 @@ typedef enum {
 // 获取客户端ID
 - (NSString *) getClientId;
 
+// 消息已读
+- (void) sendMessageRead:(NSString *)messageId;
+
 // 关闭消息服务
 - (void)close;
 

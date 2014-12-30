@@ -681,8 +681,8 @@ static Zhuge *sharedInstance = nil;
     if(self.config.isLogEnabled) {
         NSLog(@"跟踪推送通知: %@", userInfo);
     }
-    if (userInfo && userInfo[@"message_id"]) {
-        [self track:@"$app_open" properties:@{@"message_id": userInfo[@"message_id"]}];
+    if (userInfo && userInfo[@"mid"]) {
+        [self.noticeMgr sendMessageRead:userInfo[@"mid"]];
     }
 }
 
@@ -899,8 +899,8 @@ static Zhuge *sharedInstance = nil;
         NSString *requestData = [self encodeAPIData:[self wrapEvents:events]];
 
         NSError *error = nil;
-        [self httpRequestWithData:requestData andError:error];
-        if (error) {
+        BOOL success = [self httpRequestWithData:requestData andError:error];
+        if (error || !success) {
             if(self.config.isLogEnabled) {
                 NSLog(@"上报失败: %@", error);
             }
@@ -913,7 +913,7 @@ static Zhuge *sharedInstance = nil;
 }
 
 
-- (void) httpRequestWithData:(NSString *)requestData andError:(NSError *)error {
+- (BOOL) httpRequestWithData:(NSString *)requestData andError:(NSError *)error {
     NSString *postBody = [NSString stringWithFormat:@"method=event_statis_srv.upload&event=%@", requestData];
     NSURL *URL = [NSURL URLWithString:self.apiURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
@@ -931,10 +931,16 @@ static Zhuge *sharedInstance = nil;
     
     [self updateNetworkActivityIndicator:NO];
     
-    NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-    if(self.config.isLogEnabled) {
-        NSLog(@"API响应: %@", response);
+    if (responseData != nil) {
+        NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
+        if(self.config.isLogEnabled) {
+            NSLog(@"API响应: %@", response);
+        }
+        
+        return [[NSNumber numberWithInt:0] isEqualToNumber:response[@"return_code"]];
     }
+    
+    return NO;
 }
 
 #pragma mark - 持久化

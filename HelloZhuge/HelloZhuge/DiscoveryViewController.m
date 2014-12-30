@@ -50,4 +50,20 @@
     [[Zhuge sharedInstance] track:@"购物" properties: @{@"商家":@"京东"}];
 }
 
+- (IBAction)invoke:(id)sender {
+    if (self.eventName.text != nil && self.eventName.text.length !=0) {
+        NSString* event = self.eventName.text;
+        if (self.prop1.text != nil && self.prop1.text.length !=0 &&
+            self.value1.text != nil && self.value1.text.length !=0) {
+            NSDictionary* properties = @{self.prop1.text : self.value1.text};
+            [[Zhuge sharedInstance] track: event properties: properties];
+        } else {
+            [[Zhuge sharedInstance] track: event];
+        }
+        
+
+    }
+
+}
+
 @end

@@ -86,6 +86,8 @@ typedef enum {
 @property (atomic) NSNumber *seq;
 @property (atomic) NSNumber *ver;
 
+@property (nonatomic, strong) NSMutableDictionary *readedMsgQueue;
+
 @property (atomic) BOOL deviceTokenUploaded;
 
 
@@ -103,7 +105,7 @@ NSOutputStream *_outputStream;
 - (id)init {
     self = [super init];
     if (self) {
-        self.serverUrl = @"http://apipool.37degree.com/APIPOOL/?method=conf_srv.srv_list_get";
+        self.serverUrl = @"http://apipool.37degree.com/open/?method=conf_srv.srv_list_get";
         
         self.retry = 1;
         
@@ -111,6 +113,8 @@ NSOutputStream *_outputStream;
         self.ver = [NSNumber numberWithInt:1];
         
         self.deviceTokenUploaded = NO;
+        
+        self.readedMsgQueue = [NSMutableDictionary dictionary];
 
         _connectQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
     }
@@ -190,6 +194,7 @@ NSOutputStream *_outputStream;
         
         if (error) {
             NSLog(@"%@ 获取推送服务器列表错误: %@", self, error);
+            return;
         }
         
         NSDictionary *object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
@@ -221,7 +226,7 @@ NSOutputStream *_outputStream;
     msg[@"appid"] = self.appKey;
     msg[@"did"] = self.deviceId;
     msg[@"dtype"] = [NSNumber numberWithInt:2];
-    msg[@"encrpyt"] = [NSNumber numberWithInt:0];
+    msg[@"encrypt"] = [NSNumber numberWithInt:0];
     msg[@"compress"] = [NSNumber numberWithInt:0];
     
     [self sendMessage:msg withCmd:ZGNoticeCmdLogin];
@@ -237,8 +242,6 @@ NSOutputStream *_outputStream;
         msg[@"token"] = deviceToken;
         
         [self sendMessage:msg withCmd:ZGNoticeCmdUploadToken];
-        
-        [[Zhuge sharedInstance] track:@"$deviceToken" properties:@{@"cid":self.cid,@"deviceToken":self.deviceToken}];
     }
 }
 
@@ -255,6 +258,23 @@ NSOutputStream *_outputStream;
     
     [self sendMessage:msg withCmd:ZGNoticeCmdGetClientId];
 }
+
+- (void) sendMessageRead:(NSString *)messageId {
+    self.readedMsgQueue[messageId] = @"1";
+    
+    if (self.readyState == ZGNotificationManagerStateLogin) {
+        [self _sendMessageRead];
+    }
+}
+
+- (void) _sendMessageRead {
+    for (NSString* messageId in self.readedMsgQueue.allKeys) {
+        NSMutableDictionary *msg = [NSMutableDictionary dictionary];
+        msg[@"id"] = messageId;
+        [self sendMessage:msg withCmd:ZGNoticeCmdSetMsgRead];
+    }
+}
+
 
 - (void) sendMessage:(NSMutableDictionary *) msg withCmd:(uint16_t) cmd {
     msg[@"seq"] = self.seq;
@@ -357,14 +377,22 @@ NSOutputStream *_outputStream;
                     if (!self.deviceTokenUploaded && self.deviceToken != nil) {
                         [self registerDeviceToken:self.deviceToken];
                     }
+                    
+                    if (self.readedMsgQueue.count > 0) {
+                        [self _sendMessageRead];
+                    }
+                    
                     break;
                 case ZGNoticeCmdAckUploadToken:
                     NSLog(@"注册DeviceToken成功");
                     self.deviceTokenUploaded = YES;
                     break;
+                case ZGNoticeCmdAckSetMsgRead:
+                    NSLog(@"消息设置已读成功");
+                    [self.readedMsgQueue removeObjectForKey: ack[@"id"]];
+                    break;
                  case ZGNoticeCmdMsg:
                     NSLog(@"获取消息 msg: %@", NSStringFromClass([ack[@"msg"] class]));
-                    
                     break;
                 default:
                     break;
