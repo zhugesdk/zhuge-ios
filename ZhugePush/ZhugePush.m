@@ -162,7 +162,7 @@ static ZhugePush *sharedInstance = nil;
     if (self) {
         self.serverUrl = @"http://apipool.37degree.com/open/?method=setting_srv.srv_list_get";
         
-        self.retry = 1;
+        self.retry = 3;
         
         self.seq = [NSNumber numberWithInt:1];
         self.ver = [NSNumber numberWithInt:1];

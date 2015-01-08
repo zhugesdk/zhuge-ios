@@ -789,6 +789,7 @@ static Zhuge *sharedInstance = nil;
             [self startFlushTimer];
         } else if ([@"exit" isEqualToString: timing]) {
             [self stopFlushTimer];
+            [self flush];
         }
     }
 }
