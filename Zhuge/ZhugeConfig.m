@@ -17,7 +17,7 @@
         self.appVersion = ZG_APP_VERSION;
         self.channel = ZG_CHANNEL;
 
-        self.policy = SEND_ON_START;
+        self.policy = SEND_INTERVAL;
         self.sendInterval = 10;
         self.sessionInterval = 30;
         self.sendMaxSizePerDay = 1000;

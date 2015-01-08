@@ -18,7 +18,7 @@
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
 		E5A1DB871A4A62C200D52286 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A1DB841A4A62C200D52286 /* Zhuge.m */; };
 		E5A1DB881A4A62C200D52286 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */; };
-		E5BC2A8A1A492376001A0F69 /* ZhugeNoticeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */; };
+		E5C7A6F51A5E57E300AD1408 /* ZhugePush.m in Sources */ = {isa = PBXBuildFile; fileRef = E5C7A6F41A5E57E300AD1408 /* ZhugePush.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +53,8 @@
 		E5A1DB841A4A62C200D52286 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = ../Zhuge/Zhuge.m; sourceTree = "<group>"; };
 		E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = ../Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
 		E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = ../Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
-		E5BC2A881A492376001A0F69 /* ZhugeNoticeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeNoticeManager.h; path = ../Zhuge/ZhugeNoticeManager.h; sourceTree = "<group>"; };
-		E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeNoticeManager.m; path = ../Zhuge/ZhugeNoticeManager.m; sourceTree = "<group>"; };
+		E5C7A6F31A5E57E300AD1408 /* ZhugePush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugePush.h; path = ../ZhugePush/ZhugePush.h; sourceTree = "<group>"; };
+		E5C7A6F41A5E57E300AD1408 /* ZhugePush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugePush.m; path = ../ZhugePush/ZhugePush.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +78,7 @@
 		E55E514B1A242BF100ED0263 = {
 			isa = PBXGroup;
 			children = (
+				E5C7A6F21A5E578E00AD1408 /* ZhugePush */,
 				E55E51871A242D4700ED0263 /* Zhuge */,
 				E55E51561A242BF100ED0263 /* HelloZhuge */,
 				E55E51731A242BF100ED0263 /* HelloZhugeTests */,
@@ -146,10 +147,17 @@
 				E5A1DB841A4A62C200D52286 /* Zhuge.m */,
 				E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */,
 				E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */,
-				E5BC2A881A492376001A0F69 /* ZhugeNoticeManager.h */,
-				E5BC2A891A492376001A0F69 /* ZhugeNoticeManager.m */,
 			);
 			name = Zhuge;
+			sourceTree = "<group>";
+		};
+		E5C7A6F21A5E578E00AD1408 /* ZhugePush */ = {
+			isa = PBXGroup;
+			children = (
+				E5C7A6F31A5E57E300AD1408 /* ZhugePush.h */,
+				E5C7A6F41A5E57E300AD1408 /* ZhugePush.m */,
+			);
+			name = ZhugePush;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +209,7 @@
 				TargetAttributes = {
 					E55E51531A242BF100ED0263 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 7N7AX6B3LP;
 					};
 					E55E516F1A242BF100ED0263 = {
 						CreatedOnToolsVersion = 6.1;
@@ -258,7 +267,7 @@
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
-				E5BC2A8A1A492376001A0F69 /* ZhugeNoticeManager.m in Sources */,
+				E5C7A6F51A5E57E300AD1408 /* ZhugePush.m in Sources */,
 				E5A1DB871A4A62C200D52286 /* Zhuge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,11 +392,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -395,11 +407,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

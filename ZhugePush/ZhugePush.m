@@ -2,10 +2,7 @@
 #error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
 #endif
 
-#import "ZhugeNoticeManager.h"
-#import "Zhuge.h"
-
-#import <UIKit/UIKit.h>
+#import "ZhugePush.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
@@ -16,6 +13,13 @@
 #include <net/if_dl.h>
 
 #define DEVICE_TYPE 2
+
+typedef enum {
+    ZGNotificationStateConnecting       = 0, // 未连接
+    ZGNotificationStateConnected        = 1, // 连接建立
+    ZGNotificationStateLogin            = 2, // 登录成功
+    ZGNotificationStateClosed           = 4  // 连接关闭
+} ZGNotificationState;
 
 #pragma mark - 消息协议
 
@@ -68,11 +72,11 @@ typedef enum {
 @property (nonatomic, readonly) NSRunLoop *runLoop;
 @end
 
-#pragma mark - ZGNotificationManager
+#pragma mark - ZhugePush
 
-@interface ZhugeNoticeManager() <NSStreamDelegate>
+@interface ZhugePush() <NSStreamDelegate>
 
-@property (nonatomic) ZGNotificationManagerState readyState;
+@property (nonatomic) ZGNotificationState readyState;
 
 @property (nonatomic, copy) NSString *serverUrl;
 @property (nonatomic, strong) NSMutableArray *servers;
@@ -86,14 +90,17 @@ typedef enum {
 @property (atomic) NSNumber *seq;
 @property (atomic) NSNumber *ver;
 
-@property (nonatomic, strong) NSMutableDictionary *readedMsgQueue;
+@property (nonatomic, strong) NSString *messageId;
+@property (nonatomic, strong) NSMutableArray *unreadMessages;
 
 @property (atomic) BOOL deviceTokenUploaded;
+
+@property (atomic) BOOL isLogEnabled;
 
 
 @end
 
-@implementation ZhugeNoticeManager {
+@implementation ZhugePush {
     dispatch_queue_t _connectQueue;
 }
 
@@ -102,10 +109,58 @@ NSOutputStream *_outputStream;
 
 #pragma mark - 初始化
 
++ (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_8_0
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+#else
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
+#endif
+}
+
++ (void)registerDeviceId:(NSString *)deviceId {
+    [ZhugePush sharedInstance].deviceId = deviceId;
+}
+
++ (void)registerDeviceToken:(NSData *)deviceToken {
+    NSString *token=[NSString stringWithFormat:@"%@",deviceToken];
+    token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
+    token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    [ZhugePush sharedInstance].deviceToken = token;
+}
+
++ (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions {
+    [[ZhugePush sharedInstance] openWithAppKey:appKey launchOptions:launchOptions];
+}
+
++ (void)setLogEnabled:(BOOL)value {
+    [ZhugePush sharedInstance].isLogEnabled = value;
+}
+
++ (void)handleRemoteNotification:(NSDictionary *)userInfo {
+    if (userInfo && userInfo[@"mid"]) {
+        [[ZhugePush sharedInstance] setMessageRead:userInfo[@"mid"]];
+    }
+}
+
+
+static ZhugePush *sharedInstance = nil;
++ (ZhugePush *)sharedInstance {
+    if (sharedInstance == nil) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sharedInstance = [[super alloc] init];
+        });
+        return sharedInstance;
+    }
+    
+    return sharedInstance;
+}
+
 - (id)init {
     self = [super init];
     if (self) {
-        self.serverUrl = @"http://apipool.37degree.com/open/?method=conf_srv.srv_list_get";
+        self.serverUrl = @"http://apipool.37degree.com/open/?method=setting_srv.srv_list_get";
         
         self.retry = 1;
         
@@ -114,28 +169,38 @@ NSOutputStream *_outputStream;
         
         self.deviceTokenUploaded = NO;
         
-        self.readedMsgQueue = [NSMutableDictionary dictionary];
-
+        self.unreadMessages = [[NSMutableArray alloc] init];
+        
         _connectQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
     }
     
     return self;
 }
 
-- (void)openWithAppKey:(NSString *)appkey andDeviceId:(NSString *)deviceId {
+- (void)openWithAppKey:(NSString *)appkey launchOptions:(NSDictionary *)launchOptions {
     self.appKey = appkey;
-    self.deviceId = deviceId;
     
-    self.readyState = ZGNotificationManagerStateConnecting;
+    self.readyState = ZGNotificationStateConnecting;
     
     [self _getServers];
     [self _connect];
+    
+//    if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+//        NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+//        if (userInfo && userInfo[@"mid"]) {
+//            [self setMessageRead:userInfo[@"mid"]];
+//        }
+//    }
 }
 
 - (void)_connect {
     if (self.servers != nil && self.servers.count > 0) {
         self.currentServer = self.servers[arc4random() % [self.servers count]];
-        NSLog(@"尝试连接服务器: %@", self.currentServer);
+        
+        if (self.isLogEnabled) {
+            NSLog(@"尝试连接服务器: %@", self.currentServer);
+        }
+        
         if (self.currentServer) {
             NSArray *serverItems = [self.currentServer componentsSeparatedByString:@":"];
             
@@ -182,7 +247,9 @@ NSOutputStream *_outputStream;
 - (void) _getServers {
     self.servers = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"zgPushServers"] mutableCopy];
     if (self.servers == nil || self.servers.count == 0) {
-        NSLog(@"推送服务器列表不存在，正在重新获取服务器列表...");
+        if (self.isLogEnabled) {
+            NSLog(@"推送服务器列表不存在，正在重新获取服务器列表...");
+        }
         
         NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@&did=%@", self.serverUrl, self.deviceId]];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
@@ -193,30 +260,33 @@ NSOutputStream *_outputStream;
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
         
         if (error) {
-            NSLog(@"%@ 获取推送服务器列表错误: %@", self, error);
+            if (self.isLogEnabled) {
+                NSLog(@"%@ 获取推送服务器列表错误: %@", self, error);
+            }
             return;
         }
         
         NSDictionary *object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (self.isLogEnabled) {
+            NSLog(@"http response: %@", object);
+        }
         self.servers = [object[@"data"][@"servers"] mutableCopy];
         [[NSUserDefaults standardUserDefaults] setObject:self.servers forKey:@"zgPushServers"];
-        NSLog(@"重新获取推送服务器列表成功:%@", self.servers);
+        if (self.isLogEnabled) {
+            NSLog(@"重新获取推送服务器列表成功:%@", self.servers);
+        }
     }
 }
 
 - (void)close {
-    self.readyState = ZGNotificationManagerStateClosing;
     _inputStream.delegate = nil;
     _outputStream.delegate = nil;
     
     [_inputStream close];
     [_outputStream close];
-    self.readyState = ZGNotificationManagerClosed;
+    self.readyState = ZGNotificationStateClosed;
 }
 
-- (ZGNotificationManagerState) state {
-    return self.readyState;
-}
 
 #pragma mark - 请求命令
 
@@ -235,8 +305,8 @@ NSOutputStream *_outputStream;
 // 注册device token
 - (void) registerDeviceToken:(NSString *)deviceToken {
     self.deviceToken = deviceToken;
-
-    if (self.readyState == ZGNotificationManagerStateLogin) {
+    
+    if (self.readyState == ZGNotificationStateLogin) {
         NSMutableDictionary *msg = [NSMutableDictionary dictionary];
         msg[@"cid"] = self.cid;
         msg[@"token"] = deviceToken;
@@ -259,19 +329,25 @@ NSOutputStream *_outputStream;
     [self sendMessage:msg withCmd:ZGNoticeCmdGetClientId];
 }
 
-- (void) sendMessageRead:(NSString *)messageId {
-    self.readedMsgQueue[messageId] = @"1";
-    
-    if (self.readyState == ZGNotificationManagerStateLogin) {
-        [self _sendMessageRead];
+- (void) setMessageRead:(NSString *)messageId {
+    if (messageId) {
+        [self.unreadMessages addObject:messageId];
     }
+    if (self.readyState != ZGNotificationStateLogin) {
+        [self _connect];
+    }
+    
+    [self _sendMessageRead];
+
 }
 
 - (void) _sendMessageRead {
-    for (NSString* messageId in self.readedMsgQueue.allKeys) {
-        NSMutableDictionary *msg = [NSMutableDictionary dictionary];
-        msg[@"id"] = messageId;
-        [self sendMessage:msg withCmd:ZGNoticeCmdSetMsgRead];
+    if (self.unreadMessages && self.unreadMessages.count > 0) {
+        for (NSString *messageId in self.unreadMessages) {
+            NSMutableDictionary *msg = [NSMutableDictionary dictionary];
+            msg[@"id"] = messageId;
+            [self sendMessage:msg withCmd:ZGNoticeCmdSetMsgRead];
+        }
     }
 }
 
@@ -281,7 +357,9 @@ NSOutputStream *_outputStream;
     msg[@"ver"] = self.ver;
     
     NSString *json = [[NSString alloc] initWithData:[self JSONSerializeObject:msg] encoding:NSUTF8StringEncoding];
-    NSLog(@"send json: %@", json);
+    if (self.isLogEnabled) {
+        NSLog(@"发生请求: %@", json);
+    }
     NSInteger iLenJson = json.length;
     
     PkgHeader pkgHeader;
@@ -303,34 +381,51 @@ NSOutputStream *_outputStream;
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
     switch (streamEvent) {
         case  NSStreamEventOpenCompleted:
-            NSLog(@"NSStreamEventOpenCompleted");
+            if (self.isLogEnabled) {
+                NSLog(@"NSStreamEventOpenCompleted");
+            }
             if (theStream == _inputStream) {
-                self.readyState = ZGNotificationManagerStateConnected;
-                NSLog(@"已连接");
+                self.readyState = ZGNotificationStateConnected;
+                if (self.isLogEnabled) {
+                    NSLog(@"已建立连接");
+                }
             }
             break;
         case  NSStreamEventHasBytesAvailable:
-            NSLog(@"NSStreamEventHasBytesAvailable");
+            if (self.isLogEnabled) {
+                NSLog(@"NSStreamEventHasBytesAvailable");
+            }
+
             if (theStream == _inputStream) {
                 [self recvData];
             }
             break;
         case  NSStreamEventHasSpaceAvailable:
-            NSLog(@"NSStreamEventHasSpaceAvailable");
+            if (self.isLogEnabled) {
+                NSLog(@"NSStreamEventHasSpaceAvailable");
+            }
             break;
         case  NSStreamEventErrorOccurred:
-            NSLog(@"NSStreamEventErrorOccurred %@ %@", theStream, [[theStream streamError] copy]);
-            if (self.readyState == ZGNotificationManagerStateConnecting) {
-                NSLog(@"连接失败");
+            if (self.isLogEnabled) {
+                NSLog(@"NSStreamEventErrorOccurred %@ %@", theStream, [[theStream streamError] copy]);
+            }
+            if (self.readyState == ZGNotificationStateConnecting) {
+                if (self.isLogEnabled) {
+                    NSLog(@"连接失败");
+                }
                 [self _connectFailed];
             }
             
             break;
         case  NSStreamEventEndEncountered:
-            NSLog(@"NSStreamEventEndEncountered");
+            if (self.isLogEnabled) {
+                NSLog(@"NSStreamEventEndEncountered");
+            }
             break;
         default:
-            NSLog(@"no event");
+            if (self.isLogEnabled) {
+                NSLog(@"no event : %lu", streamEvent);
+            }
             break;
     }
 }
@@ -350,49 +445,63 @@ NSOutputStream *_outputStream;
             unsigned int iTotalLen = CFSwapInt32BigToHost(pkgHeader.iTotalLen);
             unsigned int iBodyLen = iTotalLen - iHeadLen;
             
-            NSLog(@"PkgHeader iCmdType: %u,iHeadLen: %u, iTotalLen: %u", iCmdType, iHeadLen, iTotalLen);
-            
+            if (self.isLogEnabled) {
+                NSLog(@"PkgHeader iCmdType: %u,iHeadLen: %u, iTotalLen: %u", iCmdType, iHeadLen, iTotalLen);
+            }
             void *msgBuf = malloc(2048);
             [data getBytes:msgBuf range:NSMakeRange(iHeadLen, iBodyLen)];
             NSDictionary *ack = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:msgBuf length:iBodyLen ] options:0 error:nil];
             
-            NSLog(@"ack: %@", ack);
-            
+            if (self.isLogEnabled) {
+                NSLog(@"响应: %@", ack);
+            }
             if (ack == nil || [ack[@"ret"] intValue] != 0) {
-                NSLog(@"recvData error");
+                if (self.isLogEnabled) {
+                    NSLog(@"接收数据失败");
+                }
                 return;
             }
             
             switch (iCmdType) {
                 case ZGNoticeCmdAckLogin:
-                    NSLog(@"登录成功");
+                    if (self.isLogEnabled) {
+                        NSLog(@"登录成功");
+                    }
                     [self sendGetClientId];
                     break;
                 case ZGNoticeCmdAckGetClientId:
-                    NSLog(@"获取ClientId成功");
+                    if (self.isLogEnabled) {
+                        NSLog(@"获取ClientId成功");
+                    }
                     self.cid = ack[@"cid"];
                     [[NSUserDefaults standardUserDefaults] setObject:self.cid forKey:@"zgPushClientId"];
-                    self.readyState = ZGNotificationManagerStateLogin;
+                    self.readyState = ZGNotificationStateLogin;
                     
-                    if (!self.deviceTokenUploaded && self.deviceToken != nil) {
+                    if (!self.deviceTokenUploaded && self.deviceToken) {
                         [self registerDeviceToken:self.deviceToken];
                     }
                     
-                    if (self.readedMsgQueue.count > 0) {
-                        [self _sendMessageRead];
-                    }
+                    [self _sendMessageRead];
                     
                     break;
                 case ZGNoticeCmdAckUploadToken:
-                    NSLog(@"注册DeviceToken成功");
+                    if (self.isLogEnabled) {
+                        NSLog(@"注册DeviceToken成功");
+                    }
                     self.deviceTokenUploaded = YES;
                     break;
                 case ZGNoticeCmdAckSetMsgRead:
-                    NSLog(@"消息设置已读成功");
-                    [self.readedMsgQueue removeObjectForKey: ack[@"id"]];
+                    if (self.isLogEnabled) {
+                        NSLog(@"消息设置已读成功");
+                    }
+                    if (self.unreadMessages && self.unreadMessages.count > 0) {
+                        [self.unreadMessages removeObjectAtIndex:0];
+                    }
                     break;
-                 case ZGNoticeCmdMsg:
-                    NSLog(@"获取消息 msg: %@", NSStringFromClass([ack[@"msg"] class]));
+                case ZGNoticeCmdMsg:
+                    if (self.isLogEnabled) {
+                        NSLog(@"获取消息 msg: %@", NSStringFromClass([ack[@"msg"] class]));
+                    }
                     break;
                 default:
                     break;

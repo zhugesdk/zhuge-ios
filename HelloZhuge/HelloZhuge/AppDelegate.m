@@ -7,7 +7,7 @@
 
 #import "AppDelegate.h"
 #import "Zhuge.h"
-#import "ZhugeNoticeManager.h"
+#import "ZhugePush.h"
 
 @implementation AppDelegate
 
@@ -40,26 +40,51 @@
 
     // 开启行为追踪
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
+    
+    // Required
+    #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_8_0
+        [ZhugePush registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+                                                       UIUserNotificationTypeSound |
+                                                       UIUserNotificationTypeAlert)
+                                           categories:nil];
+    #elif __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+        [ZhugePush registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                       UIRemoteNotificationTypeSound |
+                                                       UIRemoteNotificationTypeAlert)
+                                           categories:nil]];
+        }
+    #else
+        [ZhugePush registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                       UIRemoteNotificationTypeSound |
+                                                       UIRemoteNotificationTypeAlert)
+                                           categories:nil]];
+    #endif
+    
 
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
-    [application registerForRemoteNotifications];
-  
+    [ZhugePush registerDeviceId:[zhuge getDeviceId]];
+    [ZhugePush startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
+    [ZhugePush setLogEnabled:YES];
+    
     return YES;
 }
 
-- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSString *dt = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
-    dt = [dt stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
-    NSLog(@"deviceToken: %@", dt);
-    
-    [[Zhuge sharedInstance] registerDeviceToken:dt];
-
+-(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+    [ZhugePush registerDeviceToken:deviceToken];
 }
 
-- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
-    NSLog(@"Error %@",err);
-    
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@",error);
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"didReceiveRemoteNotification: %@" ,userInfo);
+    [ZhugePush handleRemoteNotification:userInfo];
+}
+
+-(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
+    NSLog(@"handleActionWithIdentifier: %@" ,userInfo);
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 

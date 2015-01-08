@@ -19,7 +19,7 @@
 #define ZG_CHANNEL @"App Store"
 
 /* 发送策略 */
-// 默认是启动时发送(SEND_ON_START)
+// 默认是启动时发送(SEND_INTERVAL)
 typedef enum {
     SEND_REALTIME  = 1, // 实时发送，app每产生一个事件都会发送到服务器。
     SEND_WIFI_ONLY = 2, // 仅在WIFI下启动时发送，非WIFI情况缓存到本地。

@@ -55,9 +55,6 @@
 // 崩溃报告
 - (void)trackCrash:(NSString *)stackTrace;
 
-// 推送通知
-@property (nonatomic, strong)ZhugeNoticeManager *noticeMgr;
-
 // PING
 @property (nonatomic, strong) NSTimer *pingTimer;
 
@@ -97,7 +94,6 @@ static Zhuge *sharedInstance = nil;
             sharedInstance.apiURL = @"http://apipool.37degree.com/APIPOOL/";
             sharedInstance.confURL = @"http://zhuge.io/config.jsp";
             sharedInstance.config = [[ZhugeConfig alloc] init];
-            sharedInstance.noticeMgr = [[ZhugeNoticeManager alloc] init];
         });
         
         return sharedInstance;
@@ -108,14 +104,6 @@ static Zhuge *sharedInstance = nil;
 
 - (ZhugeConfig *)config {
     return _config;
-}
-
-- (ZhugeNoticeManager *)noticeMgr {
-    return _noticeMgr;
-}
-
-- (void) registerDeviceToken:(NSString *)deviceToken {
-    [self.noticeMgr registerDeviceToken:deviceToken];
 }
 
 - (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions {
@@ -147,21 +135,23 @@ static Zhuge *sharedInstance = nil;
     [self unarchive];
     [self sessionStart];
     
-    [self.noticeMgr openWithAppKey:self.appKey andDeviceId:self.deviceId];
-
     // 崩溃报告
     if (self.config.isCrashReportEnabled) {
         NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    }
-    
-    if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        [self trackPushNotification:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]];
     }
     
     if (self.config.isPingEnabled) {
         [self startPing];
     }
     
+}
+
+- (NSString *)getDeviceId {
+    if (!self.deviceId) {
+        self.deviceId = [self defaultDeviceId];
+    }
+    
+    return self.deviceId;
 }
 
 // 监听网络状态和应用生命周期
@@ -674,16 +664,6 @@ static Zhuge *sharedInstance = nil;
     }
 
     [self enqueueEvent:e];
-}
-
-// 跟踪推送通知
-- (void)trackPushNotification:(NSDictionary *)userInfo {
-    if(self.config.isLogEnabled) {
-        NSLog(@"跟踪推送通知: %@", userInfo);
-    }
-    if (userInfo && userInfo[@"mid"]) {
-        [self.noticeMgr sendMessageRead:userInfo[@"mid"]];
-    }
 }
 
 // 崩溃报告
