@@ -31,6 +31,7 @@
 @property (nonatomic, copy) NSString *appKey;
 
 // 会话页面
+@property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *deviceId;
 @property (nonatomic, strong) NSNumber *sessionId;
 @property (nonatomic, strong) NSMutableDictionary *pages;
@@ -112,6 +113,7 @@ static Zhuge *sharedInstance = nil;
         return;
     }
     self.appKey = appKey;
+    self.userId = @"";
     self.deviceId = [self defaultDeviceId];
     self.pages = [NSMutableDictionary dictionary];
     self.lastPage = @"APP_START";
@@ -614,6 +616,8 @@ static Zhuge *sharedInstance = nil;
         return;
     }
     
+    self.userId = userId;
+    
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"idf";
     e[@"cuid"] = userId;
@@ -690,6 +694,7 @@ static Zhuge *sharedInstance = nil;
     batch[@"cn"] = self.config.channel;
     batch[@"ak"] = self.appKey;
     batch[@"did"] = self.deviceId;
+    batch[@"cuid"] = self.userId;
     batch[@"data"] = events;
     
     return batch;
@@ -964,6 +969,7 @@ static Zhuge *sharedInstance = nil;
 - (void)archiveProperties {
     NSString *filePath = [self propertiesFilePath];
     NSMutableDictionary *p = [NSMutableDictionary dictionary];
+    [p setValue:self.userId forKey:@"userId"];
     [p setValue:self.deviceId forKey:@"deviceId"];
     [p setValue:self.timedEvents forKey:@"timedEvents"];
 
@@ -985,7 +991,6 @@ static Zhuge *sharedInstance = nil;
 - (void)unarchive {
     [self unarchiveEvents];
     [self unarchiveProperties];
-
 }
 
 - (id)unarchiveFromFile:(NSString *)filePath {
@@ -1024,6 +1029,7 @@ static Zhuge *sharedInstance = nil;
 - (void)unarchiveProperties {
     NSDictionary *properties = (NSDictionary *)[self unarchiveFromFile:[self propertiesFilePath]];
     if (properties) {
+        self.userId = properties[@"userId"] ? properties[@"userId"] : @"";
         self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
         self.timedEvents = properties[@"timedEvents"] ? properties[@"timedEvents"] : [NSMutableDictionary dictionary];
         
@@ -1102,6 +1108,8 @@ static Zhuge *sharedInstance = nil;
     evt[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
     evt[@"ak"] = self.appKey;
     evt[@"did"] = self.deviceId;
+    evt[@"cuid"] = self.userId;
+
     
     NSString *requestData = [self encodeAPIData:evt];
     
