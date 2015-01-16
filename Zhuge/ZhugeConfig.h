@@ -39,7 +39,7 @@ typedef enum {
 // 两次会话时间间隔(默认:30秒)
 @property (nonatomic) NSUInteger sessionInterval;
 
-// 发送策略(默认:SEND_ON_START)
+// 发送策略(默认:SEND_INTERVAL)
 @property (nonatomic, readwrite) ReportPolicy policy;
 // 每天最大上报事件数，超出部分缓存到本地(默认:1000个)
 @property (nonatomic) NSUInteger sendMaxSizePerDay;
