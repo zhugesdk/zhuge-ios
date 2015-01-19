@@ -110,12 +110,19 @@ NSOutputStream *_outputStream;
 #pragma mark - 初始化
 
 + (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_8_0
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationType)types categories:categories];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    } else {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
+    }
 #else
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
 #endif
 }
+
 
 + (void)registerDeviceId:(NSString *)deviceId {
     [ZhugePush sharedInstance].deviceId = deviceId;

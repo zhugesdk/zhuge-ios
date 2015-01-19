@@ -23,26 +23,27 @@
 
     // 开启行为追踪
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
-    
+
     
     // 开启推送通知
-    #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_8_0
+#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         [ZhugePush registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                        UIUserNotificationTypeSound |
                                                        UIUserNotificationTypeAlert)
                                            categories:nil];
-    #elif __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
+    } else {
         [ZhugePush registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
-                                           categories:nil]];
-        }
-    #else
+                                           categories:nil];
+    }
+#else
         [ZhugePush registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
-                                           categories:nil]];
-    #endif
+                                           categories:nil];
+#endif
     [ZhugePush registerDeviceId:[zhuge getDeviceId]];
     [ZhugePush startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
     [ZhugePush setLogEnabled:YES];
