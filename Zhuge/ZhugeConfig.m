@@ -23,18 +23,18 @@
         self.sendMaxSizePerDay = 1000;
         self.cacheMaxSize = 1000;
         
-        self.isLogEnabled = NO;
-        self.isCrashReportEnabled = YES;
-        self.isOnlineConfigEnabled = YES;
+        self.logEnabled = NO;
+        self.crashReportEnabled = YES;
+        self.onlineConfigEnabled = YES;
         
-        self.isPingEnabled = NO;
+        self.pingEnabled = NO;
         self.pingInterval = 30;
     }
     
     return self;
 }
 
-- (void) updateOnlineConfig:(NSString *) configString {
+- (void) updateConfig:(NSString *) configString {
     NSArray *items = [configString componentsSeparatedByString:@":"];
     if ([items count] > 2) {
         NSArray *sendItems = [[items objectAtIndex:2] componentsSeparatedByString:@"|"];
@@ -49,7 +49,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsessionInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nisLogEnabled=%lu,\nisCrashReportEnabled=%lu,\nisOnlineConfigEnabled=%lu,\nisPingEnabled=%lu,\npingInterval=%lu\n}", _sdkVersion, _appVersion, _channel, (unsigned long)_policy, (unsigned long)_sendInterval, (unsigned long)_sessionInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_isLogEnabled, (unsigned long)_isCrashReportEnabled, (unsigned long)_isOnlineConfigEnabled, (unsigned long)_isPingEnabled, _pingInterval];
+    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsessionInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ncrashReportEnabled=%lu,\nonlineConfigEnabled=%lu,\npingEnabled=%lu,\npingInterval=%lu\n}", _sdkVersion, _appVersion, _channel, (unsigned long)_policy, (unsigned long)_sendInterval, (unsigned long)_sessionInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_crashReportEnabled, (unsigned long)_onlineConfigEnabled, (unsigned long)_pingEnabled, _pingInterval];
 }
 
 @end

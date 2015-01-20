@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"2.0"
+#define ZG_SDK_VERSION @"1.2"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -29,16 +29,17 @@ typedef enum {
 
 @interface ZhugeConfig : NSObject
 
+#pragma mark - 基本设置
 // SDK版本
 @property (nonatomic, copy) NSString *sdkVersion;
 // 应用版本(默认:info.plist中CFBundleShortVersionString对应的值)
 @property (nonatomic, copy) NSString *appVersion;
 // 渠道(默认:@"App Store")
 @property (nonatomic, copy) NSString *channel;
-
 // 两次会话时间间隔(默认:30秒)
 @property (nonatomic) NSUInteger sessionInterval;
 
+#pragma mark - 发送策略
 // 发送策略(默认:SEND_INTERVAL)
 @property (nonatomic, readwrite) ReportPolicy policy;
 // 每天最大上报事件数，超出部分缓存到本地(默认:1000个)
@@ -48,17 +49,25 @@ typedef enum {
 // 上报时间间隔，只有发送策略是SEND_INTERVAL时有效(默认:10秒)
 @property (nonatomic) NSUInteger sendInterval;
 
+#pragma mark - 日志
 // 是否开启SDK日志打印(默认:关闭)
-@property (nonatomic) BOOL isLogEnabled;
+@property (nonatomic) BOOL logEnabled;
 // 是否开启崩溃报告(默认:开启)
-@property (nonatomic) BOOL isCrashReportEnabled;
+@property (nonatomic) BOOL crashReportEnabled;
+
+#pragma mark - 云配置
 // 是否允许从官网更新配置(默认:开启)
-@property (nonatomic) BOOL isOnlineConfigEnabled;
+@property (nonatomic) BOOL onlineConfigEnabled;
+// 更新配置
+- (void) updateConfig:(NSString *) configString;
 
-- (void) updateOnlineConfig:(NSString *) configString;
-
+#pragma mark - 推送
 // 是否开启PING(默认:关闭)
-@property (nonatomic) BOOL isPingEnabled;
+@property (nonatomic) BOOL pushEnabled;
+
+#pragma mark - PING
+// 是否开启PING(默认:关闭)
+@property (nonatomic) BOOL pingEnabled;
 // PING时间间隔(默认:30秒)
 @property (nonatomic) NSUInteger pingInterval;
 

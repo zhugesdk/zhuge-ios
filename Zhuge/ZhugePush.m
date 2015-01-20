@@ -95,7 +95,7 @@ typedef enum {
 
 @property (atomic) BOOL deviceTokenUploaded;
 
-@property (atomic) BOOL isLogEnabled;
+@property (nonatomic, strong)ZhugeConfig *config;
 
 
 @end
@@ -109,7 +109,7 @@ NSOutputStream *_outputStream;
 
 #pragma mark - 初始化
 
-+ (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
+- (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
         UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationType)types categories:categories];
@@ -123,33 +123,27 @@ NSOutputStream *_outputStream;
 #endif
 }
 
-
-+ (void)registerDeviceId:(NSString *)deviceId {
-    [ZhugePush sharedInstance].deviceId = deviceId;
+- (void)registerDeviceId:(NSString *)deviceId {
+    self.deviceId = deviceId;
 }
 
-+ (void)registerDeviceToken:(NSData *)deviceToken {
+- (void)registerDeviceToken:(NSData *)deviceToken {
     NSString *token=[NSString stringWithFormat:@"%@",deviceToken];
     token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
     token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
     token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
-    [ZhugePush sharedInstance].deviceToken = token;
+    self.deviceToken = token;
 }
 
-+ (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions {
-    [[ZhugePush sharedInstance] openWithAppKey:appKey launchOptions:launchOptions];
-}
-
-+ (void)setLogEnabled:(BOOL)value {
-    [ZhugePush sharedInstance].isLogEnabled = value;
-}
-
-+ (void)handleRemoteNotification:(NSDictionary *)userInfo {
+- (void)handleRemoteNotification:(NSDictionary *)userInfo {
     if (userInfo && userInfo[@"mid"]) {
-        [[ZhugePush sharedInstance] setMessageRead:userInfo[@"mid"]];
+        [self setMessageRead:userInfo[@"mid"]];
     }
 }
 
+- (void) setConfig:(ZhugeConfig *) config {
+    _config = config;
+}
 
 static ZhugePush *sharedInstance = nil;
 + (ZhugePush *)sharedInstance {
@@ -184,7 +178,7 @@ static ZhugePush *sharedInstance = nil;
     return self;
 }
 
-- (void)openWithAppKey:(NSString *)appkey launchOptions:(NSDictionary *)launchOptions {
+- (void)startWithAppKey:(NSString *)appkey launchOptions:(NSDictionary *)launchOptions {
     self.appKey = appkey;
     
     self.readyState = ZGNotificationStateConnecting;
@@ -204,7 +198,7 @@ static ZhugePush *sharedInstance = nil;
     if (self.servers != nil && self.servers.count > 0) {
         self.currentServer = self.servers[arc4random() % [self.servers count]];
         
-        if (self.isLogEnabled) {
+        if (self.config.logEnabled) {
             NSLog(@"尝试连接服务器: %@", self.currentServer);
         }
         
@@ -254,7 +248,7 @@ static ZhugePush *sharedInstance = nil;
 - (void) _getServers {
     self.servers = [[[NSUserDefaults standardUserDefaults] arrayForKey:@"zgPushServers"] mutableCopy];
     if (self.servers == nil || self.servers.count == 0) {
-        if (self.isLogEnabled) {
+        if (self.config.logEnabled) {
             NSLog(@"推送服务器列表不存在，正在重新获取服务器列表...");
         }
         
@@ -267,19 +261,19 @@ static ZhugePush *sharedInstance = nil;
         NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
         
         if (error) {
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"%@ 获取推送服务器列表错误: %@", self, error);
             }
             return;
         }
         
         NSDictionary *object = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        if (self.isLogEnabled) {
+        if (self.config.logEnabled) {
             NSLog(@"http response: %@", object);
         }
         self.servers = [object[@"data"][@"servers"] mutableCopy];
         [[NSUserDefaults standardUserDefaults] setObject:self.servers forKey:@"zgPushServers"];
-        if (self.isLogEnabled) {
+        if (self.config.logEnabled) {
             NSLog(@"重新获取推送服务器列表成功:%@", self.servers);
         }
     }
@@ -310,7 +304,7 @@ static ZhugePush *sharedInstance = nil;
 }
 
 // 注册device token
-- (void) registerDeviceToken:(NSString *)deviceToken {
+- (void) sendDeviceToken:(NSString *)deviceToken {
     self.deviceToken = deviceToken;
     
     if (self.readyState == ZGNotificationStateLogin) {
@@ -364,8 +358,8 @@ static ZhugePush *sharedInstance = nil;
     msg[@"ver"] = self.ver;
     
     NSString *json = [[NSString alloc] initWithData:[self JSONSerializeObject:msg] encoding:NSUTF8StringEncoding];
-    if (self.isLogEnabled) {
-        NSLog(@"发生请求: %@", json);
+    if (self.config.logEnabled) {
+        NSLog(@"请求: %@", json);
     }
     NSInteger iLenJson = json.length;
     
@@ -388,18 +382,18 @@ static ZhugePush *sharedInstance = nil;
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
     switch (streamEvent) {
         case  NSStreamEventOpenCompleted:
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"NSStreamEventOpenCompleted");
             }
             if (theStream == _inputStream) {
                 self.readyState = ZGNotificationStateConnected;
-                if (self.isLogEnabled) {
+                if (self.config.logEnabled) {
                     NSLog(@"已建立连接");
                 }
             }
             break;
         case  NSStreamEventHasBytesAvailable:
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"NSStreamEventHasBytesAvailable");
             }
 
@@ -408,16 +402,16 @@ static ZhugePush *sharedInstance = nil;
             }
             break;
         case  NSStreamEventHasSpaceAvailable:
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"NSStreamEventHasSpaceAvailable");
             }
             break;
         case  NSStreamEventErrorOccurred:
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"NSStreamEventErrorOccurred %@ %@", theStream, [[theStream streamError] copy]);
             }
             if (self.readyState == ZGNotificationStateConnecting) {
-                if (self.isLogEnabled) {
+                if (self.config.logEnabled) {
                     NSLog(@"连接失败");
                 }
                 [self _connectFailed];
@@ -425,12 +419,12 @@ static ZhugePush *sharedInstance = nil;
             
             break;
         case  NSStreamEventEndEncountered:
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"NSStreamEventEndEncountered");
             }
             break;
         default:
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"no event : %lu", streamEvent);
             }
             break;
@@ -452,18 +446,18 @@ static ZhugePush *sharedInstance = nil;
             unsigned int iTotalLen = CFSwapInt32BigToHost(pkgHeader.iTotalLen);
             unsigned int iBodyLen = iTotalLen - iHeadLen;
             
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"PkgHeader iCmdType: %u,iHeadLen: %u, iTotalLen: %u", iCmdType, iHeadLen, iTotalLen);
             }
             void *msgBuf = malloc(2048);
             [data getBytes:msgBuf range:NSMakeRange(iHeadLen, iBodyLen)];
             NSDictionary *ack = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:msgBuf length:iBodyLen ] options:0 error:nil];
             
-            if (self.isLogEnabled) {
+            if (self.config.logEnabled) {
                 NSLog(@"响应: %@", ack);
             }
             if (ack == nil || [ack[@"ret"] intValue] != 0) {
-                if (self.isLogEnabled) {
+                if (self.config.logEnabled) {
                     NSLog(@"接收数据失败");
                 }
                 return;
@@ -471,13 +465,13 @@ static ZhugePush *sharedInstance = nil;
             
             switch (iCmdType) {
                 case ZGNoticeCmdAckLogin:
-                    if (self.isLogEnabled) {
+                    if (self.config.logEnabled) {
                         NSLog(@"登录成功");
                     }
                     [self sendGetClientId];
                     break;
                 case ZGNoticeCmdAckGetClientId:
-                    if (self.isLogEnabled) {
+                    if (self.config.logEnabled) {
                         NSLog(@"获取ClientId成功");
                     }
                     self.cid = ack[@"cid"];
@@ -485,20 +479,20 @@ static ZhugePush *sharedInstance = nil;
                     self.readyState = ZGNotificationStateLogin;
                     
                     if (!self.deviceTokenUploaded && self.deviceToken) {
-                        [self registerDeviceToken:self.deviceToken];
+                        [self sendDeviceToken:self.deviceToken];
                     }
                     
                     [self _sendMessageRead];
                     
                     break;
                 case ZGNoticeCmdAckUploadToken:
-                    if (self.isLogEnabled) {
+                    if (self.config.logEnabled) {
                         NSLog(@"注册DeviceToken成功");
                     }
                     self.deviceTokenUploaded = YES;
                     break;
                 case ZGNoticeCmdAckSetMsgRead:
-                    if (self.isLogEnabled) {
+                    if (self.config.logEnabled) {
                         NSLog(@"消息设置已读成功");
                     }
                     if (self.unreadMessages && self.unreadMessages.count > 0) {
@@ -506,7 +500,7 @@ static ZhugePush *sharedInstance = nil;
                     }
                     break;
                 case ZGNoticeCmdMsg:
-                    if (self.isLogEnabled) {
+                    if (self.config.logEnabled) {
                         NSLog(@"获取消息 msg: %@", NSStringFromClass([ack[@"msg"] class]));
                     }
                     break;

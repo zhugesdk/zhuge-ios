@@ -15,38 +15,35 @@
     Zhuge *zhuge = [Zhuge sharedInstance];
     
     // 打开SDK日志打印
-    [zhuge.config setIsLogEnabled:YES]; // 默认关闭
+    [zhuge.config setLogEnabled:YES]; // 默认关闭
     
-    // 可以自定义版本和渠道
+    // 自定义版本和渠道
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
 
-    // 开启行为追踪
-    [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
-
     
-    // 开启推送通知
+    // 开启推送
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        [ZhugePush registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+        [zhuge.push registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                        UIUserNotificationTypeSound |
                                                        UIUserNotificationTypeAlert)
                                            categories:nil];
     } else {
-        [ZhugePush registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+        [zhuge.push registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
                                            categories:nil];
     }
 #else
-        [ZhugePush registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+        [zhuge.push registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
                                            categories:nil];
 #endif
-    [ZhugePush registerDeviceId:[zhuge getDeviceId]];
-    [ZhugePush startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
-    [ZhugePush setLogEnabled:YES];
+
+    // 启动诸葛
+    [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
@@ -55,7 +52,7 @@
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
-    [ZhugePush registerDeviceToken:deviceToken];
+    [[Zhuge sharedInstance].push registerDeviceToken:deviceToken];
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -64,7 +61,7 @@
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"didReceiveRemoteNotification: %@" ,userInfo);
-    [ZhugePush handleRemoteNotification:userInfo];
+    [[Zhuge sharedInstance].push handleRemoteNotification:userInfo];
 }
 
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
