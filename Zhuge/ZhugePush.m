@@ -133,6 +133,9 @@ NSOutputStream *_outputStream;
     token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
     token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
     self.deviceToken = token;
+    if (!self.deviceTokenUploaded) {
+        [self sendDeviceToken:token];
+    }
 }
 
 - (void)handleRemoteNotification:(NSDictionary *)userInfo {

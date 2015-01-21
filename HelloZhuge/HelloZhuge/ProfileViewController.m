@@ -16,6 +16,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString * did = [[Zhuge sharedInstance] getDeviceId];
+    if (did) {
+        self.uid.text = [did substringToIndex:6];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
