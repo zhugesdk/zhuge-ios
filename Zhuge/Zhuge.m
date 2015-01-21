@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSNumber *sessionId;
 @property (nonatomic, strong) NSMutableDictionary *pages;
 @property (nonatomic, strong) NSString *lastPage;
+@property (nonatomic, strong) NSNumber *updated;
 
 // 事件
 @property (nonatomic, strong) NSMutableDictionary *timedEvents;
@@ -236,7 +237,6 @@ static Zhuge *sharedInstance = nil;
         NSLog(@"applicationDidEnterBackground");
     }
     [self endAllPages];
-    [self sessionEnd];
     [self sendWithTiming:@"exit"];
     dispatch_async(_serialQueue, ^{
         [self archive];
@@ -248,7 +248,6 @@ static Zhuge *sharedInstance = nil;
         NSLog(@"applicationWillTerminate");
     }
     [self endAllPages];
-    [self sessionEnd];
     [self sendWithTiming:@"exit"];
     dispatch_async(_serialQueue, ^{
         [self archive];
@@ -465,22 +464,27 @@ static Zhuge *sharedInstance = nil;
 
 // 会话开始
 - (void)sessionStart {
-    NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-    if (!self.sessionId || ([ts intValue] - [self.sessionId intValue]) > self.config.sessionInterval) {
+    NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
+    if (!self.sessionId || ([ts intValue] - [self.updated intValue]) > self.config.sessionInterval) {
+        if (self.sessionId && self.updated > 0) {
+            [self sessionEnd];
+        }
         self.sessionId = ts;
+        NSLog(@"sessionId:%.3f",[ts doubleValue]);
         if(self.config.logEnabled) {
-            NSLog(@"会话开始(ID:%@)", self.sessionId);
+            NSLog(@"会话开始(ID:%@)", @([self.sessionId intValue]));
         }
         
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"et"] = @"ss";
-        e[@"sid"] = self.sessionId;
+        e[@"sid"] = @([self.sessionId intValue]);
         e[@"vn"] = self.config.appVersion;
         e[@"net"] = self.net;
         e[@"radio"] = self.radio;
         
         [self enqueueEvent:e];
     }
+    self.updated = ts;
 }
 
 // 会话结束
@@ -490,11 +494,10 @@ static Zhuge *sharedInstance = nil;
     }
     
     if (self.sessionId) {
-        NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"et"] = @"se";
-        e[@"sid"] = self.sessionId;
-        e[@"dr"] = [NSString stringWithFormat:@"%d", [ts intValue] - [self.sessionId intValue]];
+        e[@"sid"] = @([self.sessionId intValue]);
+        e[@"dr"] = [NSString stringWithFormat:@"%.3f", [self.updated doubleValue] - [self.sessionId doubleValue]];
 
         [self enqueueEvent:e];
         self.sessionId = nil;
@@ -543,13 +546,13 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"pg";
     e[@"pn"] = page;
-    e[@"sid"] = self.sessionId;
+    e[@"sid"] = @([self.sessionId intValue]);
     e[@"pid"] = page;
     e[@"ref"] = self.lastPage;
     
     self.lastPage = page;
 
-    NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
+    double ts = [[NSDate date] timeIntervalSince1970];
     NSNumber *startTime = self.pages[page];
     if (startTime) {
         [self.pages removeObjectForKey:page];
@@ -557,7 +560,7 @@ static Zhuge *sharedInstance = nil;
         startTime = self.sessionId;
     }
     //e[@"ts"] = @([startTime intValue]);
-    e[@"dr"] = [NSString stringWithFormat:@"%d", [ts intValue] - [startTime intValue]];
+    e[@"dr"] = [NSString stringWithFormat:@"%.3f", ts - [startTime doubleValue]];
 
     [self enqueueEvent:e];
 }
@@ -634,7 +637,7 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"idf";
     e[@"cuid"] = userId;
-    e[@"sid"] = self.sessionId;
+    e[@"sid"] = @([self.sessionId intValue]);
     e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
     
     [self enqueueEvent:e];
@@ -670,7 +673,7 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"cus";
     e[@"eid"] = event;
-    e[@"sid"] = self.sessionId;
+    e[@"sid"] = @([self.sessionId intValue]);
     e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
     
     NSNumber *eventStartTime = self.timedEvents[event];
@@ -690,7 +693,7 @@ static Zhuge *sharedInstance = nil;
     
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"ex";
-    e[@"sid"] = self.sessionId;
+    e[@"sid"] = @([self.sessionId intValue]);
     e[@"pr"] =pr;
     
     [self syncEnqueueEvent:e];
@@ -854,8 +857,11 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)syncEnqueueEvent:(NSMutableDictionary *)event {
+    NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
+
+    self.updated = ts;
     if (!event[@"ts"]) {
-        event[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
+        event[@"ts"] = @([ts intValue]);
     }
     
     if(self.config.logEnabled) {
@@ -984,6 +990,8 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *p = [NSMutableDictionary dictionary];
     [p setValue:self.userId forKey:@"userId"];
     [p setValue:self.deviceId forKey:@"deviceId"];
+    [p setValue:self.sessionId forKey:@"sessionId"];
+    [p setValue:self.updated forKey:@"updated"];
     [p setValue:self.timedEvents forKey:@"timedEvents"];
 
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
@@ -1044,6 +1052,8 @@ static Zhuge *sharedInstance = nil;
     if (properties) {
         self.userId = properties[@"userId"] ? properties[@"userId"] : @"";
         self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
+        self.sessionId = properties[@"sessionId"] ? properties[@"sessionId"] : nil;
+        self.updated = properties[@"updated"] ? properties[@"updated"] : 0;
         self.timedEvents = properties[@"timedEvents"] ? properties[@"timedEvents"] : [NSMutableDictionary dictionary];
         
         NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
