@@ -433,7 +433,7 @@ static ZhugePush *sharedInstance = nil;
             }
 
             if (theStream == _inputStream) {
-                [self recvData];
+                [self messageReceived];
             }
             break;
         case  NSStreamEventHasSpaceAvailable:
@@ -466,7 +466,7 @@ static ZhugePush *sharedInstance = nil;
     }
 }
 
--(void) recvData {
+-(void) messageReceived {
     const int bufferSize = 2048;
     uint8_t buffer[bufferSize];
     while ([_inputStream hasBytesAvailable]) {

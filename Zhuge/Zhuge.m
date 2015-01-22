@@ -704,6 +704,8 @@ static Zhuge *sharedInstance = nil;
     batch[@"ak"] = self.appKey;
     batch[@"did"] = self.deviceId;
     batch[@"cuid"] = self.userId;
+    batch[@"net"] = self.net;
+    batch[@"radio"] = self.radio;
     batch[@"data"] = events;
     
     return batch;
