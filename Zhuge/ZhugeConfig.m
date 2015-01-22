@@ -17,7 +17,6 @@
         self.appVersion = ZG_APP_VERSION;
         self.channel = ZG_CHANNEL;
 
-        self.policy = SEND_INTERVAL;
         self.sendInterval = 10;
         self.sessionInterval = 30;
         self.sendMaxSizePerDay = 1000;
@@ -26,9 +25,6 @@
         self.logEnabled = NO;
         self.crashReportEnabled = YES;
         self.onlineConfigEnabled = YES;
-        
-        self.pingEnabled = NO;
-        self.pingInterval = 30;
     }
     
     return self;
@@ -39,7 +35,7 @@
     if ([items count] > 2) {
         NSArray *sendItems = [[items objectAtIndex:2] componentsSeparatedByString:@"|"];
         if ([sendItems count] > 7) {
-            self.policy = [[sendItems objectAtIndex:0] intValue];
+            //self.policy = [[sendItems objectAtIndex:0] intValue];
             self.sessionInterval = [[sendItems objectAtIndex:1] intValue];
             self.sendMaxSizePerDay = [[sendItems objectAtIndex:2] intValue];
             self.cacheMaxSize = [[sendItems objectAtIndex:3] intValue];
@@ -49,7 +45,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsessionInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ncrashReportEnabled=%lu,\nonlineConfigEnabled=%lu,\npingEnabled=%lu,\npingInterval=%lu\n}", _sdkVersion, _appVersion, _channel, (unsigned long)_policy, (unsigned long)_sendInterval, (unsigned long)_sessionInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_crashReportEnabled, (unsigned long)_onlineConfigEnabled, (unsigned long)_pingEnabled, _pingInterval];
+    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsessionInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ncrashReportEnabled=%lu,\nonlineConfigEnabled=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)3, (unsigned long)_sendInterval, (unsigned long)_sessionInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_crashReportEnabled, (unsigned long)_onlineConfigEnabled];
 }
 
 @end

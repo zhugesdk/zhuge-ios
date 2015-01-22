@@ -60,9 +60,6 @@
 // 推送
 @property (nonatomic, strong)ZhugePush *push;
 
-// PING
-@property (nonatomic, strong) NSTimer *pingTimer;
-
 @end
 
 // 异常处理
@@ -155,13 +152,7 @@ static Zhuge *sharedInstance = nil;
     [self.push registerDeviceId:self.deviceId];
     [self.push startWithAppKey:self.appKey launchOptions:launchOptions];
     
-    // PING
-    if (self.config.pingEnabled) {
-        [self startPing];
-    }
-    
     [self sessionStart];
-    
 }
 
 - (NSString *)getDeviceId {
@@ -229,7 +220,7 @@ static Zhuge *sharedInstance = nil;
 
     [self sessionStart];
     [self uploadDeviceInfo];
-    [self sendWithTiming:@"start"];
+    [self startFlushTimer];
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification {
@@ -237,7 +228,8 @@ static Zhuge *sharedInstance = nil;
         NSLog(@"applicationDidEnterBackground");
     }
     [self endAllPages];
-    [self sendWithTiming:@"exit"];
+    [self stopFlushTimer];
+    [self flush];
     dispatch_async(_serialQueue, ^{
         [self archive];
     });
@@ -248,7 +240,8 @@ static Zhuge *sharedInstance = nil;
         NSLog(@"applicationWillTerminate");
     }
     [self endAllPages];
-    [self sendWithTiming:@"exit"];
+    [self stopFlushTimer];
+    [self flush];
     dispatch_async(_serialQueue, ^{
         [self archive];
     });
@@ -790,31 +783,6 @@ static Zhuge *sharedInstance = nil;
 
 #pragma mark - 上报策略
 
-// 上报策略
-- (void)sendWithTiming:(NSString *)timing {
-    // 实时发送
-    if (self.config.policy == SEND_REALTIME) {
-        [self flush];
-    }
-    // WIFI时发送
-    else if (self.config.policy == SEND_WIFI_ONLY && [@"4" isEqualToString:self.net]) {
-        [self flush];
-    }
-    // 启动时发送
-    else if (self.config.policy == SEND_ON_START && [@"start" isEqualToString: timing]) {
-        [self flush];
-    }
-    // 按时间间隔发送
-    else if (self.config.policy == SEND_INTERVAL) {
-        if ([@"start" isEqualToString: timing]) {
-            [self startFlushTimer];
-        } else if ([@"exit" isEqualToString: timing]) {
-            [self stopFlushTimer];
-            [self flush];
-        }
-    }
-}
-
 // 启动事件发送定时器
 - (void)startFlushTimer {
     [self stopFlushTimer];
@@ -872,8 +840,6 @@ static Zhuge *sharedInstance = nil;
     if ([self.eventsQueue count] > self.config.cacheMaxSize) {
         [self.eventsQueue removeObjectAtIndex:0];
     }
-    
-    [self sendWithTiming:@"enqueue"];
 }
 
 - (void)flush {
@@ -1110,40 +1076,6 @@ static Zhuge *sharedInstance = nil;
         NSLog(@"设置配置: %@", confString);
     }
     [self.config updateConfig:confString];
-}
-
-#pragma mark - PING
-
-// PING
-- (void)startPing {
-    self.pingTimer = [NSTimer scheduledTimerWithTimeInterval:self.config.pingInterval
-                                                      target:self
-                                                    selector:@selector(ping)
-                                                    userInfo:nil
-                                                     repeats:YES];
-    
-}
-- (void)ping {
-    NSMutableDictionary *evt = [NSMutableDictionary dictionary];
-    evt[@"type"] = @"ping";
-    evt[@"sdk"] = @"ios";
-    evt[@"sdkv"] = self.config.sdkVersion;
-    evt[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
-    evt[@"ak"] = self.appKey;
-    evt[@"did"] = self.deviceId;
-    evt[@"cuid"] = self.userId;
-
-    
-    NSString *requestData = [self encodeAPIData:evt];
-    
-    NSError *error = nil;
-    [self httpRequestWithData:requestData andError:error];
-    if (error) {
-        if(self.config.logEnabled) {
-            NSLog(@"PING失败: %@", error);
-        }
-    }
-
 }
 
 @end

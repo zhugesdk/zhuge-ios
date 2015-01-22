@@ -306,15 +306,15 @@ static ZhugePush *sharedInstance = nil;
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     if(self.config.logEnabled) {
         NSLog(@"applicationDidBecomeActive");
+        NSLog(@"_inputStream.streamStatus: %lu", _inputStream.streamStatus);
+        NSLog(@"_outputStream.streamStatus: %lu", _outputStream.streamStatus);
     }
-
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification {
     if(self.config.logEnabled) {
         NSLog(@"applicationDidEnterBackground");
-    }
-
+    };
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
