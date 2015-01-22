@@ -61,6 +61,7 @@
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"didReceiveRemoteNotification: %@" ,userInfo);
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[Zhuge sharedInstance].push handleRemoteNotification:userInfo];
 }
 

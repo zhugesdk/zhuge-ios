@@ -98,6 +98,8 @@ typedef enum {
 @property (nonatomic, strong)ZhugeConfig *config;
 
 
+
+
 @end
 
 @implementation ZhugePush {
@@ -174,8 +176,23 @@ static ZhugePush *sharedInstance = nil;
         self.deviceTokenUploaded = NO;
         
         self.unreadMessages = [[NSMutableArray alloc] init];
-        
         _connectQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
+        
+        // 应用生命周期通知
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationWillTerminate:)
+                                   name:UIApplicationWillTerminateNotification
+                                 object:nil];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationDidBecomeActive:)
+                                   name:UIApplicationDidBecomeActiveNotification
+                                 object:nil];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationDidEnterBackground:)
+                                   name:UIApplicationDidEnterBackgroundNotification
+                                 object:nil];
+
     }
     
     return self;
@@ -188,13 +205,6 @@ static ZhugePush *sharedInstance = nil;
     
     [self _getServers];
     [self _connect];
-    
-//    if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-//        NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
-//        if (userInfo && userInfo[@"mid"]) {
-//            [self setMessageRead:userInfo[@"mid"]];
-//        }
-//    }
 }
 
 - (void)_connect {
@@ -291,6 +301,27 @@ static ZhugePush *sharedInstance = nil;
     self.readyState = ZGNotificationStateClosed;
 }
 
+#pragma mark - 应用生命周期
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification {
+    if(self.config.logEnabled) {
+        NSLog(@"applicationDidBecomeActive");
+    }
+
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification {
+    if(self.config.logEnabled) {
+        NSLog(@"applicationDidEnterBackground");
+    }
+
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    if(self.config.logEnabled) {
+        NSLog(@"applicationWillTerminate");
+    }
+}
 
 #pragma mark - 请求命令
 
@@ -350,6 +381,7 @@ static ZhugePush *sharedInstance = nil;
         for (NSString *messageId in self.unreadMessages) {
             NSMutableDictionary *msg = [NSMutableDictionary dictionary];
             msg[@"id"] = messageId;
+            msg[@"appid"] = self.appKey;
             [self sendMessage:msg withCmd:ZGNoticeCmdSetMsgRead];
         }
     }
@@ -579,7 +611,6 @@ static ZhugePush *sharedInstance = nil;
     [_inputStream close];
     [_outputStream close];
 }
-
 
 @end
 
