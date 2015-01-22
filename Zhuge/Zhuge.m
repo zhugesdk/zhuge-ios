@@ -477,7 +477,7 @@ static Zhuge *sharedInstance = nil;
         
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"et"] = @"ss";
-        e[@"sid"] = @([self.sessionId intValue]);
+        e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
         e[@"vn"] = self.config.appVersion;
         e[@"net"] = self.net;
         e[@"radio"] = self.radio;
@@ -496,7 +496,7 @@ static Zhuge *sharedInstance = nil;
     if (self.sessionId) {
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"et"] = @"se";
-        e[@"sid"] = @([self.sessionId intValue]);
+        e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
         e[@"dr"] = [NSString stringWithFormat:@"%.3f", [self.updated doubleValue] - [self.sessionId doubleValue]];
 
         [self enqueueEvent:e];
@@ -546,7 +546,7 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"pg";
     e[@"pn"] = page;
-    e[@"sid"] = @([self.sessionId intValue]);
+    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
     e[@"pid"] = page;
     e[@"ref"] = self.lastPage;
     
@@ -637,7 +637,7 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"idf";
     e[@"cuid"] = userId;
-    e[@"sid"] = @([self.sessionId intValue]);
+    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
     e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
     
     [self enqueueEvent:e];
@@ -673,7 +673,7 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"cus";
     e[@"eid"] = event;
-    e[@"sid"] = @([self.sessionId intValue]);
+    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
     e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
     
     NSNumber *eventStartTime = self.timedEvents[event];
@@ -693,7 +693,7 @@ static Zhuge *sharedInstance = nil;
     
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"ex";
-    e[@"sid"] = @([self.sessionId intValue]);
+    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
     e[@"pr"] =pr;
     
     [self syncEnqueueEvent:e];
@@ -861,7 +861,7 @@ static Zhuge *sharedInstance = nil;
 
     self.updated = ts;
     if (!event[@"ts"]) {
-        event[@"ts"] = @([ts intValue]);
+        event[@"ts"] = [NSString stringWithFormat:@"%.3f", [ts doubleValue]];
     }
     
     if(self.config.logEnabled) {
