@@ -64,12 +64,4 @@
 - (void)track:(NSString *)event;
 - (void)track:(NSString *)event properties:(NSDictionary *)properties;
 
-/**
- 追踪页面访问。
- 
- @param page 页面名称
- */
-- (void)pageStart:(NSString *)page;
-- (void)pageEnd:(NSString *)page;
-
 @end

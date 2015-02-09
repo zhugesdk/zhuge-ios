@@ -44,10 +44,4 @@
 // 是否开启崩溃报告(默认:开启)
 @property (nonatomic) BOOL crashReportEnabled;
 
-#pragma mark - 云配置
-// 是否允许从官网更新配置(默认:开启)
-@property (nonatomic) BOOL onlineConfigEnabled;
-// 更新配置
-- (void) updateConfig:(NSString *) configString;
-
 @end

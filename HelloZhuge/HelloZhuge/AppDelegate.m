@@ -20,7 +20,6 @@
     // 自定义版本和渠道
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
-
     
     // 开启推送
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1

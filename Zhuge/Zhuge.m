@@ -22,7 +22,6 @@
 @interface Zhuge () {
     BOOL logEnabled;
     BOOL isCrashReportEnabled;
-    BOOL isOnlineConfigEnabled;
 }
 
 // API连接
@@ -30,12 +29,10 @@
 @property (nonatomic, copy) NSString *confURL;
 @property (nonatomic, copy) NSString *appKey;
 
-// 会话页面
+// 会话
 @property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *deviceId;
 @property (nonatomic, strong) NSNumber *sessionId;
-@property (nonatomic, strong) NSMutableDictionary *pages;
-@property (nonatomic, strong) NSString *lastPage;
 @property (nonatomic, strong) NSNumber *updated;
 
 // 事件
@@ -121,15 +118,11 @@ static Zhuge *sharedInstance = nil;
     self.appKey = appKey;
     self.userId = @"";
     self.deviceId = [self defaultDeviceId];
-    self.pages = [NSMutableDictionary dictionary];
-    self.lastPage = @"APP_START";
+    self.sessionId = 0;
     self.net = @"";
     self.radio = @"";
 
     // SDK配置
-    if (self.config.onlineConfigEnabled) {
-        [self updateConfigFromOnline];
-    }
     if(self.config.logEnabled) {
         NSLog(@"SDK系统配置: %@", self.config);
     }
@@ -227,7 +220,6 @@ static Zhuge *sharedInstance = nil;
     if(self.config.logEnabled) {
         NSLog(@"applicationDidEnterBackground");
     }
-    [self endAllPages];
     [self stopFlushTimer];
     [self flush];
     dispatch_async(_serialQueue, ^{
@@ -239,7 +231,6 @@ static Zhuge *sharedInstance = nil;
     if(self.config.logEnabled) {
         NSLog(@"applicationWillTerminate");
     }
-    [self endAllPages];
     [self stopFlushTimer];
     [self flush];
     dispatch_async(_serialQueue, ^{
@@ -497,67 +488,6 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
-// 结束所有页面
-- (void) endAllPages {
-    NSArray *sortedPages = [self.pages keysSortedByValueUsingComparator: ^(id obj1, id obj2) {
-        if ([obj1 doubleValue] > [obj2 doubleValue]) {
-            return (NSComparisonResult)NSOrderedAscending;
-        }
-        if ([obj1 doubleValue] < [obj2 doubleValue]) {
-            return (NSComparisonResult)NSOrderedDescending;
-        }
-        return (NSComparisonResult)NSOrderedSame;
-    }];
-    
-    for (NSString *page in sortedPages) {
-       [self pageEnd:page];
-    }
-}
-
-// 页面开始访问
-- (void)pageStart:(NSString *)page {
-    if (page == nil || page.length == 0) {
-        NSLog(@"页面名称不能为空");
-        return;
-    }
-    
-    if(self.config.logEnabled) {
-        NSLog(@"开始访问页面: %@", page);
-    }
-    
-    dispatch_async(self.serialQueue, ^{
-        self.pages[page] = @([[NSDate date] timeIntervalSince1970]);
-    });
-}
-
-// 页面访问结束
-- (void)pageEnd:(NSString *)page {
-    if(self.config.logEnabled) {
-        NSLog(@"结束访问页面: %@", page);
-    }
-    
-    NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"et"] = @"pg";
-    e[@"pn"] = page;
-    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-    e[@"pid"] = page;
-    e[@"ref"] = self.lastPage;
-    
-    self.lastPage = page;
-
-    double ts = [[NSDate date] timeIntervalSince1970];
-    NSNumber *startTime = self.pages[page];
-    if (startTime) {
-        [self.pages removeObjectForKey:page];
-    } else {
-        startTime = self.sessionId;
-    }
-    //e[@"ts"] = @([startTime intValue]);
-    e[@"dr"] = [NSString stringWithFormat:@"%.3f", ts - [startTime doubleValue]];
-
-    [self enqueueEvent:e];
-}
-
 // 上报设备信息
 - (void)uploadDeviceInfo {
     NSNumber *zgInfoUploadTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgInfoUploadTime"];
@@ -613,7 +543,6 @@ static Zhuge *sharedInstance = nil;
     e[@"tz"] = [NSString stringWithFormat:@"%@",[NSTimeZone localTimeZone]];
     
     [self enqueueEvent:e];
-    
 }
 
 // 识别用户
@@ -623,6 +552,10 @@ static Zhuge *sharedInstance = nil;
             NSLog(@"用户ID不能为空");
         }
         return;
+    }
+    
+    if (!self.sessionId) {
+        [self sessionStart];
     }
     
     self.userId = userId;
@@ -663,6 +596,10 @@ static Zhuge *sharedInstance = nil;
         return;
     }
     
+    if (!self.sessionId) {
+        [self sessionStart];
+    }
+    
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"et"] = @"cus";
     e[@"eid"] = event;
@@ -681,6 +618,10 @@ static Zhuge *sharedInstance = nil;
 
 // 崩溃报告
 - (void)trackCrash:(NSString *)stackTrace {
+    if (!self.sessionId) {
+        [self sessionStart];
+    }
+    
     NSMutableDictionary *pr = [NSMutableDictionary dictionary];
     pr[@"msg"] = stackTrace;
     
@@ -1030,54 +971,6 @@ static Zhuge *sharedInstance = nil;
         NSString *sendCountKey = [NSString stringWithFormat:@"sendCount-%@", today];
         self.sendCount = properties[sendCountKey] ? [properties[sendCountKey] intValue] : 0;
     }
-}
-
-#pragma mark - 配置文件
-
-- (NSString *) getOnlineConfig {
-    NSString *url =  [NSString stringWithFormat:@"%@?appkey=%@&did=%@", self.confURL, self.appKey, self.deviceId];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-    [request setHTTPMethod:@"GET"];
-    [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-
-    NSURLResponse *response;
-    NSError *error;
-    
-    NSData *aData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-    if (aData == nil) {
-        return @"";
-    }    
-    NSMutableDictionary *json = [[NSMutableDictionary alloc]init];
-    json = (NSMutableDictionary*)[NSJSONSerialization JSONObjectWithData:aData options:kNilOptions error:&error];
-    
-    // 禁用上传:禁止上传应用列表|禁止上传账户中心数据|禁止上传手机号:上传方式|会话过期时间|用户每天最大上传消息数|用户本地最大缓存消息数|重试次数|连接超时|读取超时|上传间隔时间
-    return json[@"config"];
-    
-}
-
-- (void)updateConfigFromOnline {
-    NSString *confString = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgConfig"];
-    NSNumber *zgConfigTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgConfigTime"];
-    NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-    if (confString == nil || zgConfigTime == nil ||[ts longValue] > [zgConfigTime longValue] + 86400) {
-        if(self.config.logEnabled) {
-            NSLog(@"开始下载线上配置, 上次下载时间:%@", zgConfigTime);
-        }
-
-        confString = [self getOnlineConfig];
-        
-        if(self.config.logEnabled) {
-            NSLog(@"线上配置: %@", confString);
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:confString forKey:@"zgConfig"];
-        [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgConfigTime"];
-    }
-    
-    if(self.config.logEnabled) {
-        NSLog(@"设置配置: %@", confString);
-    }
-    [self.config updateConfig:confString];
 }
 
 @end

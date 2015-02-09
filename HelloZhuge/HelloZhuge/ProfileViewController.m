@@ -28,16 +28,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //页面开始
-    [[Zhuge sharedInstance] pageStart:@"我"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
-    //页面结束
-    [[Zhuge sharedInstance] pageEnd:@"我"];
 }
 
 - (IBAction)identify:(id)sender {

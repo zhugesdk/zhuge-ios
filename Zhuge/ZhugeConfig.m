@@ -24,7 +24,6 @@
         
         self.logEnabled = NO;
         self.crashReportEnabled = YES;
-        self.onlineConfigEnabled = YES;
     }
     
     return self;
@@ -45,7 +44,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsessionInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ncrashReportEnabled=%lu,\nonlineConfigEnabled=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)3, (unsigned long)_sendInterval, (unsigned long)_sessionInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_crashReportEnabled, (unsigned long)_onlineConfigEnabled];
+    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsessionInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ncrashReportEnabled=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)3, (unsigned long)_sendInterval, (unsigned long)_sessionInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_crashReportEnabled];
 }
 
 @end
