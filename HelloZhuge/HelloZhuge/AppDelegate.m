@@ -24,18 +24,18 @@
     // 开启推送
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        [zhuge.push registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
+        [zhuge registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
                                                        UIUserNotificationTypeSound |
                                                        UIUserNotificationTypeAlert)
                                            categories:nil];
     } else {
-        [zhuge.push registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+        [zhuge registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
                                            categories:nil];
     }
 #else
-        [zhuge.push registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+        [zhuge registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
                                                        UIRemoteNotificationTypeSound |
                                                        UIRemoteNotificationTypeAlert)
                                            categories:nil];
@@ -46,12 +46,14 @@
 
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
+    [zhuge handleRemoteNotification:@{@"mid":@"54db05932c21ae70951c81fa"}];
+    
     return YES;
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
-    [[Zhuge sharedInstance].push registerDeviceToken:deviceToken];
+    [[Zhuge sharedInstance] registerDeviceToken:deviceToken];
 }
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -61,7 +63,7 @@
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"didReceiveRemoteNotification: %@" ,userInfo);
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    [[Zhuge sharedInstance].push handleRemoteNotification:userInfo];
+    [[Zhuge sharedInstance] handleRemoteNotification:userInfo];
 }
 
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {

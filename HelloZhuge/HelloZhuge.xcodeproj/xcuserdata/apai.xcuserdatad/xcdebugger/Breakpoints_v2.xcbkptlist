@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HelloZhuge/DiscoveryViewController.m"
-            timestampString = "445161844.8967"
+            timestampString = "445256730.997779"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "-invoke:"
             landmarkType = "5">
          </BreakpointContent>

@@ -64,4 +64,14 @@
 - (void)track:(NSString *)event;
 - (void)track:(NSString *)event properties:(NSDictionary *)properties;
 
+#pragma mark - 推送
+// 注册APNS远程消息类型
+- (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories;
+
+// 注册deviceToken
+- (void)registerDeviceToken:(NSData *)deviceToken;
+
+// 处理接收到的消息
+- (void)handleRemoteNotification:(NSDictionary *)userInfo;
+
 @end

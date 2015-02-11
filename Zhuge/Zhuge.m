@@ -51,24 +51,10 @@
 @property (nonatomic, strong) NSString *net;
 @property (nonatomic, strong) NSString *radio;
 
-// 崩溃报告
-- (void)trackCrash:(NSString *)stackTrace;
-
 // 推送
 @property (nonatomic, strong)ZhugePush *push;
 
 @end
-
-// 异常处理
-void uncaughtExceptionHandler(NSException *exception) {
-    if ([[[Zhuge sharedInstance] config] logEnabled]) {
-        NSLog(@"Exception: %@", exception);
-        NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
-    }
-    NSString *stackTrace = [[NSString alloc] initWithFormat:@"%@\n%@", exception, [exception callStackSymbols]];
-    [[Zhuge sharedInstance] trackCrash: stackTrace];
-}
-
 
 @implementation Zhuge
 
@@ -112,7 +98,7 @@ static Zhuge *sharedInstance = nil;
 
 - (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions {
     if (appKey == nil || [appKey length] == 0) {
-        NSLog(@"%@ appKey不能为空。", self);
+        NSLog(@"appKey不能为空。");
         return;
     }
     self.appKey = appKey;
@@ -123,7 +109,7 @@ static Zhuge *sharedInstance = nil;
     self.radio = @"";
 
     // SDK配置
-    if(self.config.logEnabled) {
+    if(self.config && self.config.logEnabled) {
         NSLog(@"SDK系统配置: %@", self.config);
     }
 
@@ -134,11 +120,6 @@ static Zhuge *sharedInstance = nil;
 
     [self setupListeners];
     [self unarchive];
-    
-    // 崩溃报告
-    if (self.config.crashReportEnabled) {
-        NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    }
     
     // 推送
     [self.push setConfig:self.config];
@@ -202,6 +183,29 @@ static Zhuge *sharedInstance = nil;
                                name:UIApplicationDidEnterBackgroundNotification
                              object:nil];
  
+}
+
+#pragma mark - 推送
+// 注册APNS远程消息类型
+- (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
+    [self.push registerForRemoteNotificationTypes:types categories:categories];
+}
+
+// 注册deviceToken
+- (void)registerDeviceToken:(NSData *)deviceToken {
+    [self.push registerDeviceToken:deviceToken];
+    NSString *token=[NSString stringWithFormat:@"%@",deviceToken];
+    token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+    token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
+    token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
+}
+
+// 处理接收到的消息
+- (void)handleRemoteNotification:(NSDictionary *)userInfo {
+    //[self.push handleRemoteNotification:userInfo];
+    if (userInfo && userInfo[@"mid"]) {
+        [self trackPush:userInfo[@"mid"]];
+    }
 }
 
 #pragma mark - 应用生命周期
@@ -427,7 +431,7 @@ static Zhuge *sharedInstance = nil;
 - (void)setCurrentRadio {
     dispatch_async(self.serialQueue, ^(){
         self.radio = [self currentRadio];
-        if(self.config.logEnabled) {
+        if(self.config.logEnabled && self.radio) {
             NSLog(@"网络制式: %@", self.radio);
         }
     });
@@ -473,7 +477,7 @@ static Zhuge *sharedInstance = nil;
 
 // 会话结束
 - (void)sessionEnd {
-    if(self.config.logEnabled) {
+    if(self.config.logEnabled && self.sessionId) {
         NSLog(@"会话结束(ID:%@)", self.sessionId);
     }
     
@@ -616,22 +620,13 @@ static Zhuge *sharedInstance = nil;
     [self enqueueEvent:e];
 }
 
-// 崩溃报告
-- (void)trackCrash:(NSString *)stackTrace {
-    if (!self.sessionId) {
-        [self sessionStart];
-    }
-    
-    NSMutableDictionary *pr = [NSMutableDictionary dictionary];
-    pr[@"msg"] = stackTrace;
-    
+
+// 上报设备信息
+- (void)trackPush:(NSString *) messageId {
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"et"] = @"ex";
-    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-    e[@"pr"] =pr;
-    
-    [self syncEnqueueEvent:e];
-    [self archiveEvents];
+    e[@"et"] = @"push";
+    e[@"mid"] = messageId;
+    [self enqueueEvent:e];
 }
 
 // 事件包装
@@ -697,9 +692,6 @@ static Zhuge *sharedInstance = nil;
             NSString *stringKey;
             if (![key isKindOfClass:[NSString class]]) {
                 stringKey = [key description];
-                if(self.config.logEnabled) {
-                    NSLog(@"%@ warning: property keys should be strings. got: %@. coercing to: %@", self, [key class], stringKey);
-                }
             } else {
                 stringKey = [NSString stringWithString:key];
             }
@@ -711,9 +703,6 @@ static Zhuge *sharedInstance = nil;
 
     // default to sending the object's description
     NSString *s = [obj description];
-    if(self.config.logEnabled) {
-        NSLog(@"%@ warning: property values should be valid json types. got: %@. coercing to: %@", self, [obj class], s);
-    }
     return s;
 }
 
@@ -737,7 +726,7 @@ static Zhuge *sharedInstance = nil;
                                                         userInfo:nil
                                                          repeats:YES];
             if(self.config.logEnabled) {
-                NSLog(@"启动事件发送定时器: %@", self.timer);
+                NSLog(@"启动事件发送定时器");
             }
         }
     });
@@ -749,7 +738,7 @@ static Zhuge *sharedInstance = nil;
         if (self.timer) {
             [self.timer invalidate];
             if(self.config.logEnabled) {
-                NSLog(@"关闭事件发送定时器: %@", self.timer);
+                NSLog(@"关闭事件发送定时器");
             }
         }
         self.timer = nil;
@@ -834,7 +823,7 @@ static Zhuge *sharedInstance = nil;
     [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[[postBody stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
-    if(self.config.logEnabled) {
+    if(self.config.logEnabled && URL && postBody) {
         NSLog(@"API请求: %@&%@", URL, postBody);
     }
     
@@ -847,7 +836,7 @@ static Zhuge *sharedInstance = nil;
     
     if (responseData != nil) {
         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
-        if(self.config.logEnabled) {
+        if(self.config.logEnabled && response) {
             NSLog(@"API响应: %@", response);
         }
         
@@ -884,7 +873,7 @@ static Zhuge *sharedInstance = nil;
 - (void)archiveEvents{
     NSString *filePath = [self eventsFilePath];
     NSMutableArray *eventsQueueCopy = [NSMutableArray arrayWithArray:[self.eventsQueue copy]];
-    if(self.config.logEnabled) {
+    if(self.config.logEnabled && filePath) {
         NSLog(@"保存事件到 %@", filePath);
     }
     if (![NSKeyedArchiver archiveRootObject:eventsQueueCopy toFile:filePath]) {
@@ -908,7 +897,7 @@ static Zhuge *sharedInstance = nil;
     NSString *today = [DateFormatter stringFromDate:[NSDate date]];
     [p setValue:[NSString stringWithFormat:@"%lu",(unsigned long)self.sendCount] forKey:[NSString stringWithFormat:@"sendCount-%@", today]];
 
-    if(self.config.logEnabled) {
+    if(self.config.logEnabled && filePath && p) {
         NSLog(@"保存属性到 %@: %@",  filePath, p);
     }
     if (![NSKeyedArchiver archiveRootObject:p toFile:filePath]) {
@@ -927,7 +916,7 @@ static Zhuge *sharedInstance = nil;
     id unarchivedData = nil;
     @try {
         unarchivedData = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
-        if(self.config.logEnabled) {
+        if(self.config.logEnabled && filePath && unarchivedData) {
             NSLog(@"恢复数据 %@: %@", filePath, unarchivedData);
         }
     }
@@ -941,7 +930,7 @@ static Zhuge *sharedInstance = nil;
         NSError *error;
         BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
         if (!removed) {
-            if(self.config.logEnabled) {
+            if(self.config.logEnabled && error) {
                 NSLog(@"删除数据失败 %@", error);
             }
         }

@@ -41,7 +41,5 @@
 #pragma mark - 日志
 // 是否开启SDK日志打印(默认:关闭)
 @property (nonatomic) BOOL logEnabled;
-// 是否开启崩溃报告(默认:开启)
-@property (nonatomic) BOOL crashReportEnabled;
 
 @end
