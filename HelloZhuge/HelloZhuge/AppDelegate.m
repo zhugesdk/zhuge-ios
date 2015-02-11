@@ -43,11 +43,8 @@
 
     // 启动诸葛
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
-
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
-    [zhuge handleRemoteNotification:@{@"mid":@"54db05932c21ae70951c81fa"}];
-    
+
     return YES;
 }
 

@@ -127,6 +127,11 @@ static Zhuge *sharedInstance = nil;
     [self.push startWithAppKey:self.appKey launchOptions:launchOptions];
     
     [self sessionStart];
+    
+    if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+        [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
+    }
+
 }
 
 - (NSString *)getDeviceId {
@@ -203,9 +208,7 @@ static Zhuge *sharedInstance = nil;
 // 处理接收到的消息
 - (void)handleRemoteNotification:(NSDictionary *)userInfo {
     //[self.push handleRemoteNotification:userInfo];
-    if (userInfo && userInfo[@"mid"]) {
-        [self trackPush:userInfo[@"mid"]];
-    }
+    [self trackPush:userInfo type:@"rec"];
 }
 
 #pragma mark - 应用生命周期
@@ -622,11 +625,14 @@ static Zhuge *sharedInstance = nil;
 
 
 // 上报设备信息
-- (void)trackPush:(NSString *) messageId {
-    NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"et"] = @"push";
-    e[@"mid"] = messageId;
-    [self enqueueEvent:e];
+- (void)trackPush:(NSDictionary *)userInfo type:(NSString *) type {
+    if (userInfo && userInfo[@"mid"]) {
+        NSMutableDictionary *e = [NSMutableDictionary dictionary];
+        e[@"et"] = @"push";
+        e[@"mid"] = userInfo[@"mid"];
+        e[@"mtype"] = type;
+        [self enqueueEvent:e];
+    }
 }
 
 // 事件包装
