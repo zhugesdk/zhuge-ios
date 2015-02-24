@@ -1,6 +1,3 @@
-#if ! __has_feature(objc_arc)
-#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
-#endif
 //
 //  ZhugeConfig.m
 //
@@ -24,19 +21,6 @@
     }
     
     return self;
-}
-
-- (void) updateConfig:(NSString *) configString {
-    NSArray *items = [configString componentsSeparatedByString:@":"];
-    if ([items count] > 2) {
-        NSArray *sendItems = [[items objectAtIndex:2] componentsSeparatedByString:@"|"];
-        if ([sendItems count] > 7) {
-            self.sessionInterval = [[sendItems objectAtIndex:1] intValue];
-            self.sendMaxSizePerDay = [[sendItems objectAtIndex:2] intValue];
-            self.cacheMaxSize = [[sendItems objectAtIndex:3] intValue];
-            self.sendInterval = [[sendItems objectAtIndex:7] intValue];
-        }
-    }
 }
 
 - (NSString *) description {

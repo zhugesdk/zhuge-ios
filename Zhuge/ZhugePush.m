@@ -1,7 +1,3 @@
-#if ! __has_feature(objc_arc)
-#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
-#endif
-
 #import "ZhugePush.h"
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
@@ -97,9 +93,6 @@ typedef enum {
 
 @property (nonatomic, strong)ZhugeConfig *config;
 
-
-
-
 @end
 
 @implementation ZhugePush {
@@ -164,35 +157,39 @@ static ZhugePush *sharedInstance = nil;
 }
 
 - (id)init {
-    self = [super init];
-    if (self) {
-        self.serverUrl = @"http://apipool.37degree.com/open/?method=setting_srv.srv_list_get";
-        
-        self.retry = 3;
-        
-        self.seq = [NSNumber numberWithInt:1];
-        self.ver = [NSNumber numberWithInt:1];
-        
-        self.deviceTokenUploaded = NO;
-        
-        self.unreadMessages = [[NSMutableArray alloc] init];
-        _connectQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
-        
-        // 应用生命周期通知
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-        [notificationCenter addObserver:self
-                               selector:@selector(applicationWillTerminate:)
-                                   name:UIApplicationWillTerminateNotification
-                                 object:nil];
-        [notificationCenter addObserver:self
-                               selector:@selector(applicationDidBecomeActive:)
-                                   name:UIApplicationDidBecomeActiveNotification
-                                 object:nil];
-        [notificationCenter addObserver:self
-                               selector:@selector(applicationDidEnterBackground:)
-                                   name:UIApplicationDidEnterBackgroundNotification
-                                 object:nil];
-
+    @try {
+        self = [super init];
+        if (self) {
+            self.serverUrl = @"http://apipool.37degree.com/open/?method=setting_srv.srv_list_get";
+            
+            self.retry = 3;
+            
+            self.seq = [NSNumber numberWithInt:1];
+            self.ver = [NSNumber numberWithInt:1];
+            
+            self.deviceTokenUploaded = NO;
+            
+            self.unreadMessages = [[NSMutableArray alloc] init];
+            _connectQueue = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
+            
+            // 应用生命周期通知
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            [notificationCenter addObserver:self
+                                   selector:@selector(applicationWillTerminate:)
+                                       name:UIApplicationWillTerminateNotification
+                                     object:nil];
+            [notificationCenter addObserver:self
+                                   selector:@selector(applicationDidBecomeActive:)
+                                       name:UIApplicationDidBecomeActiveNotification
+                                     object:nil];
+            [notificationCenter addObserver:self
+                                   selector:@selector(applicationDidEnterBackground:)
+                                       name:UIApplicationDidEnterBackgroundNotification
+                                     object:nil];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"init exception");
     }
     
     return self;

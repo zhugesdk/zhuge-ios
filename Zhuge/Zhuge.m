@@ -1,6 +1,3 @@
-#if ! __has_feature(objc_arc)
-#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
-#endif
 //
 //  Zhuge.m
 //
@@ -34,6 +31,7 @@
 @property (nonatomic, copy) NSString *deviceId;
 @property (nonatomic, strong) NSNumber *sessionId;
 @property (nonatomic, strong) NSNumber *updated;
+@property (nonatomic, copy) NSString *deviceToken;
 
 // 事件
 @property (nonatomic, strong) NSMutableDictionary *timedEvents;
@@ -97,39 +95,45 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions {
-    if (appKey == nil || [appKey length] == 0) {
-        NSLog(@"appKey不能为空。");
-        return;
+    @try {
+        if (appKey == nil || [appKey length] == 0) {
+            NSLog(@"appKey不能为空。");
+            return;
+        }
+        self.appKey = appKey;
+        self.userId = @"";
+        self.deviceId = [self defaultDeviceId];
+        self.deviceToken = @"";
+        self.sessionId = 0;
+        self.net = @"";
+        self.radio = @"";
+
+        // SDK配置
+        if(self.config && self.config.logEnabled) {
+            NSLog(@"SDK系统配置: %@", self.config);
+        }
+
+        NSString *label = [NSString stringWithFormat:@"io.zhuge.%@.%p", appKey, self];
+        self.serialQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
+        self.eventsQueue = [NSMutableArray array];
+        self.timedEvents = [NSMutableDictionary dictionary];
+
+        [self setupListeners];
+        [self unarchive];
+        
+        // 推送
+        [self.push setConfig:self.config];
+        [self.push registerDeviceId:self.deviceId];
+        [self.push startWithAppKey:self.appKey launchOptions:launchOptions];
+        
+        [self sessionStart];
+        
+        if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
+            [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
+        }
     }
-    self.appKey = appKey;
-    self.userId = @"";
-    self.deviceId = [self defaultDeviceId];
-    self.sessionId = 0;
-    self.net = @"";
-    self.radio = @"";
-
-    // SDK配置
-    if(self.config && self.config.logEnabled) {
-        NSLog(@"SDK系统配置: %@", self.config);
-    }
-
-    NSString *label = [NSString stringWithFormat:@"io.zhuge.%@.%p", appKey, self];
-    self.serialQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
-    self.eventsQueue = [NSMutableArray array];
-    self.timedEvents = [NSMutableDictionary dictionary];
-
-    [self setupListeners];
-    [self unarchive];
-    
-    // 推送
-    [self.push setConfig:self.config];
-    [self.push registerDeviceId:self.deviceId];
-    [self.push startWithAppKey:self.appKey launchOptions:launchOptions];
-    
-    [self sessionStart];
-    
-    if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
-        [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
+    @catch (NSException *exception) {
+        NSLog(@"startWithAppKey exception");
     }
 
 }
@@ -193,56 +197,88 @@ static Zhuge *sharedInstance = nil;
 #pragma mark - 推送
 // 注册APNS远程消息类型
 - (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
-    [self.push registerForRemoteNotificationTypes:types categories:categories];
+    @try {
+        [self.push registerForRemoteNotificationTypes:types categories:categories];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"registerForRemoteNotificationTypes exception");
+    }
 }
 
 // 注册deviceToken
 - (void)registerDeviceToken:(NSData *)deviceToken {
-    [self.push registerDeviceToken:deviceToken];
-    NSString *token=[NSString stringWithFormat:@"%@",deviceToken];
-    token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
-    token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
-    token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    @try {
+        [self.push registerDeviceToken:deviceToken];
+        
+        NSString *token=[NSString stringWithFormat:@"%@",deviceToken];
+        token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+        token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
+        token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
+        self.deviceToken = token;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"registerForRemoteNotificationTypes exception");
+    }
 }
 
 // 处理接收到的消息
 - (void)handleRemoteNotification:(NSDictionary *)userInfo {
-    //[self.push handleRemoteNotification:userInfo];
-    [self trackPush:userInfo type:@"rec"];
+    @try {
+        //[self.push handleRemoteNotification:userInfo];
+        [self trackPush:userInfo type:@"rec"];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"registerForRemoteNotificationTypes exception");
+    }
 }
 
 #pragma mark - 应用生命周期
 
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
-    if(self.config.logEnabled) {
-        NSLog(@"applicationDidBecomeActive");
-    }
+    @try {
+        if(self.config.logEnabled) {
+            NSLog(@"applicationDidBecomeActive");
+        }
 
-    [self sessionStart];
-    [self uploadDeviceInfo];
-    [self startFlushTimer];
+        [self sessionStart];
+        [self uploadDeviceInfo];
+        [self startFlushTimer];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"applicationDidBecomeActive exception");
+    }
 }
 
 - (void)applicationDidEnterBackground:(NSNotification *)notification {
-    if(self.config.logEnabled) {
-        NSLog(@"applicationDidEnterBackground");
+    @try {
+        if(self.config.logEnabled) {
+            NSLog(@"applicationDidEnterBackground");
+        }
+        [self stopFlushTimer];
+        [self flush];
+        dispatch_async(_serialQueue, ^{
+            [self archive];
+        });
     }
-    [self stopFlushTimer];
-    [self flush];
-    dispatch_async(_serialQueue, ^{
-        [self archive];
-    });
+    @catch (NSException *exception) {
+        NSLog(@"applicationDidEnterBackground exception");
+    }
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
-    if(self.config.logEnabled) {
-        NSLog(@"applicationWillTerminate");
+    @try {
+        if(self.config.logEnabled) {
+            NSLog(@"applicationWillTerminate");
+        }
+        [self stopFlushTimer];
+        [self flush];
+        dispatch_async(_serialQueue, ^{
+            [self archive];
+        });
     }
-    [self stopFlushTimer];
-    [self flush];
-    dispatch_async(_serialQueue, ^{
-        [self archive];
-    });
+    @catch (NSException *exception) {
+        NSLog(@"applicationWillTerminate exception");
+    }
 }
 
 #pragma mark - 设备状态
@@ -282,60 +318,6 @@ static Zhuge *sharedInstance = nil;
         deviceId = [[NSUUID UUID] UUIDString];
     }
     return deviceId;
-}
-
-// MAC地址
-- (NSString *)macAddress {
-    int                 mib[6];
-    size_t              len;
-    char                *buf;
-    unsigned char       *ptr;
-    struct if_msghdr    *ifm;
-    struct sockaddr_dl  *sdl;
-    
-    mib[0] = CTL_NET;
-    mib[1] = AF_ROUTE;
-    mib[2] = 0;
-    mib[3] = AF_LINK;
-    mib[4] = NET_RT_IFLIST;
-    
-    if ((mib[5] = if_nametoindex("en0")) == 0) {
-        if(self.config.logEnabled) {
-            NSLog(@"Error: if_nametoindex error");
-        }
-        return nil;
-    }
-    
-    if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
-        if(self.config.logEnabled) {
-            NSLog(@"Error: sysctl, take 1");
-        }
-        return nil;
-    }
-    
-    if ((buf = malloc(len)) == NULL) {
-        if(self.config.logEnabled) {
-            NSLog(@"Could not allocate memory. error!");
-        }
-        return nil;
-    }
-    
-    if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
-        if(self.config.logEnabled) {
-            NSLog(@"Error: sysctl, take 2");
-        }
-        free(buf);
-        return nil;
-    }
-    
-    ifm = (struct if_msghdr *)buf;
-    sdl = (struct sockaddr_dl *)(ifm + 1);
-    ptr = (unsigned char *)LLADDR(sdl);
-    NSString *outstring = [NSString stringWithFormat:@"%02X:%02X:%02X:%02X:%02X:%02X",
-                           *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
-    free(buf);
-    
-    return outstring;
 }
 
 // 系统信息
@@ -455,125 +437,144 @@ static Zhuge *sharedInstance = nil;
 
 // 会话开始
 - (void)sessionStart {
-    NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
-    if (!self.sessionId || ([ts intValue] - [self.updated intValue]) > self.config.sessionInterval) {
-        if (self.sessionId && self.updated > 0) {
-            [self sessionEnd];
-        }
-        self.sessionId = ts;
-        NSLog(@"sessionId:%.3f",[ts doubleValue]);
-        if(self.config.logEnabled) {
-            NSLog(@"会话开始(ID:%@)", @([self.sessionId intValue]));
-        }
+    @try {
+        NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
+        if (!self.sessionId || ([ts intValue] - [self.updated intValue]) > self.config.sessionInterval) {
+            if (self.sessionId && self.updated > 0) {
+                [self sessionEnd];
+            }
+            self.sessionId = ts;
+            NSLog(@"sessionId:%.3f",[ts doubleValue]);
+            if(self.config.logEnabled) {
+                NSLog(@"会话开始(ID:%@)", @([self.sessionId intValue]));
+            }
         
-        NSMutableDictionary *e = [NSMutableDictionary dictionary];
-        e[@"et"] = @"ss";
-        e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-        e[@"vn"] = self.config.appVersion;
-        e[@"net"] = self.net;
-        e[@"radio"] = self.radio;
+            NSMutableDictionary *e = [NSMutableDictionary dictionary];
+            e[@"et"] = @"ss";
+            e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
+            e[@"vn"] = self.config.appVersion;
+            e[@"net"] = self.net;
+            e[@"radio"] = self.radio;
         
-        [self enqueueEvent:e];
+            [self enqueueEvent:e];
+        }
+        self.updated = ts;
     }
-    self.updated = ts;
+    @catch (NSException *exception) {
+        NSLog(@"sessionStart exception");
+    }
 }
 
 // 会话结束
 - (void)sessionEnd {
-    if(self.config.logEnabled && self.sessionId) {
-        NSLog(@"会话结束(ID:%@)", self.sessionId);
-    }
+    @try {
+        if(self.config.logEnabled && self.sessionId) {
+            NSLog(@"会话结束(ID:%@)", self.sessionId);
+        }
     
-    if (self.sessionId) {
-        NSMutableDictionary *e = [NSMutableDictionary dictionary];
-        e[@"et"] = @"se";
-        e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-        e[@"dr"] = [NSString stringWithFormat:@"%.3f", [self.updated doubleValue] - [self.sessionId doubleValue]];
+        if (self.sessionId) {
+            NSMutableDictionary *e = [NSMutableDictionary dictionary];
+            e[@"et"] = @"se";
+            e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
+            e[@"dr"] = [NSString stringWithFormat:@"%.3f", [self.updated doubleValue] - [self.sessionId doubleValue]];
 
-        [self enqueueEvent:e];
-        self.sessionId = nil;
+            [self enqueueEvent:e];
+            self.sessionId = nil;
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"sessionEnd exception");
     }
 }
 
 // 上报设备信息
 - (void)uploadDeviceInfo {
-    NSNumber *zgInfoUploadTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgInfoUploadTime"];
-    NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-    if (zgInfoUploadTime == nil ||[ts longValue] > [zgInfoUploadTime longValue] + 7*86400) {
-        [self trackDeviceInfo];
-        [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgInfoUploadTime"];
+    @try {
+        NSNumber *zgInfoUploadTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgInfoUploadTime"];
+        NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
+        if (zgInfoUploadTime == nil ||[ts longValue] > [zgInfoUploadTime longValue] + 7*86400) {
+            [self trackDeviceInfo];
+            [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgInfoUploadTime"];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"uploadDeviceInfo exception");
     }
 }
 
 // 上报设备信息
 - (void)trackDeviceInfo {
-    NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"et"] = @"info";
+    @try {
+        NSMutableDictionary *e = [NSMutableDictionary dictionary];
+        e[@"et"] = @"info";
 
-    // 设备ID
-    e[@"did"] = self.deviceId;
-    // 应用版本
-    e[@"vn"] = self.config.appVersion;
-    // 应用名称
-    NSString *displayName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
-    if (displayName != nil) {
-        e[@"pn"] = displayName;
+        // 设备ID
+        e[@"did"] = self.deviceId;
+        // 应用版本
+        e[@"vn"] = self.config.appVersion;
+        // 应用名称
+        NSString *displayName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+        if (displayName != nil) {
+            e[@"pn"] = displayName;
+        }
+        // SDK
+        e[@"sdk"] = @"ios";
+        // SDK版本
+        e[@"sdkv"] = self.config.sdkVersion;
+        // 设备
+        e[@"dv"] = [self getSysInfoByName:"hw.machine"];
+        // 系统
+        e[@"os"] = @"ios";
+        // 制造商
+        e[@"maker"] = @"Apple";
+        // 系统版本
+        e[@"ov"] = [[UIDevice currentDevice] systemVersion];
+        //分辨率
+        e[@"rs"] = [self resolution];
+        // 运营商
+        e[@"cr"] = [self carrier];
+        //网络
+        e[@"net"] = self.net;
+        e[@"radio"] = self.radio;
+        // 是否越狱
+        e[@"jail"] =[self isJailBroken] ? @YES : @NO;
+        // 是否破解
+        e[@"pirate"] =[self isPirated] ? @YES : @NO;
+        // 语言
+        e[@"lang"] = [[NSLocale preferredLanguages] objectAtIndex:0];
+        // 时区
+        e[@"tz"] = [NSString stringWithFormat:@"%@",[NSTimeZone localTimeZone]];
+        
+        [self enqueueEvent:e];
     }
-    // SDK
-    e[@"sdk"] = @"ios";
-    // SDK版本
-    e[@"sdkv"] = self.config.sdkVersion;
-    // MAC地址
-    e[@"mac"] = [self macAddress];
-    // 设备
-    e[@"dv"] = [self getSysInfoByName:"hw.machine"];
-    // 系统
-    e[@"os"] = @"ios";
-    // 制造商
-    e[@"maker"] = @"Apple";
-    // 系统版本
-    e[@"ov"] = [[UIDevice currentDevice] systemVersion];
-    //分辨率
-    e[@"rs"] = [self resolution];
-    // 运营商
-    e[@"cr"] = [self carrier];
-    //网络
-    e[@"net"] = self.net;
-    e[@"radio"] = self.radio;
-    // 是否越狱
-    e[@"jail"] =[self isJailBroken] ? @YES : @NO;
-    // 是否破解
-    e[@"pirate"] =[self isPirated] ? @YES : @NO;
-    // 语言
-    e[@"lang"] = [[NSLocale preferredLanguages] objectAtIndex:0];
-    // 时区
-    e[@"tz"] = [NSString stringWithFormat:@"%@",[NSTimeZone localTimeZone]];
-    
-    [self enqueueEvent:e];
+    @catch (NSException *exception) {
+        NSLog(@"trackDeviceInfo exception");
+    }
 }
 
 // 识别用户
 - (void)identify:(NSString *)userId properties:(NSDictionary *)properties {
-    if (userId == nil || userId.length == 0) {
-        if(self.config.logEnabled) {
-            NSLog(@"用户ID不能为空");
+    @try {
+        if (userId == nil || userId.length == 0) {
+            if(self.config.logEnabled) {
+                NSLog(@"用户ID不能为空");
+            }
+            return;
         }
-        return;
+    
+        self.userId = userId;
+    
+        NSMutableDictionary *e = [NSMutableDictionary dictionary];
+        e[@"et"] = @"idf";
+        e[@"cuid"] = userId;
+        e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
+        e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
+    
+        [self enqueueEvent:e];
     }
-    
-    if (!self.sessionId) {
-        [self sessionStart];
+    @catch (NSException *exception) {
+        NSLog(@"identify exception");
     }
-    
-    self.userId = userId;
-    
-    NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"et"] = @"idf";
-    e[@"cuid"] = userId;
-    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-    e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
-    
-    [self enqueueEvent:e];
 }
 
 // 开始记录有时长的事件
@@ -591,47 +592,58 @@ static Zhuge *sharedInstance = nil;
 
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
-    [self track:event properties:nil];
+    @try {
+        [self track:event properties:nil];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"track exception");
+    }
 }
 
 // 跟踪自定义事件
 - (void)track:(NSString *)event properties:(NSMutableDictionary *)properties {
-    if (event == nil || [event length] == 0) {
-        if(self.config.logEnabled) {
-            NSLog(@"事件名不能为空");
+    @try {
+        if (event == nil || [event length] == 0) {
+            if(self.config.logEnabled) {
+                NSLog(@"事件名不能为空");
+            }
+            return;
         }
-        return;
-    }
     
-    if (!self.sessionId) {
-        [self sessionStart];
-    }
+        NSMutableDictionary *e = [NSMutableDictionary dictionary];
+        e[@"et"] = @"cus";
+        e[@"eid"] = event;
+        e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
+        e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
     
-    NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"et"] = @"cus";
-    e[@"eid"] = event;
-    e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-    e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
-    
-    NSNumber *eventStartTime = self.timedEvents[event];
-    if (eventStartTime) {
-        [self.timedEvents removeObjectForKey:event];
-        double epochInterval = [[NSDate date] timeIntervalSince1970];
-        e[@"dr"] = [NSString stringWithFormat:@"%.3f", epochInterval - [eventStartTime doubleValue]];
-    }
+        NSNumber *eventStartTime = self.timedEvents[event];
+        if (eventStartTime) {
+            [self.timedEvents removeObjectForKey:event];
+            double epochInterval = [[NSDate date] timeIntervalSince1970];
+            e[@"dr"] = [NSString stringWithFormat:@"%.3f", epochInterval - [eventStartTime doubleValue]];
+        }
 
-    [self enqueueEvent:e];
+        [self enqueueEvent:e];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"track properties exception");
+    }
 }
 
 
 // 上报设备信息
 - (void)trackPush:(NSDictionary *)userInfo type:(NSString *) type {
-    if (userInfo && userInfo[@"mid"]) {
-        NSMutableDictionary *e = [NSMutableDictionary dictionary];
-        e[@"et"] = @"push";
-        e[@"mid"] = userInfo[@"mid"];
-        e[@"mtype"] = type;
-        [self enqueueEvent:e];
+    @try {
+        if (userInfo && userInfo[@"mid"]) {
+            NSMutableDictionary *e = [NSMutableDictionary dictionary];
+            e[@"et"] = @"push";
+            e[@"mid"] = userInfo[@"mid"];
+            e[@"mtype"] = type;
+            [self enqueueEvent:e];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"trackPush exception");
     }
 }
 
@@ -648,6 +660,7 @@ static Zhuge *sharedInstance = nil;
     batch[@"cuid"] = self.userId;
     batch[@"net"] = self.net;
     batch[@"radio"] = self.radio;
+    batch[@"deviceToken"] = self.deviceToken;
     batch[@"data"] = events;
     
     return batch;
@@ -781,43 +794,53 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)flush {
-    dispatch_async(self.serialQueue, ^{
-        [self flushQueue: _eventsQueue];
-    });
+    @try {
+        dispatch_async(self.serialQueue, ^{
+            [self flushQueue: _eventsQueue];
+        });
+    }
+    @catch (NSException *exception) {
+        NSLog(@"flush exception");
+    }
 }
 
 - (void)flushQueue:(NSMutableArray *)queue {
-    while ([queue count] > 0) {
-        if (self.sendCount >= self.config.sendMaxSizePerDay) {
-            if(self.config.logEnabled) {
-                NSLog(@"超过每天限额，不发送。(今天已经发送:%lu, 限额:%lu, 队列库存数: %lu)", (unsigned long)self.sendCount, (unsigned long)self.config.sendMaxSizePerDay, (unsigned long)[queue count]);
+    @try {
+        while ([queue count] > 0) {
+            if (self.sendCount >= self.config.sendMaxSizePerDay) {
+                if(self.config.logEnabled) {
+                    NSLog(@"超过每天限额，不发送。(今天已经发送:%lu, 限额:%lu, 队列库存数: %lu)", (unsigned long)self.sendCount, (unsigned long)self.config.sendMaxSizePerDay, (unsigned long)[queue count]);
+                }
+                return;
             }
-            return;
-        }
-        
-        NSUInteger sendBatchSize = ([queue count] > 50) ? 50 : [queue count];
-        if (self.sendCount + sendBatchSize >= self.config.sendMaxSizePerDay) {
-            sendBatchSize = self.config.sendMaxSizePerDay - self.sendCount;
-        }
-        
-        NSArray *events = [queue subarrayWithRange:NSMakeRange(0, sendBatchSize)];
-        if(self.config.logEnabled) {
-            NSLog(@"开始上报事件(本次上报事件数:%lu, 队列内事件总数:%lu, 今天已经发送:%lu, 限额:%lu)", (unsigned long)[events count], (unsigned long)[queue count], (unsigned long)self.sendCount, (unsigned long)self.config.sendMaxSizePerDay);
-        }
-        
-        NSString *requestData = [self encodeAPIData:[self wrapEvents:events]];
+            
+            NSUInteger sendBatchSize = ([queue count] > 50) ? 50 : [queue count];
+            if (self.sendCount + sendBatchSize >= self.config.sendMaxSizePerDay) {
+                sendBatchSize = self.config.sendMaxSizePerDay - self.sendCount;
+            }
+            
+            NSArray *events = [queue subarrayWithRange:NSMakeRange(0, sendBatchSize)];
+            if(self.config.logEnabled) {
+                NSLog(@"开始上报事件(本次上报事件数:%lu, 队列内事件总数:%lu, 今天已经发送:%lu, 限额:%lu)", (unsigned long)[events count], (unsigned long)[queue count], (unsigned long)self.sendCount, (unsigned long)self.config.sendMaxSizePerDay);
+            }
+            
+            NSString *requestData = [self encodeAPIData:[self wrapEvents:events]];
 
-        NSError *error = nil;
-        BOOL success = [self httpRequestWithData:requestData andError:error];
-        if (error || !success) {
-            if(self.config.logEnabled) {
-                NSLog(@"上报失败: %@", error);
+            NSError *error = nil;
+            BOOL success = [self httpRequestWithData:requestData andError:error];
+            if (error || !success) {
+                if(self.config.logEnabled) {
+                    NSLog(@"上报失败: %@", error);
+                }
+                break;
             }
-            break;
+            
+            self.sendCount += sendBatchSize;
+           [queue removeObjectsInArray:events];
         }
-        
-        self.sendCount += sendBatchSize;
-       [queue removeObjectsInArray:events];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"flushQueue exception");
     }
 }
 
@@ -872,8 +895,13 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)archive {
-    [self archiveEvents];
-    [self archiveProperties];
+    @try {
+        [self archiveEvents];
+        [self archiveProperties];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"archive exception");
+    }
 }
 
 - (void)archiveEvents{
@@ -914,8 +942,13 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)unarchive {
-    [self unarchiveEvents];
-    [self unarchiveProperties];
+    @try {
+        [self unarchiveEvents];
+        [self unarchiveProperties];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"unarchive exception");
+    }
 }
 
 - (id)unarchiveFromFile:(NSString *)filePath {
