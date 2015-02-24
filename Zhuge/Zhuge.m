@@ -827,8 +827,8 @@ static Zhuge *sharedInstance = nil;
             NSString *requestData = [self encodeAPIData:[self wrapEvents:events]];
 
             NSError *error = nil;
-            BOOL success = [self httpRequestWithData:requestData andError:error];
-            if (error || !success) {
+            [self httpRequestWithData:requestData andError:error];
+            if (error) {
                 if(self.config.logEnabled) {
                     NSLog(@"上报失败: %@", error);
                 }
@@ -845,7 +845,7 @@ static Zhuge *sharedInstance = nil;
 }
 
 
-- (BOOL) httpRequestWithData:(NSString *)requestData andError:(NSError *)error {
+- (void) httpRequestWithData:(NSString *)requestData andError:(NSError *)error {
     NSString *postBody = [NSString stringWithFormat:@"method=event_statis_srv.upload&event=%@", requestData];
     NSURL *URL = [NSURL URLWithString:self.apiURL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
@@ -868,11 +868,7 @@ static Zhuge *sharedInstance = nil;
         if(self.config.logEnabled && response) {
             NSLog(@"API响应: %@", response);
         }
-        
-        return [[NSNumber numberWithInt:0] isEqualToNumber:response[@"return_code"]];
     }
-    
-    return NO;
 }
 
 #pragma mark - 持久化
