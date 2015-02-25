@@ -256,6 +256,7 @@ static Zhuge *sharedInstance = nil;
         }
         [self stopFlushTimer];
         [self flush];
+        self.updated = @([[NSDate date] timeIntervalSince1970]);
         dispatch_async(_serialQueue, ^{
             [self archive];
         });
@@ -270,6 +271,7 @@ static Zhuge *sharedInstance = nil;
         if(self.config.logEnabled) {
             NSLog(@"applicationWillTerminate");
         }
+        self.updated = @([[NSDate date] timeIntervalSince1970]);
         [self stopFlushTimer];
         [self flush];
         dispatch_async(_serialQueue, ^{
