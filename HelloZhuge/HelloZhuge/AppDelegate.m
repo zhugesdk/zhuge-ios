@@ -7,7 +7,6 @@
 
 #import "AppDelegate.h"
 #import "Zhuge.h"
-#import "ZhugePush.h"
 
 @implementation AppDelegate
 
@@ -44,7 +43,7 @@
     // 启动诸葛
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-
+    
     return YES;
 }
 

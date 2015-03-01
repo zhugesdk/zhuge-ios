@@ -7,7 +7,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
-#import "ZhugePush.h"
 
 @interface Zhuge : NSObject
 
@@ -22,11 +21,6 @@
  获得诸葛配置实例。
  */
 - (ZhugeConfig *)config;
-
-/**
- 获得诸葛推送实例。
- */
-- (ZhugePush *)push;
 
 /**
  获得诸葛设备ID。

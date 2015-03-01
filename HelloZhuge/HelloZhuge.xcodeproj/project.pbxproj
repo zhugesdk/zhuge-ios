@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E54F69391A6E0CC700101BAC /* ZhugePush.m in Sources */ = {isa = PBXBuildFile; fileRef = E54F69381A6E0CC700101BAC /* ZhugePush.m */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -32,8 +31,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E54F69371A6E0CC700101BAC /* ZhugePush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugePush.h; path = ../Zhuge/ZhugePush.h; sourceTree = "<group>"; };
-		E54F69381A6E0CC700101BAC /* ZhugePush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugePush.m; path = ../Zhuge/ZhugePush.m; sourceTree = "<group>"; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -142,8 +139,6 @@
 		E55E51871A242D4700ED0263 /* Zhuge */ = {
 			isa = PBXGroup;
 			children = (
-				E54F69371A6E0CC700101BAC /* ZhugePush.h */,
-				E54F69381A6E0CC700101BAC /* ZhugePush.m */,
 				E5A1DB831A4A62C200D52286 /* Zhuge.h */,
 				E5A1DB841A4A62C200D52286 /* Zhuge.m */,
 				E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */,
@@ -259,7 +254,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
-				E54F69391A6E0CC700101BAC /* ZhugePush.m in Sources */,
 				E5A1DB881A4A62C200D52286 /* ZhugeConfig.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
