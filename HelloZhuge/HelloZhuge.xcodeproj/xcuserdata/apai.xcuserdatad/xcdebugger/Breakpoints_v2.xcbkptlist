@@ -38,16 +38,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../Zhuge/Zhuge.m"
+            timestampString = "446894486.469972"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "462"
+            endingLineNumber = "462"
+            landmarkName = "-setCurrentRadio"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HelloZhuge/AppDelegate.m"
-            timestampString = "446888427.432479"
+            filePath = "../Zhuge/Zhuge.m"
+            timestampString = "446894692.335874"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "-setupListeners"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

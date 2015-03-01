@@ -158,7 +158,7 @@ static Zhuge *sharedInstance = nil;
     // 网络制式(GRPS,WCDMA,LTE,...),IOS7以上版本才支持
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-        [self setCurrentRadio];
+        self.telephonyInfo = [CTTelephonyNetworkInfo new];
         [notificationCenter addObserver:self
                                selector:@selector(setCurrentRadio)
                                    name:CTRadioAccessTechnologyDidChangeNotification
@@ -222,7 +222,7 @@ static Zhuge *sharedInstance = nil;
         
         NSNumber *lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgRegisterDeviceToken"];
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-        if (self.cid == nil || self.cid.length == 0 || lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 86400) {
+        if (self.cid == nil || self.cid.length == 0 || lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 864) {
             [self uploadDeviceToken:token];
             [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgRegisterDeviceToken"];
         }
@@ -243,10 +243,13 @@ static Zhuge *sharedInstance = nil;
         }
         if (responseData) {
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
-            if (response && response[@"data"] && response[@"data"][@"cid"]) {
-                self.cid = response[@"data"][@"cid"];
-                if(self.config.logEnabled && self.cid) {
-                    NSLog(@"get cid:%@", self.cid);
+            if (response && response[@"data"]) {
+                NSDictionary *zgData = response[@"data"];
+                if ([zgData isKindOfClass:[NSDictionary class]] && zgData[@"cid"]) {
+                    self.cid = zgData[@"cid"];
+                    if(self.config.logEnabled && self.cid) {
+                        NSLog(@"get cid:%@", self.cid);
+                    }
                 }
             }
         }
@@ -465,7 +468,7 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (NSString *)currentRadio {
-    NSString *radio = _telephonyInfo.currentRadioAccessTechnology;
+    NSString *radio = self.telephonyInfo.currentRadioAccessTechnology;
     if (!radio) {
         radio = @"None";
     } else if ([radio hasPrefix:@"CTRadioAccessTechnology"]) {
@@ -943,7 +946,7 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
-- (void)archiveEvents{
+- (void)archiveEvents {
     NSString *filePath = [self eventsFilePath];
     NSMutableArray *eventsQueueCopy = [NSMutableArray arrayWithArray:[self.eventsQueue copy]];
     if(self.config.logEnabled && filePath) {
