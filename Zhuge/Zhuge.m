@@ -17,13 +17,10 @@
 #import "Zhuge.h"
 
 @interface Zhuge () {
-    BOOL logEnabled;
-    BOOL isCrashReportEnabled;
 }
 
 // API连接
 @property (nonatomic, copy) NSString *apiURL;
-@property (nonatomic, copy) NSString *confURL;
 @property (nonatomic, copy) NSString *appKey;
 
 // 会话
@@ -115,11 +112,11 @@ static Zhuge *sharedInstance = nil;
         [self setupListeners];
         [self unarchive];
         
-        [self sessionStart];
-        
         if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
             [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
         }
+        
+        [self sessionStart];
     }
     @catch (NSException *exception) {
         NSLog(@"startWithAppKey exception");
@@ -688,6 +685,7 @@ static Zhuge *sharedInstance = nil;
             e[@"mid"] = userInfo[@"mid"];
             e[@"mtype"] = type;
             [self enqueueEvent:e];
+            [self flush];
         }
     }
     @catch (NSException *exception) {
@@ -839,14 +837,9 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)flush {
-    @try {
-        dispatch_async(self.serialQueue, ^{
-            [self flushQueue: _eventsQueue];
-        });
-    }
-    @catch (NSException *exception) {
-        NSLog(@"flush exception");
-    }
+    dispatch_async(self.serialQueue, ^{
+        [self flushQueue: _eventsQueue];
+    });
 }
 
 - (void)flushQueue:(NSMutableArray *)queue {
