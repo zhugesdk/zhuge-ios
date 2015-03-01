@@ -100,6 +100,7 @@ static Zhuge *sharedInstance = nil;
         self.sessionId = 0;
         self.net = @"";
         self.radio = @"";
+        self.telephonyInfo = [[CTTelephonyNetworkInfo alloc] init];
 
         // SDK配置
         if(self.config && self.config.logEnabled) {
@@ -158,7 +159,6 @@ static Zhuge *sharedInstance = nil;
     // 网络制式(GRPS,WCDMA,LTE,...),IOS7以上版本才支持
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
-        self.telephonyInfo = [CTTelephonyNetworkInfo new];
         [notificationCenter addObserver:self
                                selector:@selector(setCurrentRadio)
                                    name:CTRadioAccessTechnologyDidChangeNotification
@@ -385,8 +385,7 @@ static Zhuge *sharedInstance = nil;
 
 // 运营商
 - (NSString *)carrier {
-    CTTelephonyNetworkInfo *netInfo =[[CTTelephonyNetworkInfo alloc] init];
-    CTCarrier *carrier =[netInfo subscriberCellularProvider];
+    CTCarrier *carrier =[self.telephonyInfo subscriberCellularProvider];
     if (carrier != nil) {
         NSString *mcc =[carrier mobileCountryCode];
         NSString *mnc =[carrier mobileNetworkCode];
@@ -468,7 +467,7 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (NSString *)currentRadio {
-    NSString *radio = self.telephonyInfo.currentRadioAccessTechnology;
+    NSString *radio = _telephonyInfo.currentRadioAccessTechnology;
     if (!radio) {
         radio = @"None";
     } else if ([radio hasPrefix:@"CTRadioAccessTechnology"]) {
