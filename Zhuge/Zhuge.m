@@ -1,3 +1,6 @@
+#if ! __has_feature(objc_arc)
+#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
+#endif
 //
 //  Zhuge.m
 //
@@ -15,6 +18,8 @@
 #include <net/if_dl.h>
 
 #import "Zhuge.h"
+#import "ZG_OpenUDID.h"
+
 
 @interface Zhuge () {
 }
@@ -349,11 +354,19 @@ static Zhuge *sharedInstance = nil;
 
 // 设备ID
 - (NSString *)defaultDeviceId {
-    NSString *deviceId = [self adid];
+    // OpenUDID
+    NSString *deviceId = [ZG_OpenUDID value];
     
+    // IDFA
+    if (!deviceId) {
+        deviceId = [self adid];
+    }
+    
+    // IDFV
     if (!deviceId && NSClassFromString(@"UIDevice")) {
         deviceId = [[UIDevice currentDevice].identifierForVendor UUIDString];
     }
+    
     if (!deviceId) {
         if(self.config.logEnabled) {
             NSLog(@"error getting device identifier: falling back to uuid");
