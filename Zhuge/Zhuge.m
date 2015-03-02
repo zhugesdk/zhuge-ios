@@ -156,6 +156,7 @@ static Zhuge *sharedInstance = nil;
     // 网络制式(GRPS,WCDMA,LTE,...),IOS7以上版本才支持
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1) {
+        [self setCurrentRadio];
         [notificationCenter addObserver:self
                                selector:@selector(setCurrentRadio)
                                    name:CTRadioAccessTechnologyDidChangeNotification
