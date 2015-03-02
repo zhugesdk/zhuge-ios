@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E520333A1AA46FF200352CEF /* ZG_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = E52033381AA46FF200352CEF /* ZG_OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E520333D1AA47B5500352CEF /* ZG_OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = E520333B1AA47B5500352CEF /* ZG_OpenUDID.m */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -32,8 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		E52033381AA46FF200352CEF /* ZG_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZG_OpenUDID.m; sourceTree = "<group>"; };
-		E52033391AA46FF200352CEF /* ZG_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZG_OpenUDID.h; sourceTree = "<group>"; };
+		E520333B1AA47B5500352CEF /* ZG_OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZG_OpenUDID.m; path = ../Zhuge/ZG_OpenUDID.m; sourceTree = "<group>"; };
+		E520333C1AA47B5500352CEF /* ZG_OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZG_OpenUDID.h; path = ../Zhuge/ZG_OpenUDID.h; sourceTree = "<group>"; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -142,8 +142,8 @@
 		E55E51871A242D4700ED0263 /* Zhuge */ = {
 			isa = PBXGroup;
 			children = (
-				E52033381AA46FF200352CEF /* ZG_OpenUDID.m */,
-				E52033391AA46FF200352CEF /* ZG_OpenUDID.h */,
+				E520333B1AA47B5500352CEF /* ZG_OpenUDID.m */,
+				E520333C1AA47B5500352CEF /* ZG_OpenUDID.h */,
 				E5A1DB831A4A62C200D52286 /* Zhuge.h */,
 				E5A1DB841A4A62C200D52286 /* Zhuge.m */,
 				E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */,
@@ -258,7 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E520333A1AA46FF200352CEF /* ZG_OpenUDID.m in Sources */,
+				E520333D1AA47B5500352CEF /* ZG_OpenUDID.m in Sources */,
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
 				E5A1DB881A4A62C200D52286 /* ZhugeConfig.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
