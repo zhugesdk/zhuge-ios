@@ -57,13 +57,17 @@
 }
 
 -(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    NSLog(@"didReceiveRemoteNotification: %@" ,userInfo);
+    if (userInfo) {
+        NSLog(@"didReceiveRemoteNotification: %@" ,userInfo);
+    }
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[Zhuge sharedInstance] handleRemoteNotification:userInfo];
 }
 
 -(void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
-    NSLog(@"handleActionWithIdentifier: %@" ,userInfo);
+    if (userInfo) {
+        NSLog(@"handleActionWithIdentifier: %@" ,userInfo);
+    }
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

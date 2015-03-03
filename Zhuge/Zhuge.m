@@ -261,12 +261,7 @@ static Zhuge *sharedInstance = nil;
 
 // 处理接收到的消息
 - (void)handleRemoteNotification:(NSDictionary *)userInfo {
-    @try {
-        [self trackPush:userInfo type:@"rec"];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"handleRemoteNotification exception");
-    }
+    [self trackPush:userInfo type:@"rec"];
 }
 
 #pragma mark - 应用生命周期
@@ -689,7 +684,7 @@ static Zhuge *sharedInstance = nil;
 // 上报设备信息
 - (void)trackPush:(NSDictionary *)userInfo type:(NSString *) type {
     @try {
-        if(self.config.logEnabled) {
+        if(self.config.logEnabled && userInfo) {
             NSLog(@"push payload: %@", userInfo);
         }
         
