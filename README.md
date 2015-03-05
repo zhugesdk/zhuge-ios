@@ -25,7 +25,7 @@ open {YOUR-PROJECT}.xcworkspace
 #import <Zhuge/Zhuge.h>
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [[Zhuge sharedInstance] startWithAppKey:@"Your App Key"];
+    [[Zhuge sharedInstance] startWithAppKey:@"Your App Key" launchOptions:launchOptions];
 }
 ```
 
@@ -35,4 +35,9 @@ open {YOUR-PROJECT}.xcworkspace
 [[Zhuge sharedInstance] track:@"分享" properties:@{@"渠道":@"微博"}];
 ```
 
-**了解更多 [完整文档 »](http://docs.zhuge.io/sdks/ios)**
+4、 识别用户身份
+```objc
+[[Zhuge sharedInstance] identify:@"1234" properties:@{@"email":@"zhuge@37degree.com"}]];
+```
+
+**了解更多 [完整文档 »](http://zhugeio.com/docs/ios.html)**
