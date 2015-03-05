@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"1.3.5"
+#define ZG_SDK_VERSION @"1.3.6"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -38,5 +38,8 @@
 #pragma mark - 日志
 // 是否开启SDK日志打印(默认:关闭)
 @property (nonatomic) BOOL logEnabled;
+
+// 开发模式，默认YES(推送时指定deviceToken上传到开发环境或生产环境)
+@property (nonatomic) BOOL devMode;
 
 @end

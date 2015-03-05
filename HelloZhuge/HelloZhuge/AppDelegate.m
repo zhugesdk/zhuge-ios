@@ -20,6 +20,9 @@
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
     
+    // 推送指定deviceToken上传到开发环境或生产环境，默认YES，上传到开发环境
+    [zhuge.config setDevMode:NO];
+    
     // 开启推送
 #if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
@@ -43,6 +46,10 @@
     // 启动诸葛
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
+    
+    
+    [zhuge registerDeviceToken:[@"123" dataUsingEncoding:NSUTF8StringEncoding]];
         
     return YES;
 }

@@ -18,7 +18,6 @@
 #include <net/if_dl.h>
 
 #import "Zhuge.h"
-#import "ZG_OpenUDID.h"
 
 @interface Zhuge () {
 }
@@ -238,7 +237,7 @@ static Zhuge *sharedInstance = nil;
     dispatch_async(self.serialQueue, ^{
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
         NSError *error = nil;
-        NSString *requestData = [NSString stringWithFormat:@"method=setting_srv.upload_token_tmp&appid=%@&did=%@&dtype=2&token=%@&timestamp=%@", self.appKey, self.deviceId, deviceToken, ts];
+        NSString *requestData = [NSString stringWithFormat:@"method=setting_srv.upload_token_tmp&dev=%@&appid=%@&did=%@&dtype=2&token=%@&timestamp=%@", self.config.devMode? @"1" : @"0", self.appKey, self.deviceId, deviceToken, ts];
         NSData *responseData = [self apiRequest:@"/open/" WithData:requestData andError:error];
         if (error) {
             NSLog(@"上报失败: %@", error);
@@ -350,11 +349,6 @@ static Zhuge *sharedInstance = nil;
 - (NSString *)defaultDeviceId {
     // IDFA
     NSString *deviceId = [self adid];
-    
-    // Open UDID
-    if (!deviceId) {
-        deviceId = [ZG_OpenUDID value];
-    }
     
     // IDFV
     if (!deviceId && NSClassFromString(@"UIDevice")) {
