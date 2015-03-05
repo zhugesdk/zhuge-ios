@@ -68,6 +68,9 @@
     if (userInfo) {
         NSLog(@"handleActionWithIdentifier: %@" ,userInfo);
     }
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [[Zhuge sharedInstance] handleRemoteNotification:userInfo];
+
     completionHandler(UIBackgroundFetchResultNewData);
 }
 

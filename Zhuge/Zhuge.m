@@ -18,6 +18,7 @@
 #include <net/if_dl.h>
 
 #import "Zhuge.h"
+#import "ZG_OpenUDID.h"
 
 @interface Zhuge () {
 }
@@ -348,7 +349,12 @@ static Zhuge *sharedInstance = nil;
 // 设备ID
 - (NSString *)defaultDeviceId {
     // IDFA
-    NSString *deviceId = [self adid];;
+    NSString *deviceId = [self adid];
+    
+    // Open UDID
+    if (!deviceId) {
+        deviceId = [ZG_OpenUDID value];
+    }
     
     // IDFV
     if (!deviceId && NSClassFromString(@"UIDevice")) {
