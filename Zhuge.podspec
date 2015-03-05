@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name         = "Zhuge"
   s.version      = "1.3.5"
   s.summary      = "iOS tracking library for Zhuge Analytics"
-  s.homepage     = "http://zhuge.io"
+  s.homepage     = "http://zhugeio.com"
   s.license      = "MIT"
   s.author       = { "37degree,Inc" => "support@37degree.com" }
   s.platform     = :ios, "6.0"
