@@ -223,7 +223,7 @@ static Zhuge *sharedInstance = nil;
         
         NSNumber *lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgRegisterDeviceToken"];
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-        if (self.cid == nil || self.cid.length == 0 || lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 864) {
+        if (self.cid == nil || self.cid.length == 0 || lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 86400) {
             [self uploadDeviceToken:token];
             [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgRegisterDeviceToken"];
         }
@@ -322,12 +322,25 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
-#pragma mark - 设备状态
+#pragma mark - 设备ID
 
-// 是否在后台运行
-- (BOOL)inBackground {
-    return [UIApplication sharedApplication].applicationState == UIApplicationStateBackground;
+// 设备ID
+- (NSString *)defaultDeviceId {
+    // IDFA
+    NSString *deviceId = [self adid];
+    
+    // IDFV from KeyChain
+    if (!deviceId) {
+        deviceId = [self idFromKeyChain];
+    }
+    
+    if (!deviceId) {
+        NSLog(@"error getting device identifier: falling back to uuid");
+        deviceId = [[NSUUID UUID] UUIDString];
+    }
+    return deviceId;
 }
+
 
 // 广告ID
 - (NSString *)adid {
@@ -345,23 +358,87 @@ static Zhuge *sharedInstance = nil;
     return adid;
 }
 
-// 设备ID
-- (NSString *)defaultDeviceId {
-    // IDFA
-    NSString *deviceId = [self adid];
+- (NSString *)newStoredID {
+    CFMutableDictionaryRef query = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecAttrAccount, CFSTR("zgid_account"));
+    CFDictionarySetValue(query, kSecAttrService, CFSTR("zgid_service"));
     
-    // IDFV
-    if (!deviceId && NSClassFromString(@"UIDevice")) {
-        deviceId = [[UIDevice currentDevice].identifierForVendor UUIDString];
+    NSString *uuid = nil;
+    if (NSClassFromString(@"UIDevice")) {
+        uuid = [[UIDevice currentDevice].identifierForVendor UUIDString];
+    } else {
+        uuid = [[NSUUID UUID] UUIDString];
     }
     
-    if (!deviceId) {
-        if(self.config.logEnabled) {
-            NSLog(@"error getting device identifier: falling back to uuid");
+    CFDataRef dataRef = CFBridgingRetain([uuid dataUsingEncoding:NSUTF8StringEncoding]);
+    CFDictionarySetValue(query, kSecValueData, dataRef);
+    OSStatus status = SecItemAdd(query, NULL);
+    
+    if (status != noErr) {
+        NSLog(@"Keychain Save Error: %d", (int)status);
+        uuid = nil;
+    }
+    
+    CFRelease(dataRef);
+    CFRelease(query);
+    
+    return uuid;
+}
+
+- (NSString *)idFromKeyChain {
+    CFMutableDictionaryRef query = CFDictionaryCreateMutable(kCFAllocatorDefault, 4, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecAttrAccount, CFSTR("zgid_account"));
+    CFDictionarySetValue(query, kSecAttrService, CFSTR("zgid_service"));
+    
+    // See if the attribute exists
+    CFTypeRef attributeResult = NULL;
+    OSStatus status = SecItemCopyMatching(query, (CFTypeRef *)&attributeResult);
+    if (attributeResult != NULL)
+        CFRelease(attributeResult);
+    
+    if (status != noErr) {
+        CFRelease(query);
+        if (status == errSecItemNotFound) {
+            return [self newStoredID];
+        } else {
+            NSLog(@"Unhandled Keychain Error %d", (int)status);
+            return nil;
         }
-        deviceId = [[NSUUID UUID] UUIDString];
     }
-    return deviceId;
+    
+    // Fetch stored attribute
+    CFDictionaryRemoveValue(query, kSecReturnAttributes);
+    CFDictionarySetValue(query, kSecReturnData, (id)kCFBooleanTrue);
+    CFTypeRef resultData = NULL;
+    status = SecItemCopyMatching(query, &resultData);
+    
+    if (status != noErr) {
+        CFRelease(query);
+        if (status == errSecItemNotFound){
+            return [self newStoredID];
+        } else {
+            NSLog(@"Unhandled Keychain Error %ld", status);
+            return nil;
+        }
+    }
+    
+    NSString *uuid = nil;
+    if (resultData != NULL)  {
+        uuid = [[NSString alloc] initWithData:objc_retainedObject(resultData) encoding:NSUTF8StringEncoding];
+    }
+    
+    CFRelease(query);
+    
+    return uuid;
+}
+
+#pragma mark - 设备状态
+
+// 是否在后台运行
+- (BOOL)inBackground {
+    return [UIApplication sharedApplication].applicationState == UIApplicationStateBackground;
 }
 
 // 系统信息

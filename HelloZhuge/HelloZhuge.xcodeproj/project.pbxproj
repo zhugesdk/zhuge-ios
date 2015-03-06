@@ -16,9 +16,9 @@
 		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
 		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
-		E561C5481AA59630009E3FBC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E561C5471AA59630009E3FBC /* AdSupport.framework */; };
 		E5A1DB871A4A62C200D52286 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A1DB841A4A62C200D52286 /* Zhuge.m */; };
 		E5A1DB881A4A62C200D52286 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */; };
+		E5AC1F431AA97F6400A19577 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AC1F421AA97F6400A19577 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,11 +49,11 @@
 		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
 		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		E561C5471AA59630009E3FBC /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		E5A1DB831A4A62C200D52286 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Zhuge.h; path = ../Zhuge/Zhuge.h; sourceTree = "<group>"; };
 		E5A1DB841A4A62C200D52286 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Zhuge.m; path = ../Zhuge/Zhuge.m; sourceTree = "<group>"; };
 		E5A1DB851A4A62C200D52286 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZhugeConfig.h; path = ../Zhuge/ZhugeConfig.h; sourceTree = "<group>"; };
 		E5A1DB861A4A62C200D52286 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZhugeConfig.m; path = ../Zhuge/ZhugeConfig.m; sourceTree = "<group>"; };
+		E5AC1F421AA97F6400A19577 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E561C5481AA59630009E3FBC /* AdSupport.framework in Frameworks */,
+				E5AC1F431AA97F6400A19577 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,7 +78,7 @@
 		E55E514B1A242BF100ED0263 = {
 			isa = PBXGroup;
 			children = (
-				E561C5471AA59630009E3FBC /* AdSupport.framework */,
+				E5AC1F421AA97F6400A19577 /* Security.framework */,
 				E55E51871A242D4700ED0263 /* Zhuge */,
 				E55E51561A242BF100ED0263 /* HelloZhuge */,
 				E55E51731A242BF100ED0263 /* HelloZhugeTests */,
@@ -391,7 +391,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -406,7 +406,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
