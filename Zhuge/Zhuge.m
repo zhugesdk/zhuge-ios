@@ -30,9 +30,9 @@
 @property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *deviceId;
 @property (nonatomic, strong) NSNumber *sessionId;
-@property (nonatomic, strong) NSNumber *updated;
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, copy) NSString *cid;
+@property (nonatomic, assign) UIBackgroundTaskIdentifier taskId;
 
 // 事件
 @property (nonatomic, strong) NSMutableDictionary *timedEvents;
@@ -101,6 +101,7 @@ static Zhuge *sharedInstance = nil;
         self.net = @"";
         self.radio = @"";
         self.telephonyInfo = [[CTTelephonyNetworkInfo alloc] init];
+        self.taskId = UIBackgroundTaskInvalid;
 
         // SDK配置
         if(self.config && self.config.logEnabled) {
@@ -284,6 +285,7 @@ static Zhuge *sharedInstance = nil;
         if(self.config.logEnabled) {
             NSLog(@"applicationWillResignActive");
         }
+        [self sessionEnd];
         [self stopFlushTimer];
     }
     @catch (NSException *exception) {
@@ -296,10 +298,20 @@ static Zhuge *sharedInstance = nil;
         if(self.config.logEnabled) {
             NSLog(@"applicationDidEnterBackground");
         }
+        
+        self.taskId = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+            [[UIApplication sharedApplication] endBackgroundTask:self.taskId];
+            self.taskId = UIBackgroundTaskInvalid;
+        }];
+        
         [self flush];
-        self.updated = @([[NSDate date] timeIntervalSince1970]);
+        
         dispatch_async(_serialQueue, ^{
             [self archive];
+            if (self.taskId != UIBackgroundTaskInvalid) {
+                [[UIApplication sharedApplication] endBackgroundTask:self.taskId];
+                self.taskId = UIBackgroundTaskInvalid;
+            }
         });
     }
     @catch (NSException *exception) {
@@ -312,7 +324,6 @@ static Zhuge *sharedInstance = nil;
         if(self.config.logEnabled) {
             NSLog(@"applicationWillTerminate");
         }
-        self.updated = @([[NSDate date] timeIntervalSince1970]);
         dispatch_async(_serialQueue, ^{
             [self archive];
         });
@@ -558,27 +569,23 @@ static Zhuge *sharedInstance = nil;
 // 会话开始
 - (void)sessionStart {
     @try {
-        NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
-        if (!self.sessionId || ([ts intValue] - [self.updated intValue]) > self.config.sessionInterval) {
-            if (self.sessionId && self.updated > 0) {
-                [self sessionEnd];
-            }
+        if (!self.sessionId) {
+            NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
             self.sessionId = ts;
             NSLog(@"sessionId:%.3f",[ts doubleValue]);
             if(self.config.logEnabled) {
                 NSLog(@"会话开始(ID:%@)", @([self.sessionId intValue]));
             }
-        
+            
             NSMutableDictionary *e = [NSMutableDictionary dictionary];
             e[@"et"] = @"ss";
             e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
             e[@"vn"] = self.config.appVersion;
             e[@"net"] = self.net;
             e[@"radio"] = self.radio;
-        
+            
             [self enqueueEvent:e];
         }
-        self.updated = ts;
     }
     @catch (NSException *exception) {
         NSLog(@"sessionStart exception");
@@ -593,11 +600,12 @@ static Zhuge *sharedInstance = nil;
         }
     
         if (self.sessionId) {
+            NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
             NSMutableDictionary *e = [NSMutableDictionary dictionary];
             e[@"et"] = @"se";
             e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
-            e[@"dr"] = [NSString stringWithFormat:@"%.3f", [self.updated doubleValue] - [self.sessionId doubleValue]];
-
+            e[@"dr"] = [NSString stringWithFormat:@"%.3f", [ts doubleValue] - [self.sessionId doubleValue]];
+            e[@"ts"] = [NSString stringWithFormat:@"%.3f", [ts doubleValue]];
             [self enqueueEvent:e];
             self.sessionId = nil;
         }
@@ -900,7 +908,6 @@ static Zhuge *sharedInstance = nil;
 - (void)syncEnqueueEvent:(NSMutableDictionary *)event {
     NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
 
-    self.updated = ts;
     if (!event[@"ts"]) {
         event[@"ts"] = [NSString stringWithFormat:@"%.3f", [ts doubleValue]];
     }
@@ -1036,7 +1043,6 @@ static Zhuge *sharedInstance = nil;
     [p setValue:self.userId forKey:@"userId"];
     [p setValue:self.deviceId forKey:@"deviceId"];
     [p setValue:self.sessionId forKey:@"sessionId"];
-    [p setValue:self.updated forKey:@"updated"];
     [p setValue:self.timedEvents forKey:@"timedEvents"];
     [p setValue:self.cid forKey:@"cid"];
 
@@ -1103,7 +1109,6 @@ static Zhuge *sharedInstance = nil;
         self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
         self.sessionId = properties[@"sessionId"] ? properties[@"sessionId"] : nil;
         self.cid = properties[@"cid"] ? properties[@"cid"] : nil;
-       self.updated = properties[@"updated"] ? properties[@"updated"] : 0;
         self.timedEvents = properties[@"timedEvents"] ? properties[@"timedEvents"] : [NSMutableDictionary dictionary];
         
         NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
