@@ -22,29 +22,19 @@
 @interface Zhuge () {
 }
 
-// API连接
 @property (nonatomic, copy) NSString *apiURL;
 @property (nonatomic, copy) NSString *appKey;
-
-// 会话
 @property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *deviceId;
 @property (nonatomic, strong) NSNumber *sessionId;
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, copy) NSString *cid;
 @property (nonatomic, assign) UIBackgroundTaskIdentifier taskId;
-
-// 事件
-@property (nonatomic, strong) NSMutableDictionary *timedEvents;
 @property (nonatomic, strong) dispatch_queue_t serialQueue;
 @property (nonatomic, strong) NSMutableArray *eventsQueue;
-
-// 配置文件
 @property (nonatomic, strong)ZhugeConfig *config;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic) NSUInteger sendCount;
-
-// 网络状态
 @property (nonatomic, assign) SCNetworkReachabilityRef reachability;
 @property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyInfo;
 @property (nonatomic, strong) NSString *net;
@@ -102,16 +92,14 @@ static Zhuge *sharedInstance = nil;
         self.radio = @"";
         self.telephonyInfo = [[CTTelephonyNetworkInfo alloc] init];
         self.taskId = UIBackgroundTaskInvalid;
+        NSString *label = [NSString stringWithFormat:@"io.zhuge.%@.%p", appKey, self];
+        self.serialQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
+        self.eventsQueue = [NSMutableArray array];
 
         // SDK配置
         if(self.config && self.config.logEnabled) {
             NSLog(@"SDK系统配置: %@", self.config);
         }
-
-        NSString *label = [NSString stringWithFormat:@"io.zhuge.%@.%p", appKey, self];
-        self.serialQueue = dispatch_queue_create([label UTF8String], DISPATCH_QUEUE_SERIAL);
-        self.eventsQueue = [NSMutableArray array];
-        self.timedEvents = [NSMutableDictionary dictionary];
 
         [self setupListeners];
         [self unarchive];
@@ -705,19 +693,6 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
-// 开始记录有时长的事件
-- (void)timeEvent:(NSString *)event {
-    if (event == nil || [event length] == 0) {
-        if(self.config.logEnabled) {
-            NSLog(@"事件名不能为空");
-        }
-        return;
-    }
-    dispatch_async(self.serialQueue, ^{
-        self.timedEvents[event] = @([[NSDate date] timeIntervalSince1970]);
-    });
-}
-
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
     @try {
@@ -744,13 +719,6 @@ static Zhuge *sharedInstance = nil;
         e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
         e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
     
-        NSNumber *eventStartTime = self.timedEvents[event];
-        if (eventStartTime) {
-            [self.timedEvents removeObjectForKey:event];
-            double epochInterval = [[NSDate date] timeIntervalSince1970];
-            e[@"dr"] = [NSString stringWithFormat:@"%.3f", epochInterval - [eventStartTime doubleValue]];
-        }
-
         [self enqueueEvent:e];
     }
     @catch (NSException *exception) {
@@ -1043,7 +1011,6 @@ static Zhuge *sharedInstance = nil;
     [p setValue:self.userId forKey:@"userId"];
     [p setValue:self.deviceId forKey:@"deviceId"];
     [p setValue:self.sessionId forKey:@"sessionId"];
-    [p setValue:self.timedEvents forKey:@"timedEvents"];
     [p setValue:self.cid forKey:@"cid"];
 
     NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
@@ -1109,7 +1076,6 @@ static Zhuge *sharedInstance = nil;
         self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
         self.sessionId = properties[@"sessionId"] ? properties[@"sessionId"] : nil;
         self.cid = properties[@"cid"] ? properties[@"cid"] : nil;
-        self.timedEvents = properties[@"timedEvents"] ? properties[@"timedEvents"] : [NSMutableDictionary dictionary];
         
         NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];
         [DateFormatter setDateFormat:@"yyyyMMdd"];

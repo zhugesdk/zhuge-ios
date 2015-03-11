@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"1.3.7"
+#define ZG_SDK_VERSION @"1.3.8"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]

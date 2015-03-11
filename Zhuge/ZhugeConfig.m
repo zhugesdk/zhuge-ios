@@ -27,7 +27,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\npolicy=%lu,\nsendInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ndevMode=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)3, (unsigned long)_sendInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_devMode];
+    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\nsendInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ndevMode=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)_sendInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_devMode];
 }
 
 @end
