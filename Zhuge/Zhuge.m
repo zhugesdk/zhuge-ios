@@ -677,6 +677,10 @@ static Zhuge *sharedInstance = nil;
             }
             return;
         }
+        
+        if (!self.sessionId) {
+            [self sessionStart];
+        }
     
         self.userId = userId;
     
@@ -695,12 +699,7 @@ static Zhuge *sharedInstance = nil;
 
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
-    @try {
-        [self track:event properties:nil];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"track exception");
-    }
+    [self track:event properties:nil];
 }
 
 // 跟踪自定义事件
@@ -711,6 +710,10 @@ static Zhuge *sharedInstance = nil;
                 NSLog(@"事件名不能为空");
             }
             return;
+        }
+        
+        if (!self.sessionId) {
+            [self sessionStart];
         }
     
         NSMutableDictionary *e = [NSMutableDictionary dictionary];

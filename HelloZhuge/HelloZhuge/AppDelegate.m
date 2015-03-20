@@ -79,7 +79,7 @@
 
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-
+    [[Zhuge sharedInstance] track:@"app resign active"];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -91,6 +91,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    [[Zhuge sharedInstance] track:@"app active"];
 
 }
 
