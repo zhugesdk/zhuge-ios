@@ -212,7 +212,7 @@ static Zhuge *sharedInstance = nil;
         
         NSNumber *lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgRegisterDeviceToken"];
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-        if (self.cid == nil || self.cid.length == 0 || lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 86400) {
+        if (lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 86400) {
             [self uploadDeviceToken:token];
             [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgRegisterDeviceToken"];
         }
