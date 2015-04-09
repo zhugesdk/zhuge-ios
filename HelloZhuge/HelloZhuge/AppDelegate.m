@@ -42,11 +42,16 @@
                                                        UIRemoteNotificationTypeAlert)
                                            categories:nil];
 #endif
-
+    
     // 启动诸葛
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
+    
+    // 第三方推送(启用第三方推送时，请在startWithAppKey后调用)
+    [zhuge setThirdPartyPushUserId:@"getui123" forChannel:ZG_PUSH_CHANNEL_GETUI];
+    
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     return YES;
 }
 

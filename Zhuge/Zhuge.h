@@ -56,6 +56,15 @@
 - (void)track:(NSString *)event properties:(NSDictionary *)properties;
 
 #pragma mark - 推送
+// 支持的第三方推送渠道
+typedef enum {
+    ZG_PUSH_CHANNEL_GETUI = 1, // 个推
+    ZG_PUSH_CHANNEL_JPUSH = 2, // 极光推送
+    ZG_PUSH_CHANNEL_BAIDU = 3, // 百度云推送
+    ZG_PUSH_CHANNEL_XINGE = 4, // 信鸽
+    ZG_PUSH_CHANNEL_UMENG = 5  // 友盟推送
+} ZGPushChannel;
+
 // 注册APNS远程消息类型
 - (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories;
 
@@ -64,5 +73,8 @@
 
 // 处理接收到的消息
 - (void)handleRemoteNotification:(NSDictionary *)userInfo;
+
+// 设置第三方推送用户ID
+- (void)setThirdPartyPushUserId:(NSString *)userId forChannel:(ZGPushChannel) channel;
 
 @end

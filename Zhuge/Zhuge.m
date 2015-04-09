@@ -706,9 +706,7 @@ static Zhuge *sharedInstance = nil;
 - (void)track:(NSString *)event properties:(NSMutableDictionary *)properties {
     @try {
         if (event == nil || [event length] == 0) {
-            if(self.config.logEnabled) {
-                NSLog(@"事件名不能为空");
-            }
+            NSLog(@"事件名不能为空");
             return;
         }
         
@@ -748,6 +746,46 @@ static Zhuge *sharedInstance = nil;
     }
     @catch (NSException *exception) {
         NSLog(@"trackPush exception");
+    }
+}
+
+// 设置第三方推送用户ID
+- (void)setThirdPartyPushUserId:(NSString *)userId forChannel:(ZGPushChannel) channel {
+    @try {
+        if (userId == nil || [userId length] == 0) {
+            NSLog(@"userId不能为空");
+            return;
+        }
+        
+        NSMutableDictionary *pr = [NSMutableDictionary dictionary];
+        pr[@"channel"] = [self nameForChannel:channel];
+        pr[@"user_id"] = userId;
+        
+        NSMutableDictionary *e = [NSMutableDictionary dictionary];
+        e[@"et"] = @"3rdpush";
+        e[@"pr"] = pr;
+        
+        [self enqueueEvent:e];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"track properties exception");
+    }
+}
+
+-(NSString *)nameForChannel:(ZGPushChannel) channel {
+    switch (channel) {
+        case ZG_PUSH_CHANNEL_JPUSH:
+            return @"jpush";
+        case ZG_PUSH_CHANNEL_UMENG:
+            return @"umeng";
+        case ZG_PUSH_CHANNEL_BAIDU:
+            return @"baidu";
+        case ZG_PUSH_CHANNEL_XINGE:
+            return @"xinge";
+        case ZG_PUSH_CHANNEL_GETUI:
+            return @"getui";
+        default:
+            return @"";
     }
 }
 
