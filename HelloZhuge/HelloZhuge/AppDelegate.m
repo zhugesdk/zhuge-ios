@@ -48,7 +48,7 @@
     
     
     // 第三方推送(启用第三方推送时，请在startWithAppKey后调用)
-    [zhuge setThirdPartyPushUserId:@"getui123" forChannel:ZG_PUSH_CHANNEL_GETUI];
+    [zhuge setThirdPartyPushUserId:@"getui12345678901234567890" forChannel:ZG_PUSH_CHANNEL_GETUI];
     
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
