@@ -20,14 +20,14 @@
         self.sendMaxSizePerDay = 500;
         self.cacheMaxSize = 500;
         self.logEnabled = NO;
-        self.devMode = YES;
+        self.apsProduction = YES;
     }
     
     return self;
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\nsendInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ndevMode=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)_sendInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_devMode];
+    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\nsendInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ndevMode=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)_sendInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_apsProduction];
 }
 
 @end

@@ -226,7 +226,7 @@ static Zhuge *sharedInstance = nil;
     dispatch_async(self.serialQueue, ^{
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
         NSError *error = nil;
-        NSString *requestData = [NSString stringWithFormat:@"method=setting_srv.upload_token_tmp&dev=%@&appid=%@&did=%@&dtype=2&token=%@&timestamp=%@", self.config.devMode? @"1" : @"0", self.appKey, self.deviceId, deviceToken, ts];
+        NSString *requestData = [NSString stringWithFormat:@"method=setting_srv.upload_token_tmp&dev=%@&appid=%@&did=%@&dtype=2&token=%@&timestamp=%@", self.config.apsProduction? @"0" : @"1", self.appKey, self.deviceId, deviceToken, ts];
         NSData *responseData = [self apiRequest:@"/open/" WithData:requestData andError:error];
         if (error) {
             NSLog(@"上报失败: %@", error);
@@ -727,8 +727,7 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
-
-// 上报设备信息
+// 上报推送已读
 - (void)trackPush:(NSDictionary *)userInfo type:(NSString *) type {
     @try {
         if(self.config.logEnabled && userInfo) {

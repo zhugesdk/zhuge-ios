@@ -39,7 +39,7 @@
 // 是否开启SDK日志打印(默认:关闭)
 @property (nonatomic) BOOL logEnabled;
 
-// 开发模式，默认YES(推送时指定deviceToken上传到开发环境或生产环境)
-@property (nonatomic) BOOL devMode;
+// 是否推送到生产环境，默认NO(推送时指定deviceToken上传到开发环境或生产环境)
+@property (nonatomic) BOOL apsProduction;
 
 @end
