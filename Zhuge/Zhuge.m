@@ -418,7 +418,7 @@ static Zhuge *sharedInstance = nil;
         if (status == errSecItemNotFound){
             return [self newStoredID];
         } else {
-            NSLog(@"Unhandled Keychain Error %ld", status);
+            NSLog(@"Unhandled Keychain Error %d", (int)status);
             return nil;
         }
     }
@@ -571,7 +571,9 @@ static Zhuge *sharedInstance = nil;
             e[@"vn"] = self.config.appVersion;
             e[@"net"] = self.net;
             e[@"radio"] = self.radio;
-            
+            if (self.config.logEnabled) {
+                NSLog(@"会话开始");
+            }
             [self enqueueEvent:e];
         }
     }
@@ -660,7 +662,6 @@ static Zhuge *sharedInstance = nil;
         e[@"lang"] = [[NSLocale preferredLanguages] objectAtIndex:0];
         // 时区
         e[@"tz"] = [NSString stringWithFormat:@"%@",[NSTimeZone localTimeZone]];
-        
         [self enqueueEvent:e];
     }
     @catch (NSException *exception) {
@@ -719,7 +720,6 @@ static Zhuge *sharedInstance = nil;
         e[@"eid"] = event;
         e[@"sid"] = [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
         e[@"pr"] =[NSDictionary dictionaryWithDictionary:properties];
-    
         [self enqueueEvent:e];
     }
     @catch (NSException *exception) {
@@ -794,6 +794,9 @@ static Zhuge *sharedInstance = nil;
     batch[@"type"] = @"statis";
     batch[@"sdk"] = @"ios";
     batch[@"sdkv"] = self.config.sdkVersion;
+    if (self.config.logEnabled) {
+        batch[@"debug"] = @1;
+    }
     batch[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
     batch[@"cn"] = self.config.channel;
     batch[@"ak"] = self.appKey;
@@ -803,7 +806,7 @@ static Zhuge *sharedInstance = nil;
     batch[@"radio"] = self.radio;
     batch[@"deviceToken"] = self.deviceToken;
     batch[@"data"] = events;
-    
+   
     return batch;
 }
 
@@ -877,12 +880,12 @@ static Zhuge *sharedInstance = nil;
     [self stopFlushTimer];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.config.sendInterval > 0) {
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:self.config.sendInterval
-                                                          target:self
+                self.timer = [NSTimer scheduledTimerWithTimeInterval:self.config.logEnabled? 2 : self.config.sendInterval
+                                                        target:self
                                                         selector:@selector(flush)
                                                         userInfo:nil
-                                                         repeats:YES];
-            if(self.config.logEnabled) {
+                                                        repeats:YES];
+            if (self.config.logEnabled) {
                 NSLog(@"启动事件发送定时器");
             }
         }
