@@ -798,12 +798,13 @@ static Zhuge *sharedInstance = nil;
     batch[@"cn"] = self.config.channel;
     batch[@"ak"] = self.appKey;
     batch[@"did"] = self.deviceId;
-    batch[@"cuid"] = self.userId;
+    if (self.userId.length > 0) {
+        batch[@"cuid"] = self.userId;
+    }
     batch[@"net"] = self.net;
     batch[@"radio"] = self.radio;
     batch[@"deviceToken"] = self.deviceToken;
     batch[@"data"] = events;
-   
     return batch;
 }
 

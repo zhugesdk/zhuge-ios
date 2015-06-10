@@ -147,13 +147,17 @@ zhuge
     [[Zhuge sharedInstance] handleRemoteNotification:userInfo];
 }
 ```
-
 ## 第三方推送
 诸葛同时支持第三方推送，如果您正在使用第三方推送，请在startWithAppKey调用之后设置第三方推送的用户ID
 
 ```
 [zhuge setThirdPartyPushUserId:@"第三方推送的用户ID" forChannel:ZG_PUSH_CHANNEL_GETUI];
 ```
+## 实时调试
+实时调试功能开启后，使用和操作设备或网站时，可以在实时调试平台看到所有的操作信息，以辅助开发者确认打点是否正确。
+
+**注意，实时调试过程中设备操作信息不会上传到应用数据中，调试完成，需要关闭debug。**
+
 
 
 
