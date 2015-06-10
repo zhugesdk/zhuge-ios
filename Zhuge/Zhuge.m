@@ -113,7 +113,6 @@ static Zhuge *sharedInstance = nil;
     @catch (NSException *exception) {
         NSLog(@"startWithAppKey exception");
     }
-
 }
 
 - (NSString *)getDeviceId {
@@ -173,7 +172,6 @@ static Zhuge *sharedInstance = nil;
                            selector:@selector(applicationDidEnterBackground:)
                                name:UIApplicationDidEnterBackgroundNotification
                              object:nil];
- 
 }
 
 #pragma mark - 推送
@@ -339,7 +337,6 @@ static Zhuge *sharedInstance = nil;
     }
     return deviceId;
 }
-
 
 // 广告ID
 - (NSString *)adid {
@@ -794,7 +791,7 @@ static Zhuge *sharedInstance = nil;
     batch[@"type"] = @"statis";
     batch[@"sdk"] = @"ios";
     batch[@"sdkv"] = self.config.sdkVersion;
-    if (self.config.logEnabled) {
+    if (self.config.debug) {
         batch[@"debug"] = @1;
     }
     batch[@"ts"] = @(round([[NSDate date] timeIntervalSince1970]));
@@ -904,7 +901,6 @@ static Zhuge *sharedInstance = nil;
         self.timer = nil;
     });
 }
-
 
 #pragma mark - 事件上报
 

@@ -50,7 +50,6 @@
     user[@"location"] = @"北京 朝阳区";
     user[@"公司"] = @"zhuge";
     [[Zhuge sharedInstance] identify:self.uid.text properties:user];
-
 }
 
 @end

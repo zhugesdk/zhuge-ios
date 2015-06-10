@@ -30,14 +30,12 @@
     [super viewWillDisappear:animated];
 }
 
-
 - (IBAction)scan:(id)sender {
     [[Zhuge sharedInstance] track:@"扫一扫"];
 }
 
 - (IBAction)feed:(id)sender {
     [[Zhuge sharedInstance] track:@"朋友圈"];
-
 }
 
 - (IBAction)shopping:(id)sender {
@@ -54,10 +52,7 @@
         } else {
             [[Zhuge sharedInstance] track: event];
         }
-        
-
     }
-
 }
 
 @end

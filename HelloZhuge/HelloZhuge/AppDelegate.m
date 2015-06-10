@@ -16,6 +16,8 @@
     // 打开SDK日志打印
     [zhuge.config setLogEnabled:YES]; // 默认关闭
     
+    [zhuge.config setDebug:NO]; // 默认关闭
+    
     // 自定义版本和渠道
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
@@ -46,10 +48,8 @@
     // 启动诸葛
     [zhuge startWithAppKey:@"a03fa1da94ec4c23a7325f8dad4629c8" launchOptions:launchOptions];
     
-    
     // 第三方推送(启用第三方推送时，请在startWithAppKey后调用)
     [zhuge setThirdPartyPushUserId:@"getui12345678901234567890" forChannel:ZG_PUSH_CHANNEL_GETUI];
-    
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     return YES;
@@ -82,26 +82,21 @@
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     [[Zhuge sharedInstance] track:@"app resign active"];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
- 
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[Zhuge sharedInstance] track:@"app active"];
-
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-
 }
 
 @end

@@ -20,6 +20,7 @@
         self.sendMaxSizePerDay = 500;
         self.cacheMaxSize = 500;
         self.logEnabled = NO;
+        self.debug = NO;
         self.apsProduction = YES;
     }
     
