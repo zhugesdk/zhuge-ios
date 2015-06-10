@@ -158,7 +158,7 @@ zhuge
 
 **注意，实时调试过程中设备操作信息不会上传到应用数据中，调试完成，需要关闭debug。**
 
-
+	[zhuge.config setDebug:YES];
 
 
 
