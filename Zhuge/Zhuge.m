@@ -780,6 +780,8 @@ static Zhuge *sharedInstance = nil;
             return @"xinge";
         case ZG_PUSH_CHANNEL_GETUI:
             return @"getui";
+        case ZG_PUSH_CHANNEL_XIAOMI:
+            return @"xiaomi";
         default:
             return @"";
     }

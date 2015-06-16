@@ -62,7 +62,8 @@ typedef enum {
     ZG_PUSH_CHANNEL_JPUSH = 2, // 极光推送
     ZG_PUSH_CHANNEL_BAIDU = 3, // 百度云推送
     ZG_PUSH_CHANNEL_XINGE = 4, // 信鸽
-    ZG_PUSH_CHANNEL_UMENG = 5  // 友盟推送
+    ZG_PUSH_CHANNEL_UMENG = 5, // 友盟推送
+    ZG_PUSH_CHANNEL_XIAOMI  = 6
 } ZGPushChannel;
 
 // 注册APNS远程消息类型
