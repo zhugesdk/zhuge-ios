@@ -6,8 +6,8 @@ gem install cocoapods
 ```
 
 在项目目录下创建`Podfile`文件，文件内容为:
-```ruby
-pod 'Zhuge'
+```
+pod 'Zhugeio'
 ```
 
 在项目目录下执行下面脚本，CocoaPods会自动下载安装Zhuge SDK，并生成工作区文件:

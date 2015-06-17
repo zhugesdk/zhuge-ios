@@ -3,7 +3,7 @@
 ## 安装SDK
 最简单的安装方式是使用[CocoaPods](http://cocoapods.org/)  
  1. 安装CocoaPod `gem install cocoapods`  
- 2. 项目目录下创建`Podfile`文件，并加入一行代码: `pod 'Zhuge'`  
+ 2. 项目目录下创建`Podfile`文件，并加入一行代码: `pod 'Zhugeio'`  
  3. 项目目录下执行`pod install`，CocoaPods会自动安装Zhuge SDK，并生成工作区文件*.xcworkspace，打开该工作区即可。
 
 你也可以直接下载来安装：  
