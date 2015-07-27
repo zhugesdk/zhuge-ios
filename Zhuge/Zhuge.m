@@ -17,6 +17,11 @@
 #include <net/if.h>
 #include <net/if_dl.h>
 
+
+#import "Base64.h"
+#import "Compres.h"
+
+
 #import "Zhuge.h"
 
 @interface Zhuge () {
@@ -959,7 +964,16 @@ static Zhuge *sharedInstance = nil;
             }
             
             NSString *eventData = [self encodeAPIData:[self wrapEvents:events]];
-            NSString *requestData = [NSString stringWithFormat:@"method=event_statis_srv.upload&event=%@", eventData];
+            if (self.config.logEnabled) {
+                NSLog(@"上传事件：%@",eventData);
+            }
+            NSData *eventDataBefore = [eventData dataUsingEncoding:NSUTF8StringEncoding];
+            NSData *zlibedData = [eventDataBefore zlibDeflate];
+            
+            NSString *event = [zlibedData base64EncodedString];
+            NSString *result = [[event stringByReplacingOccurrencesOfString:@"\r" withString:@""] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+            
+            NSString *requestData = [NSString stringWithFormat:@"method=event_statis_srv.upload&compress=1&event=%@", result];
 
             NSError *error = nil;
             [self apiRequest:@"/APIPOOL/" WithData:requestData andError:error];
@@ -984,9 +998,6 @@ static Zhuge *sharedInstance = nil;
     [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[[requestData stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
-    if(self.config.logEnabled && URL && requestData) {
-        NSLog(@"API请求: %@&%@", URL, requestData);
-    }
     
     [self updateNetworkActivityIndicator:YES];
     

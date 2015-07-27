@@ -10,7 +10,7 @@
  1. 下载[SDK](https://github.com/zhugesdk/zhuge-ios)：  
  2. 把`Zhuge`目录拖拽到项目中  
  3. 安装所有依赖： 
-    `UIKit`、`Foundation`、`SystemConfiguration`、`CoreTelephony`、`'Accelerate`、`CoreGraphics`、`QuartzCore`
+    `UIKit`、`Foundation`、`SystemConfiguration`、`CoreTelephony`、`'Accelerate`、`CoreGraphics`、`QuartzCore`、`libz.dylib`
 
 ## 兼容性和ARC
  1. 诸葛SDK仅支持iOS 6.0以上系统，您需要使用Xcode 5和IOS 7.0及以上开发环境进行编译，如果您的版本较低，强烈建议升级。  

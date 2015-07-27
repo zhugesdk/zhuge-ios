@@ -14,7 +14,7 @@
     Zhuge *zhuge = [Zhuge sharedInstance];
 
     // 打开SDK日志打印
-//    [zhuge.config setLogEnabled:YES]; // 默认关闭
+    [zhuge.config setLogEnabled:YES]; // 默认关闭
     
     [zhuge.config setDebug:YES]; // 默认关闭
     

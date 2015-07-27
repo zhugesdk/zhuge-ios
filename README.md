@@ -21,22 +21,21 @@ open {YOUR-PROJECT}.xcworkspace
 ```
 
 2、 向`AppDelegate.m`文件中添加诸葛启动代码:
-```objc
-#import <Zhuge/Zhuge.h>
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [[Zhuge sharedInstance] startWithAppKey:@"Your App Key" launchOptions:launchOptions];
-}
-```
+	#import <Zhuge/Zhuge.h>
+
+	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    	[[Zhuge sharedInstance] startWithAppKey:@"Your App Key" launchOptions:launchOptions];
+	}
+	
 
 3、 开始追踪用户行为:
 
-```objc
-[[Zhuge sharedInstance] track:@"分享" properties:@{@"渠道":@"微博"}];
+	[[Zhuge sharedInstance] track:@"分享" properties:@{@"渠道":@"微博"}];
 ```
 
 4、 识别用户身份
-```objc
+
 [[Zhuge sharedInstance] identify:@"1234" properties:@{@"email":@"zhuge@37degree.com"}]];
 ```
 
