@@ -19,16 +19,15 @@
         self.sendInterval = 10;
         self.sendMaxSizePerDay = 500;
         self.cacheMaxSize = 500;
-        self.logEnabled = NO;
         self.debug = NO;
+        self.openGestureBindingUI = NO;
         self.apsProduction = YES;
     }
     
     return self;
 }
-
 - (NSString *) description {
-    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\nsendInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nlogEnabled=%lu,\ndevMode=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)_sendInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_logEnabled, (unsigned long)_apsProduction];
+    return [NSString stringWithFormat: @"\n{\nsdkVersion=%@,\nappVersion=%@,\nchannel=%@,\nsendInterval=%lu,\nsendMaxSizePerDay=%lu,\ncacheMaxSize=%lu,\nopenGestureBindingUI=%lu,\ndevMode=%lu}", _sdkVersion, _appVersion, _channel, (unsigned long)_sendInterval, (unsigned long)_sendMaxSizePerDay, (unsigned long)_cacheMaxSize, (unsigned long)_openGestureBindingUI, (unsigned long)_apsProduction];
 }
 @end
 

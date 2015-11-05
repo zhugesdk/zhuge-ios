@@ -39,4 +39,4 @@ open {YOUR-PROJECT}.xcworkspace
 [[Zhuge sharedInstance] identify:@"1234" properties:@{@"email":@"zhuge@37degree.com"}]];
 ```
 
-**了解更多 [完整文档 »](http://zhugeio.com/docs/ios.html)**
+**了解更多 [完整文档 »](https://docs.zhugeio.com/help/developer/iOS)**

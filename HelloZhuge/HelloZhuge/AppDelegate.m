@@ -22,7 +22,7 @@
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
     
-    // 推送指定deviceToken上传到开发环境或生产环境，默认NO，上传到开发环境
+    // 推送指定deviceToken上传到开发环境或生产环境，默认YES，上传到生产环境
     [zhuge.config setApsProduction:NO];
 
     // 开启推送
@@ -46,8 +46,7 @@
 #endif
     
     // 启动诸葛
-    [zhuge startWithAppKey:@"e7a39acb186b4049b91306a4b6965e5d" launchOptions:launchOptions];
-    
+    [zhuge startWithAppKey:@"f05e0a67082f460f9fadb50b61040733" launchOptions:launchOptions];
     // 第三方推送(启用第三方推送时，请在startWithAppKey后调用)
 //    [zhuge setThirdPartyPushUserId:@"getui12345678901234567890" forChannel:ZG_PUSH_CHANNEL_GETUI];
     
@@ -56,7 +55,8 @@
 }
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+    
+    NSLog(@"before cid = %@",[[Zhuge sharedInstance] getCid]);
     [[Zhuge sharedInstance] registerDeviceToken:deviceToken];
 }
 
@@ -94,6 +94,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[Zhuge sharedInstance] track:@"app active"];
+    NSLog(@"after cid = %@",[[Zhuge sharedInstance] getCid]);
+    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

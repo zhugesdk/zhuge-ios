@@ -1,13 +1,13 @@
 Pod::Spec.new do |s|
   s.name         = "Zhugeio"
-  s.version      = "1.4.5"
-  s.summary      = "iOS tracking library for Zhuge Analytics"
+  s.version      = "2.0.0"
+  s.summary      = "iOS tracking library for Zhugeio Analytics"
   s.homepage     = "http://zhugeio.com"
   s.license      = "MIT"
-  s.author       = { "37degree,Inc" => "support@37degree.com" }
-  s.platform     = :ios, "6.0"
-  s.source       = { :git => "https://github.com/zhugesdk/zhuge-ios.git", :tag => "1.4.5" }
-  s.frameworks   = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security'
-  s.source_files = "Classes", "Zhuge/**/*.{h,m}"
+  s.author       = { "Zhugeio,Inc" => "info@zhugeio.com" }
+  s.platform     = :ios, "7.0"
+  s.source       = { :git => "https://github.com/zhugesdk/zhuge-ios.git", :tag => s.version }
+  s.frameworks   = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security','CoreMotion',libz','libicucore'
+  s.source_files = "Classes", "Zhuge/**/*.{h,m,json}"
   s.requires_arc = true
 end

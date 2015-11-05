@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"1.4.2"
+#define ZG_SDK_VERSION @"2.0.0"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -29,7 +29,7 @@
 
 #pragma mark - 发送策略
 // 上报时间间隔(默认:10秒)
-@property (nonatomic) NSUInteger sendInterval;
+@property  NSUInteger sendInterval;
 // 每天最大上报事件数，超出部分缓存到本地(默认:500个)
 @property (nonatomic) NSUInteger sendMaxSizePerDay;
 // 本地缓存事件数(默认:500个)
@@ -37,12 +37,14 @@
 
 #pragma mark - 日志
 // 是否开启SDK日志打印(默认:关闭)
-@property (nonatomic) BOOL logEnabled;
+//@property (nonatomic) BOOL logEnabled;
 
 // 是否开启实时调试(默认:关闭)
 @property (nonatomic) BOOL debug;
 
-// 是否推送到生产环境，默认NO(推送时指定deviceToken上传到开发环境或生产环境)
-@property (nonatomic) BOOL apsProduction;
+// 是否开启无码打点（默认：关闭）
+@property (nonatomic) BOOL openGestureBindingUI;
 
+// 是否推送到生产环境，默认YES(推送时指定deviceToken上传到开发环境或生产环境)
+@property (nonatomic) BOOL apsProduction;
 @end

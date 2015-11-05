@@ -7,8 +7,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
-
-@interface Zhuge : NSObject
+#import "ShakeGesture.h"
+@interface Zhuge : NSObject<connectPro>
 
 #pragma mark - 获取实例
 
@@ -21,7 +21,9 @@
  获得诸葛配置实例。
  */
 - (ZhugeConfig *)config;
-
+/**
+ */
+-(void)openGestureBindingUI;
 /**
  获得诸葛设备ID。
  */
@@ -77,5 +79,5 @@ typedef enum {
 
 // 设置第三方推送用户ID
 - (void)setThirdPartyPushUserId:(NSString *)userId forChannel:(ZGPushChannel) channel;
-
+- (void)clearNotification;
 @end
