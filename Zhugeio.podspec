@@ -7,7 +7,8 @@ Pod::Spec.new do |s|
   s.author       = { "Zhugeio,Inc" => "info@zhugeio.com" }
   s.platform     = :ios, "7.0"
   s.source       = { :git => "https://github.com/zhugesdk/zhuge-ios.git", :tag => s.version }
-  s.frameworks   = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security','CoreMotion',libz','libicucore'
+  s.frameworks   = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security','CoreMotion'
+  s.libraries = 'icucore','z'
   s.source_files = "Classes", "Zhuge/**/*.{h,m,json}"
   s.requires_arc = true
 end
