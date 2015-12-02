@@ -14,9 +14,13 @@
     Zhuge *zhuge = [Zhuge sharedInstance];
 
     // 打开SDK日志打印
-    [zhuge.config setLogEnabled:YES]; // 默认关闭
     
-    [zhuge.config setDebug:YES]; // 默认关闭
+    BOOL state = NO;
+    
+    while (!state) {
+        NSLog(@"state is %@",state?@"YES":@"NO");
+        state = !state;
+    }
     
     // 自定义版本和渠道
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
@@ -47,6 +51,8 @@
     
     // 启动诸葛
     [zhuge startWithAppKey:@"f05e0a67082f460f9fadb50b61040733" launchOptions:launchOptions];
+    [zhuge.config setDebug:YES]; // 默认关闭
+
     // 第三方推送(启用第三方推送时，请在startWithAppKey后调用)
 //    [zhuge setThirdPartyPushUserId:@"getui12345678901234567890" forChannel:ZG_PUSH_CHANNEL_GETUI];
     
@@ -56,7 +62,6 @@
 
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
-    NSLog(@"before cid = %@",[[Zhuge sharedInstance] getCid]);
     [[Zhuge sharedInstance] registerDeviceToken:deviceToken];
 }
 
@@ -94,7 +99,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     [[Zhuge sharedInstance] track:@"app active"];
-    NSLog(@"after cid = %@",[[Zhuge sharedInstance] getCid]);
     
 }
 

@@ -77,7 +77,7 @@ static Zhuge *sharedInstance = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             sharedInstance = [[super alloc] init];
-            sharedInstance.apiURL = @"https://apipool.37degree.com";
+            sharedInstance.apiURL = @"https://apipool.zhussgeio.com";
             sharedInstance.config = [[ZhugeConfig alloc] init];
         });
         
@@ -259,10 +259,7 @@ static Zhuge *sharedInstance = nil;
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
         NSError *error = nil;
         NSString *requestData = [NSString stringWithFormat:@"method=setting_srv.upload_token_tmp&dev=%@&appid=%@&did=%@&dtype=2&token=%@&timestamp=%@", self.config.apsProduction? @"0" : @"1", self.appKey, self.deviceId, deviceToken, ts];
-        NSData *responseData = [self apiRequest:@"/open/" WithData:requestData andError:error];
-        if (error) {
-            ZhugeDebug(@"上报失败: %@", error);
-        }
+        NSData *responseData = [self apiRequest:@"/open/" WithData:requestData andError:nil];
         if (responseData) {
             NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
             if (response && response[@"data"]) {
@@ -272,6 +269,8 @@ static Zhuge *sharedInstance = nil;
                     ZhugeDebug(@"get cid:%@", self.cid);
                 }
             }
+        }else{
+            ZhugeDebug(@"上传设备信息失败");
         }
     });
 }
@@ -284,20 +283,18 @@ static Zhuge *sharedInstance = nil;
 -(void)clearNotification{
     dispatch_async(self.serialQueue, ^{
         NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-        NSError *error = nil;
         NSString *requestData = [NSString stringWithFormat:@"setting_srv.clear_msg_cnt&cid=%@&timestamp=%@", self.cid, ts];
-        NSData *responseData = [self apiRequest:@"/open/" WithData:requestData andError:error];
-        if (error) {
-            ZhugeDebug(@"上报失败: %@", error);
-        }
+        NSData *responseData = [self apiRequest:@"/open/" WithData:requestData andError:nil];
         if (responseData) {
-            NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:&error];
+            NSDictionary *response = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
             if (response && response[@"return_code"]) {
                 NSInteger code = [response[@"return_code"] integerValue];
                 if (0!=code) {
                     
                 }
             }
+        }else{
+            ZhugeDebug(@"清除通知消息失败，检查网络连接。");
         }
     });
 }
@@ -319,7 +316,7 @@ static Zhuge *sharedInstance = nil;
         } useCathe:YES];
         
 #if TARGET_IPHONE_SIMULATOR
-        [self connectToABTestDesigner:YES];
+//        [self connectToABTestDesigner:YES];
 #else
         if (self.config.openGestureBindingUI){
             ZhugeDebug(@"开始监听手势");
@@ -1010,13 +1007,13 @@ static Zhuge *sharedInstance = nil;
             
             NSString *requestData = [NSString stringWithFormat:@"method=event_statis_srv.upload&compress=1&event=%@", result];
 
-            NSError *error = nil;
-            [self apiRequest:@"/APIPOOL/" WithData:requestData andError:error];
-            if (error) {
-                ZhugeDebug(@"上报失败: %@", error);
+
+            NSData *response = [self apiRequest:@"/APIPOOL/" WithData:requestData andError:nil];
+            if (!response) {
+                ZhugeDebug(@"上传事件失败");
                 break;
             }
-            
+            ZhugeDebug(@"上传事件成功");
             self.sendCount += sendBatchSize;
            [queue removeObjectsInArray:events];
         }
@@ -1028,30 +1025,43 @@ static Zhuge *sharedInstance = nil;
 
 
 - (NSData*) apiRequest:(NSString *)endpoint WithData:(NSString *)requestData andError:(NSError *)error {
-    NSURL *URL = [NSURL URLWithString:[self.apiURL stringByAppendingString:endpoint]];
-    ZhugeDebug(@"api request url = %@",URL);
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[requestData stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [self updateNetworkActivityIndicator:YES];
-    
-    NSURLResponse *urlResponse = nil;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
-    if (error) {
-        ZhugeDebug(@"error : %@",error);
+    BOOL success = NO;
+    int  retry = 0;
+    NSData *responseData = nil;
+    while (!success && retry < 3) {
+        NSURL *URL = nil;
+        if (retry > 0) {
+            URL = [NSURL URLWithString:@"https://apipoolback.zhugeio.com/upload"];
+        }else{
+            URL = [NSURL URLWithString:[self.apiURL stringByAppendingString:endpoint]];
+        }
+        ZhugeDebug(@"api request url = %@ , retry = %d",URL,retry);
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+        [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[[requestData stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
         
-    }
-    
-    [self updateNetworkActivityIndicator:NO];
-    
-    if (responseData != nil) {
-        NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        [self updateNetworkActivityIndicator:YES];
         
-        ZhugeDebug(@"API响应: %@",response);
+        NSURLResponse *urlResponse = nil;
+        NSError *reqError = nil;
+        responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&reqError];
+        if (reqError) {
+            ZhugeDebug(@"error : %@",reqError);
+            retry++;
+            continue;
+        }
+        [self updateNetworkActivityIndicator:NO];
+        
+        if (responseData != nil) {
+            NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+            ZhugeDebug(@"API响应: %@",response);
+            success = YES;
+        }
     }
-    
+    if (!success) {
+        return nil;
+    }
     return responseData;
 }
 
