@@ -77,7 +77,7 @@ static Zhuge *sharedInstance = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             sharedInstance = [[super alloc] init];
-            sharedInstance.apiURL = @"https://apipool.zhussgeio.com";
+            sharedInstance.apiURL = @"https://apipool.zhugeio.com";
             sharedInstance.config = [[ZhugeConfig alloc] init];
         });
         
