@@ -10,6 +10,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "zlib.h"
 #import "Compres.h"
 
 

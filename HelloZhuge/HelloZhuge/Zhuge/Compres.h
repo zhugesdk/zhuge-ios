@@ -5,7 +5,6 @@
 //  Created by jiaokang on 15/7/27.
 //  Copyright (c) 2015年 37degree. All rights reserved.
 //
-#import "zlib.h"
 #import <Foundation/Foundation.h>
 
 @interface NSData (NSDataExtension)

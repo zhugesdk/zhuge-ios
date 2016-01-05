@@ -221,9 +221,6 @@
 {
     ZhugeDebug(@"WebSocket %@ did open.", webSocket);
     _commandQueue.suspended = NO;
-//    NSString * jsonString = @"{\"appkey\":\"hqq\",\"platform\":\"2\",\"ctype\":\"client\"}";
-//    [_webSocket send:jsonString];
-//    ZhugeDebug(@"send paramMessage to server : %@",jsonString);
 }
 
 - (void)webSocket:(ZGWebSocket *)webSocket didFailWithError:(NSError *)error
@@ -252,7 +249,6 @@
     _open = NO;
     if (_connected) {
         _connected = NO;
-//        [self open:YES maxInterval:10 maxRetries:10];
         if (_disconnectCallback) {
             _disconnectCallback();
         }
