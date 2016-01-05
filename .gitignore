@@ -1,5 +1,5 @@
 .DS_Store
-
+*.xcuserstate
 HelloZhuge/build/
 *.pbxuser
 !default.pbxuser
@@ -13,4 +13,3 @@ xcuserdata
 *.xccheckout
 *.moved-aside
 DerivedData
-*.xcuserstate
