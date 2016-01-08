@@ -156,22 +156,23 @@ static void (*zg_swizzledMethods[MAX_ARGS - MIN_ARGS + 1])() = {zg_swizzledMetho
                 
                 // Add the swizzle as a new local method on the class.
                 if (!class_addMethod(aClass, aSelector, swizzledMethod, method_getTypeEncoding(aMethod))) {
-                    [NSException raise:@"SwizzleException" format:@"Could not add swizzled for %@::%@, even though it didn't already exist locally", NSStringFromClass(aClass), NSStringFromSelector(aSelector)];
+                    ZhugeDebug(@"SwizzleException,Could not add swizzled for %@::%@, even though it didn't already exist locally", NSStringFromClass(aClass), NSStringFromSelector(aSelector));
                 }
                 // Now re-get the Method, it should be the one we just added.
                 Method newMethod = class_getInstanceMethod(aClass, aSelector);
                 if (aMethod == newMethod) {
-                    [NSException raise:@"SwizzleException" format:@"Newly added method for %@::%@ was the same as the old method", NSStringFromClass(aClass), NSStringFromSelector(aSelector)];
+                    
+                    ZhugeDebug(@"SwizzleException,Newly added method for %@::%@ was the same as the old method", NSStringFromClass(aClass), NSStringFromSelector(aSelector));
                 }
                 
                 ZGSwizzle *newSwizzle = [[ZGSwizzle alloc] initWithBlock:aBlock named:aName forClass:aClass selector:aSelector originalMethod:originalMethod withNumArgs:numArgs];
                 [self setSwizzle:newSwizzle forMethod:newMethod];
             }
         } else {
-            [NSException raise:@"SwizzleException" format:@"Cannot swizzle method with %d args", numArgs];
+            ZhugeDebug(@"SwizzleException,Cannot swizzle method with %d args", numArgs);
         }
     } else {
-        [NSException raise:@"SwizzleException" format:@"Cannot find method for %@ on %@", NSStringFromSelector(aSelector), NSStringFromClass(aClass)];
+        ZhugeDebug(@"SwizzleException,Cannot find method for %@ on %@", NSStringFromSelector(aSelector), NSStringFromClass(aClass));
     }
 }
 
