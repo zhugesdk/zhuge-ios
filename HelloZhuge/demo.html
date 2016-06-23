@@ -1,0 +1,27 @@
+<html>
+<body>
+<script type="text/javascript">
+    function showAndroidToast() {
+        console.log('click');
+        console.log(bot);
+        var c = bot.getDid();
+        console.log('get');
+        bot.showToast(c);
+    }
+
+    function submitString() {
+        console.log('submit');
+        var b = document.getElementById("a").value;
+        bot.showToast(b);
+    }
+</script>
+<button type="button" onclick="showAndroidToast()" >Click Me!</button>
+<!--<br/>-->
+<form name="input" onsubmit="submitString()" method="get">
+    Username:
+    <input type="text" name="user" id="a"/>
+    <input type="submit" value="Submit" />
+</form>
+
+</body>
+</html>
