@@ -45,10 +45,10 @@
 @property (nonatomic, strong) CTTelephonyNetworkInfo *telephonyInfo;
 @property (nonatomic, strong) NSString *net;
 @property (nonatomic, strong) NSString *radio;
-@property (atomic, copy) NSString *switchboardURL;
-@property (atomic, copy) NSString *eventURL;
+@property (nonatomic, copy) NSString *switchboardURL;
+@property (nonatomic, copy) NSString *eventURL;
 @property (nonatomic) NSNumber *preTime;
-
+@property (nonatomic, strong)NSMutableDictionary *eventTimeDic;
 
 @property (nonatomic, strong) NSSet *eventBindings;
 @property (nonatomic, strong) id abtestDesignerConnection;
@@ -79,6 +79,7 @@ static Zhuge *sharedInstance = nil;
             sharedInstance = [[super alloc] init];
             sharedInstance.apiURL = @"https://apipool.zhugeio.com";
             sharedInstance.config = [[ZhugeConfig alloc] init];
+            sharedInstance.eventTimeDic = [[NSMutableDictionary alloc]init];
         });
         
         return sharedInstance;
@@ -114,7 +115,6 @@ static Zhuge *sharedInstance = nil;
         self.eventsQueue = [NSMutableArray array];
         self.switchboardURL = @"ws://codeless.zhugeio.com/connect?ctype=client&platform=ios&appkey=";
         self.eventURL = @"https://api.zhugeio.com/v1/events/codeless/appkey";
-        
 
         self.decideResponseCached = NO;
 
@@ -159,7 +159,13 @@ static Zhuge *sharedInstance = nil;
     
     return self.deviceId;
 }
+-(NSString *)getSessionID{
 
+    if (!self.sessionId) {
+        self.sessionId = 0;
+    }
+    return [NSString stringWithFormat:@"%.3f", [self.sessionId doubleValue]];
+}
 // 监听网络状态和应用生命周期
 - (void)setupListeners{
     BOOL reachabilityOk = NO;
@@ -743,6 +749,38 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
+-(void)stratTrack:(NSString *)eventName{
+    if (!eventName) {
+        ZhugeDebug(@"startTrack event name must not be nil.");
+        return;
+    }
+    dispatch_async(self.serialQueue, ^{
+        NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
+        ZhugeDebug(@"startTrack %@ at time : %@",eventName,ts);
+        [self.eventTimeDic setValue:ts forKey:eventName];
+    });
+}
+-(void)endTrack:(NSString *)eventName properties:(NSDictionary*)properties{
+    
+    dispatch_async(self.serialQueue, ^{
+        NSNumber *start = [self.eventTimeDic objectForKey:eventName];
+        if (!start) {
+            ZhugeDebug(@"end track event name not found ,have you called startTrack already?");
+            return;
+        }
+        [self.eventTimeDic removeObjectForKey:eventName];
+        NSNumber *end = @([[NSDate date] timeIntervalSince1970]);
+        ZhugeDebug(@"endTrack %@ at time : %@",eventName,end);
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
+        double dru = end.doubleValue - start.doubleValue;
+        if (properties) {
+            [dic addEntriesFromDictionary:properties];
+        }
+        NSString *duration = [NSString stringWithFormat:@"%.3f", dru];
+        dic[@"duration"] = duration;
+        [self track:eventName properties:dic];
+    });
+}
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
     [self track:event properties:nil];
