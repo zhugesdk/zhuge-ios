@@ -15,20 +15,21 @@
 /**
  获取诸葛统计的实例。
  */
-+ (Zhuge *)sharedInstance;
++ (nonnull Zhuge*)sharedInstance;
 
 /**
  获得诸葛配置实例。
  */
-- (ZhugeConfig *)config;
+- (nonnull ZhugeConfig *)config;
 /**
  */
 -(void)openGestureBindingUI;
+
 /**
  获得诸葛设备ID。
  */
-- (NSString *)getDeviceId;
-
+- (nonnull NSString *)getDeviceId;
+-(nonnull NSString *)getSessionID;
 #pragma mark - 开启统计
 
 /**
@@ -36,7 +37,7 @@
  
  @param appKey 应用Key，网站上注册应用时自动获得
  */
-- (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions;
+- (void)startWithAppKey:(nonnull NSString*)appKey launchOptions:(nullable NSDictionary*)launchOptions;
 
 #pragma mark - 追踪用户行为
 
@@ -46,7 +47,7 @@
  @param userId     用户ID
  @param properties 用户属性
  */
-- (void)identify:(NSString *)userId properties:(NSDictionary *)properties;
+- (void)identify:(nonnull NSString*)userId properties:(nullable   NSDictionary *)properties;
 
 /**
  追踪自定义事件。
@@ -54,9 +55,16 @@
  @param event      事件名称
  @param properties 事件属性
  */
-- (void)track:(NSString *)event;
-- (void)track:(NSString *)event properties:(NSDictionary *)properties;
+- (void)track:(nonnull NSString *)event;
+- (void)track:(nonnull NSString *)event properties:(nullable NSDictionary *)properties;
+/**
+ 开始追踪一个耗时事件，这个借口并不会真正的统计这个事件。当你调用endTrack时，会统计两个接口之间的耗时，
+ 并作为一个属性添加到事件之中
+ @param eventName 事件名称 
+ */
+-(void)stratTrack:(nonnull NSString *)eventName;
 
+-(void)endTrack:(nonnull NSString *)eventName properties:(nullable NSDictionary *)properties;
 #pragma mark - 推送
 // 支持的第三方推送渠道
 typedef enum {
@@ -68,16 +76,10 @@ typedef enum {
     ZG_PUSH_CHANNEL_XIAOMI  = 6
 } ZGPushChannel;
 
-// 注册APNS远程消息类型
-- (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories;
-
-// 注册deviceToken
-- (void)registerDeviceToken:(NSData *)deviceToken;
-
 // 处理接收到的消息
-- (void)handleRemoteNotification:(NSDictionary *)userInfo;
+- (void)handleRemoteNotification:(nonnull NSDictionary *)userInfo;
 
 // 设置第三方推送用户ID
-- (void)setThirdPartyPushUserId:(NSString *)userId forChannel:(ZGPushChannel) channel;
+- (void)setThirdPartyPushUserId:(nonnull NSString *)userId forChannel:(ZGPushChannel) channel;
 - (void)clearNotification;
 @end

@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"2.0.2"
+#define ZG_SDK_VERSION @"2.0.6"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -34,10 +34,6 @@
 @property (nonatomic) NSUInteger sendMaxSizePerDay;
 // 本地缓存事件数(默认:500个)
 @property (nonatomic) NSUInteger cacheMaxSize;
-
-#pragma mark - 日志
-// 是否开启SDK日志打印(默认:关闭)
-//@property (nonatomic) BOOL logEnabled;
 
 // 是否开启实时调试(默认:关闭)
 @property (nonatomic) BOOL debug;

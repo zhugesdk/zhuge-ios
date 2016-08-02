@@ -76,12 +76,6 @@ typedef enum {
     ZG_PUSH_CHANNEL_XIAOMI  = 6
 } ZGPushChannel;
 
-// 注册APNS远程消息类型
-- (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(nullable NSSet*)categories;
-
-// 注册deviceToken
-- (void)registerDeviceToken:(nonnull NSData *)deviceToken;
-
 // 处理接收到的消息
 - (void)handleRemoteNotification:(nonnull NSDictionary *)userInfo;
 

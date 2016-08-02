@@ -216,49 +216,6 @@ static Zhuge *sharedInstance = nil;
 }
 
 #pragma mark - 推送
-// 注册APNS远程消息类型
-- (void)registerForRemoteNotificationTypes:(UIRemoteNotificationType)types categories:(NSSet *)categories {
-    @try {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-        if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-            UIUserNotificationSettings* notificationSettings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationType)types categories:categories];
-            [[UIApplication sharedApplication] registerUserNotificationSettings:notificationSettings];
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
-        } else {
-            [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
-        }
-#else
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes: types];
-#endif
-    }
-    @catch (NSException *exception) {
-        ZhugeDebug(@"registerForRemoteNotificationTypes exception");
-    }
-}
-
-// 注册deviceToken
-- (void)registerDeviceToken:(NSData *)deviceToken {
-    @try {
-        NSString *token=[NSString stringWithFormat:@"%@",deviceToken];
-        token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
-        token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
-        token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
-        self.deviceToken = token;
-        
-        
-        ZhugeDebug(@"deviceToken:%@", token);
-        
-        NSNumber *lastUpdateTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgRegisterDeviceToken"];
-        NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-        if (self.cid == nil || self.cid.length == 0 || lastUpdateTime == nil ||[ts longValue] > [lastUpdateTime longValue] + 86400) {
-            [self uploadDeviceToken:token];
-            [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgRegisterDeviceToken"];
-        }
-    }
-    @catch (NSException *exception) {
-        ZhugeDebug(@"registerDeviceToken exception");
-    }
-}
 
 - (void)uploadDeviceToken:(NSString *)deviceToken {
     dispatch_async(self.serialQueue, ^{
@@ -489,7 +446,7 @@ static Zhuge *sharedInstance = nil;
     
     NSString *uuid = nil;
     if (resultData != NULL)  {
-        uuid = [[NSString alloc] initWithData:objc_retainedObject(resultData) encoding:NSUTF8StringEncoding];
+        uuid = [[NSString alloc] initWithData:CFBridgingRelease(resultData) encoding:NSUTF8StringEncoding];
     }
     
     CFRelease(query);

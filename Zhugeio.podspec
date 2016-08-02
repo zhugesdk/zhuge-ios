@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Zhugeio"
-  s.version      = "2.0.2"
+  s.version      = "2.0.6"
   s.summary      = "iOS tracking library for Zhugeio Analytics"
   s.homepage     = "http://zhugeio.com"
   s.license      = "MIT"
