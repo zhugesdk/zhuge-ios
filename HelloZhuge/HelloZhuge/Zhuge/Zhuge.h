@@ -57,14 +57,6 @@
  */
 - (void)track:(nonnull NSString *)event;
 - (void)track:(nonnull NSString *)event properties:(nullable NSDictionary *)properties;
-/**
- 开始追踪一个耗时事件，这个借口并不会真正的统计这个事件。当你调用endTrack时，会统计两个接口之间的耗时，
- 并作为一个属性添加到事件之中
- @param eventName 事件名称 
- */
--(void)stratTrack:(nonnull NSString *)eventName;
-
--(void)endTrack:(nonnull NSString *)eventName properties:(nullable NSDictionary *)properties;
 #pragma mark - 推送
 // 支持的第三方推送渠道
 typedef enum {

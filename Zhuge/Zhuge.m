@@ -48,7 +48,6 @@
 @property (nonatomic, copy) NSString *switchboardURL;
 @property (nonatomic, copy) NSString *eventURL;
 @property (nonatomic) NSNumber *preTime;
-@property (nonatomic, strong)NSMutableDictionary *eventTimeDic;
 
 @property (nonatomic, strong) NSSet *eventBindings;
 @property (nonatomic, strong) id abtestDesignerConnection;
@@ -79,7 +78,6 @@ static Zhuge *sharedInstance = nil;
             sharedInstance = [[super alloc] init];
             sharedInstance.apiURL = @"https://apipool.zhugeio.com";
             sharedInstance.config = [[ZhugeConfig alloc] init];
-            sharedInstance.eventTimeDic = [[NSMutableDictionary alloc]init];
         });
         
         return sharedInstance;
@@ -704,39 +702,6 @@ static Zhuge *sharedInstance = nil;
     @catch (NSException *exception) {
         ZhugeDebug(@"identify exception");
     }
-}
-
--(void)stratTrack:(NSString *)eventName{
-    if (!eventName) {
-        ZhugeDebug(@"startTrack event name must not be nil.");
-        return;
-    }
-    dispatch_async(self.serialQueue, ^{
-        NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
-        ZhugeDebug(@"startTrack %@ at time : %@",eventName,ts);
-        [self.eventTimeDic setValue:ts forKey:eventName];
-    });
-}
--(void)endTrack:(NSString *)eventName properties:(NSDictionary*)properties{
-    
-    dispatch_async(self.serialQueue, ^{
-        NSNumber *start = [self.eventTimeDic objectForKey:eventName];
-        if (!start) {
-            ZhugeDebug(@"end track event name not found ,have you called startTrack already?");
-            return;
-        }
-        [self.eventTimeDic removeObjectForKey:eventName];
-        NSNumber *end = @([[NSDate date] timeIntervalSince1970]);
-        ZhugeDebug(@"endTrack %@ at time : %@",eventName,end);
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-        double dru = end.doubleValue - start.doubleValue;
-        if (properties) {
-            [dic addEntriesFromDictionary:properties];
-        }
-        NSString *duration = [NSString stringWithFormat:@"%.3f", dru];
-        dic[@"duration"] = duration;
-        [self track:eventName properties:dic];
-    });
 }
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
