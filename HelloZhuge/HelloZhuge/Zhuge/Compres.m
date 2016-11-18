@@ -28,6 +28,8 @@
     strm.opaque = Z_NULL;
     strm.total_out = 0;
     strm.next_in=(Bytef *)[self bytes];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wshorten-64-to-32"
     strm.avail_in = [self length];
     
     // Compresssion Levels:
@@ -53,7 +55,7 @@
     } while (strm.avail_out == 0);
     
     deflateEnd(&strm);
-    
+#pragma clang diagnostic pop
     [compressed setLength: strm.total_out];
     return [NSData dataWithData: compressed];
 }

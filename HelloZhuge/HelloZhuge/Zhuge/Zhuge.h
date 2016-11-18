@@ -7,8 +7,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
-#import "ShakeGesture.h"
-@interface Zhuge : NSObject<connectPro>
+@interface Zhuge : NSObject
 
 #pragma mark - 获取实例
 
@@ -21,9 +20,6 @@
  获得诸葛配置实例。
  */
 - (nonnull ZhugeConfig *)config;
-/**
- */
--(void)openGestureBindingUI;
 
 /**
  获得诸葛设备ID。
@@ -43,11 +39,24 @@
 
 /**
  标识用户。
- 
  @param userId     用户ID
  @param properties 用户属性
  */
 - (void)identify:(nonnull NSString*)userId properties:(nullable   NSDictionary *)properties;
+
+/**
+ userID不变，仅更新用户属性
+ @param properties 属性
+ */
+-(void)updateIdentify:(nonnull NSDictionary *)properties;
+
+/**
+ 设置事件环境信息，通过这个地方存入的信息将会给之后传入的每一个事件添加环境信息
+ */
+-(void) setEventInfo:(nonnull NSDictionary *)info;
+
+-(void) setDeviceInfo:(nonnull NSDictionary *)info;
+- (void)track:(nonnull NSString *)event;
 
 /**
  追踪自定义事件。
@@ -55,8 +64,15 @@
  @param event      事件名称
  @param properties 事件属性
  */
-- (void)track:(nonnull NSString *)event;
 - (void)track:(nonnull NSString *)event properties:(nullable NSDictionary *)properties;
+/**
+ 开始追踪一个耗时事件，这个借口并不会真正的统计这个事件。当你调用endTrack时，会统计两个接口之间的耗时，
+ 并作为一个属性添加到事件之中
+ @param eventName 事件名称
+ */
+-(void)startTrack:(nonnull NSString *)eventName;
+
+-(void)endTrack:(nonnull NSString *)eventName properties:(nullable NSDictionary *)properties;
 #pragma mark - 推送
 // 支持的第三方推送渠道
 typedef enum {
@@ -68,10 +84,10 @@ typedef enum {
     ZG_PUSH_CHANNEL_XIAOMI  = 6
 } ZGPushChannel;
 
+
 // 处理接收到的消息
 - (void)handleRemoteNotification:(nonnull NSDictionary *)userInfo;
 
 // 设置第三方推送用户ID
 - (void)setThirdPartyPushUserId:(nonnull NSString *)userId forChannel:(ZGPushChannel) channel;
-- (void)clearNotification;
 @end

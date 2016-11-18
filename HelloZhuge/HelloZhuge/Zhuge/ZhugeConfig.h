@@ -6,11 +6,16 @@
 
 #import <Foundation/Foundation.h>
 
+#pragma message "SDK version"
 /* SDK版本 */
-#define ZG_SDK_VERSION @"2.0.6"
+#define ZG_SDK_VERSION @"3.0"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
+/*应用名称*/
+
+#define ZG_APP_NAME [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 
 /* 渠道 */
 #define ZG_CHANNEL @"App Store"
@@ -22,6 +27,8 @@
 @property (nonatomic, copy) NSString *sdkVersion;
 // 应用版本(默认:info.plist中CFBundleShortVersionString对应的值)
 @property (nonatomic, copy) NSString *appVersion;
+//应用名称（默认：info.plist中的CFBundleDisplayName）
+@property (nonatomic ,copy)NSString *appName;
 // 渠道(默认:@"App Store")
 @property (nonatomic, copy) NSString *channel;
 // 两次会话时间间隔(默认:30秒)
@@ -35,11 +42,13 @@
 // 本地缓存事件数(默认:500个)
 @property (nonatomic) NSUInteger cacheMaxSize;
 
+#pragma mark - 日志
+// 是否开启会话追踪(默认:开启)
+@property (nonatomic) BOOL sessionEnable;
+
 // 是否开启实时调试(默认:关闭)
 @property (nonatomic) BOOL debug;
 
-// 是否开启无码打点（默认：关闭）
-@property (nonatomic) BOOL openGestureBindingUI;
 
 // 是否推送到生产环境，默认YES(推送时指定deviceToken上传到开发环境或生产环境)
 @property (nonatomic) BOOL apsProduction;

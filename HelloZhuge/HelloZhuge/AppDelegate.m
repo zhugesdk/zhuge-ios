@@ -29,25 +29,6 @@
     // 推送指定deviceToken上传到开发环境或生产环境，默认YES，上传到生产环境
     [zhuge.config setApsProduction:NO];
 
-    // 开启推送
-#if __IPHONE_OS_VERSION_MAX_ALLOWED > __IPHONE_7_1
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        [zhuge registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |
-                                                       UIUserNotificationTypeSound |
-                                                       UIUserNotificationTypeAlert)
-                                           categories:nil];
-    } else {
-        [zhuge registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                       UIRemoteNotificationTypeSound |
-                                                       UIRemoteNotificationTypeAlert)
-                                           categories:nil];
-    }
-#else
-        [zhuge registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                       UIRemoteNotificationTypeSound |
-                                                       UIRemoteNotificationTypeAlert)
-                                           categories:nil];
-#endif
     
     // 启动诸葛
     [zhuge startWithAppKey:@"f05e0a67082f460f9fadb50b61040733" launchOptions:launchOptions];
@@ -60,10 +41,6 @@
     return YES;
 }
 
--(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    
-    [[Zhuge sharedInstance] registerDeviceToken:deviceToken];
-}
 
 -(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"didFailToRegisterForRemoteNotificationsWithError: %@",error);
@@ -84,7 +61,6 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[Zhuge sharedInstance] handleRemoteNotification:userInfo];
 
-    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

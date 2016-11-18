@@ -49,6 +49,8 @@
     if (![string length]) return nil;
     
     NSData *decoded = nil;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
     
 #if __MAC_OS_X_VERSION_MIN_REQUIRED < __MAC_10_9 || __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_7_0
     
@@ -82,6 +84,7 @@
     else
     
 #endif
+#pragma clang diagnostic pop
     
     {
         switch (wrapWidth)

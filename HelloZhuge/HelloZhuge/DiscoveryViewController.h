@@ -13,10 +13,14 @@
 - (IBAction)feed:(id)sender;
 - (IBAction)shopping:(id)sender;
 - (IBAction)invoke:(id)sender;
+- (IBAction)setEventInfo:(id)sender;
+- (IBAction)setDeviceInfo:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITextField *eventName;
 @property (weak, nonatomic) IBOutlet UITextField *prop1;
 @property (weak, nonatomic) IBOutlet UITextField *value1;
+@property (weak, nonatomic) IBOutlet UITextField *prop2;
+@property (weak, nonatomic) IBOutlet UITextField *value2;
 
 @end
 

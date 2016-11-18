@@ -7,69 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2751DDEF0110021559D /* JSDemo.m */; };
+		DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2781DDEF0410021559D /* ZhugeJS.m */; };
+		DC8AA27D1DDEF0910021559D /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27B1DDEF0910021559D /* jquery.min.js */; };
+		DC8AA27E1DDEF0910021559D /* JsDemo.html in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27C1DDEF0910021559D /* JsDemo.html */; };
+		DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8AA2801DDEF0FC0021559D /* libz.tbd */; };
 		DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC31C05A35100F866E7 /* Base64.m */; };
 		DCBA2D201C05A35100F866E7 /* Compres.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC51C05A35100F866E7 /* Compres.m */; };
-		DCBA2D211C05A35100F866E7 /* NSInvocation+ZGHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC71C05A35100F866E7 /* NSInvocation+ZGHelpers.m */; };
-		DCBA2D221C05A35100F866E7 /* ShakeGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC91C05A35100F866E7 /* ShakeGesture.m */; };
-		DCBA2D231C05A35100F866E7 /* snapshot_config.json in Resources */ = {isa = PBXBuildFile; fileRef = DCBA2CCA1C05A35100F866E7 /* snapshot_config.json */; };
-		DCBA2D241C05A35100F866E7 /* UIView+ZGHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CCB1C05A35100F866E7 /* UIView+ZGHelpers.m */; };
-		DCBA2D251C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CCD1C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.m */; };
-		DCBA2D261C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CCF1C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.m */; };
-		DCBA2D271C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CD11C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.m */; };
-		DCBA2D281C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CD31C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.m */; };
-		DCBA2D291C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CD51C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.m */; };
-		DCBA2D2A1C05A35100F866E7 /* ZGABTestDesignerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CD71C05A35100F866E7 /* ZGABTestDesignerConnection.m */; };
-		DCBA2D2B1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CD91C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.m */; };
-		DCBA2D2C1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CDB1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.m */; };
-		DCBA2D2D1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CDD1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.m */; };
-		DCBA2D2E1C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE01C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.m */; };
-		DCBA2D2F1C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE21C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.m */; };
-		DCBA2D301C05A35100F866E7 /* ZGApplicationStateSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE41C05A35100F866E7 /* ZGApplicationStateSerializer.m */; };
-		DCBA2D311C05A35100F866E7 /* ZGBOOLToNSNumberValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE51C05A35100F866E7 /* ZGBOOLToNSNumberValueTransformer.m */; };
-		DCBA2D321C05A35100F866E7 /* ZGCATransform3DToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE71C05A35100F866E7 /* ZGCATransform3DToNSDictionaryValueTransformer.m */; };
-		DCBA2D331C05A35100F866E7 /* ZGCGAffineTransformToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE81C05A35100F866E7 /* ZGCGAffineTransformToNSDictionaryValueTransformer.m */; };
-		DCBA2D341C05A35100F866E7 /* ZGCGColorRefToNSStringValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CE91C05A35100F866E7 /* ZGCGColorRefToNSStringValueTransformer.m */; };
-		DCBA2D351C05A35100F866E7 /* ZGCGPointToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CEA1C05A35100F866E7 /* ZGCGPointToNSDictionaryValueTransformer.m */; };
-		DCBA2D361C05A35100F866E7 /* ZGCGRectToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CEB1C05A35100F866E7 /* ZGCGRectToNSDictionaryValueTransformer.m */; };
-		DCBA2D371C05A35100F866E7 /* ZGCGSizeToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CEC1C05A35100F866E7 /* ZGCGSizeToNSDictionaryValueTransformer.m */; };
-		DCBA2D381C05A35100F866E7 /* ZGClassDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CEE1C05A35100F866E7 /* ZGClassDescription.m */; };
-		DCBA2D391C05A35100F866E7 /* ZGData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CF01C05A35100F866E7 /* ZGData+Base64.m */; };
-		DCBA2D3A1C05A35100F866E7 /* ZGDesignerEventBindingRequestMesssage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CF21C05A35100F866E7 /* ZGDesignerEventBindingRequestMesssage.m */; };
-		DCBA2D3B1C05A35100F866E7 /* ZGDesignerEventBindingResponseMesssage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CF31C05A35100F866E7 /* ZGDesignerEventBindingResponseMesssage.m */; };
-		DCBA2D3C1C05A35100F866E7 /* ZGDesignerTrackMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CF51C05A35100F866E7 /* ZGDesignerTrackMessage.m */; };
-		DCBA2D3D1C05A35100F866E7 /* ZGEnumDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CF71C05A35100F866E7 /* ZGEnumDescription.m */; };
-		DCBA2D3E1C05A35100F866E7 /* ZGEventBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CF91C05A35100F866E7 /* ZGEventBinding.m */; };
-		DCBA2D3F1C05A35100F866E7 /* ZGNSAttributedStringToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CFB1C05A35100F866E7 /* ZGNSAttributedStringToNSDictionaryValueTransformer.m */; };
-		DCBA2D401C05A35100F866E7 /* ZGNSNumberToCGFloatValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CFC1C05A35100F866E7 /* ZGNSNumberToCGFloatValueTransformer.m */; };
-		DCBA2D411C05A35100F866E7 /* ZGObjectIdentityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CFE1C05A35100F866E7 /* ZGObjectIdentityProvider.m */; };
-		DCBA2D421C05A35100F866E7 /* ZGObjectSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D001C05A35100F866E7 /* ZGObjectSelector.m */; };
-		DCBA2D431C05A35100F866E7 /* ZGObjectSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D021C05A35100F866E7 /* ZGObjectSerializer.m */; };
-		DCBA2D441C05A35100F866E7 /* ZGObjectSerializerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D041C05A35100F866E7 /* ZGObjectSerializerConfig.m */; };
-		DCBA2D451C05A35100F866E7 /* ZGObjectSerializerContext.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D061C05A35100F866E7 /* ZGObjectSerializerContext.m */; };
-		DCBA2D461C05A35100F866E7 /* ZGPassThroughValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D071C05A35100F866E7 /* ZGPassThroughValueTransformer.m */; };
-		DCBA2D471C05A35100F866E7 /* ZGPropertyDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D091C05A35100F866E7 /* ZGPropertyDescription.m */; };
-		DCBA2D481C05A35100F866E7 /* ZGSequenceGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D0B1C05A35100F866E7 /* ZGSequenceGenerator.m */; };
-		DCBA2D491C05A35100F866E7 /* ZGSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D0D1C05A35100F866E7 /* ZGSwizzler.m */; };
-		DCBA2D4A1C05A35100F866E7 /* ZGTypeDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D0F1C05A35100F866E7 /* ZGTypeDescription.m */; };
-		DCBA2D4B1C05A35100F866E7 /* ZGUIColorToNSStringValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D101C05A35100F866E7 /* ZGUIColorToNSStringValueTransformer.m */; };
-		DCBA2D4C1C05A35100F866E7 /* ZGUIControlBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D121C05A35100F866E7 /* ZGUIControlBinding.m */; };
-		DCBA2D4D1C05A35100F866E7 /* ZGUIEdgeInsetsToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D131C05A35100F866E7 /* ZGUIEdgeInsetsToNSDictionaryValueTransformer.m */; };
-		DCBA2D4E1C05A35100F866E7 /* ZGUIFontToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D141C05A35100F866E7 /* ZGUIFontToNSDictionaryValueTransformer.m */; };
-		DCBA2D4F1C05A35100F866E7 /* ZGUIImageToNSDictionaryValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D151C05A35100F866E7 /* ZGUIImageToNSDictionaryValueTransformer.m */; };
-		DCBA2D501C05A35100F866E7 /* ZGUITableViewBinding.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D171C05A35100F866E7 /* ZGUITableViewBinding.m */; };
-		DCBA2D511C05A35100F866E7 /* ZGWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1A1C05A35100F866E7 /* ZGWebSocket.m */; };
 		DCBA2D521C05A35100F866E7 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1C1C05A35100F866E7 /* Zhuge.m */; };
 		DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */; };
-		DCBA2D551C05A65600F866E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D541C05A65600F866E7 /* UIKit.framework */; };
-		DCBA2D571C05A65C00F866E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D561C05A65C00F866E7 /* Foundation.framework */; };
-		DCBA2D591C05A66C00F866E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */; };
-		DCBA2D5B1C05A67500F866E7 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D5A1C05A67500F866E7 /* CoreTelephony.framework */; };
-		DCBA2D5D1C05A68200F866E7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D5C1C05A68200F866E7 /* Accelerate.framework */; };
-		DCBA2D5F1C05A68D00F866E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D5E1C05A68D00F866E7 /* CoreGraphics.framework */; };
-		DCBA2D611C05A69500F866E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D601C05A69500F866E7 /* QuartzCore.framework */; };
-		DCBA2D631C05A6A300F866E7 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D621C05A6A300F866E7 /* libicucore.tbd */; };
-		DCBA2D651C05A6AE00F866E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D641C05A6AE00F866E7 /* libz.tbd */; };
-		DCBA2D671C05A6B800F866E7 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -79,7 +25,6 @@
 		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
 		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
-		E5AC1F431AA97F6400A19577 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AC1F421AA97F6400A19577 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,110 +38,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC8AA2741DDEF0110021559D /* JSDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDemo.h; sourceTree = "<group>"; };
+		DC8AA2751DDEF0110021559D /* JSDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDemo.m; sourceTree = "<group>"; };
+		DC8AA2771DDEF0410021559D /* ZhugeJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhugeJS.h; sourceTree = "<group>"; };
+		DC8AA2781DDEF0410021559D /* ZhugeJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhugeJS.m; sourceTree = "<group>"; };
+		DC8AA27B1DDEF0910021559D /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
+		DC8AA27C1DDEF0910021559D /* JsDemo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = JsDemo.html; sourceTree = "<group>"; };
+		DC8AA2801DDEF0FC0021559D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		DCBA2CC21C05A35100F866E7 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		DCBA2CC31C05A35100F866E7 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		DCBA2CC41C05A35100F866E7 /* Compres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compres.h; sourceTree = "<group>"; };
 		DCBA2CC51C05A35100F866E7 /* Compres.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Compres.m; sourceTree = "<group>"; };
-		DCBA2CC61C05A35100F866E7 /* NSInvocation+ZGHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSInvocation+ZGHelpers.h"; sourceTree = "<group>"; };
-		DCBA2CC71C05A35100F866E7 /* NSInvocation+ZGHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSInvocation+ZGHelpers.m"; sourceTree = "<group>"; };
-		DCBA2CC81C05A35100F866E7 /* ShakeGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakeGesture.h; sourceTree = "<group>"; };
-		DCBA2CC91C05A35100F866E7 /* ShakeGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakeGesture.m; sourceTree = "<group>"; };
-		DCBA2CCA1C05A35100F866E7 /* snapshot_config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = snapshot_config.json; sourceTree = "<group>"; };
-		DCBA2CCB1C05A35100F866E7 /* UIView+ZGHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ZGHelpers.m"; sourceTree = "<group>"; };
-		DCBA2CCC1C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGAbstractABTestDesignerMessage.h; sourceTree = "<group>"; };
-		DCBA2CCD1C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGAbstractABTestDesignerMessage.m; sourceTree = "<group>"; };
-		DCBA2CCE1C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerChangeRequestMessage.h; sourceTree = "<group>"; };
-		DCBA2CCF1C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerChangeRequestMessage.m; sourceTree = "<group>"; };
-		DCBA2CD01C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerChangeResponseMessage.h; sourceTree = "<group>"; };
-		DCBA2CD11C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerChangeResponseMessage.m; sourceTree = "<group>"; };
-		DCBA2CD21C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerClearRequestMessage.h; sourceTree = "<group>"; };
-		DCBA2CD31C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerClearRequestMessage.m; sourceTree = "<group>"; };
-		DCBA2CD41C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerClearResponseMessage.h; sourceTree = "<group>"; };
-		DCBA2CD51C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerClearResponseMessage.m; sourceTree = "<group>"; };
-		DCBA2CD61C05A35100F866E7 /* ZGABTestDesignerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerConnection.h; sourceTree = "<group>"; };
-		DCBA2CD71C05A35100F866E7 /* ZGABTestDesignerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerConnection.m; sourceTree = "<group>"; };
-		DCBA2CD81C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerDeviceInfoRequestMessage.h; sourceTree = "<group>"; };
-		DCBA2CD91C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerDeviceInfoRequestMessage.m; sourceTree = "<group>"; };
-		DCBA2CDA1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerDeviceInfoResponseMessage.h; sourceTree = "<group>"; };
-		DCBA2CDB1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerDeviceInfoResponseMessage.m; sourceTree = "<group>"; };
-		DCBA2CDC1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerDisconnectMessage.h; sourceTree = "<group>"; };
-		DCBA2CDD1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerDisconnectMessage.m; sourceTree = "<group>"; };
-		DCBA2CDE1C05A35100F866E7 /* ZGABTestDesignerMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerMessage.h; sourceTree = "<group>"; };
-		DCBA2CDF1C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerSnapshotRequestMessage.h; sourceTree = "<group>"; };
-		DCBA2CE01C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerSnapshotRequestMessage.m; sourceTree = "<group>"; };
-		DCBA2CE11C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGABTestDesignerSnapshotResponseMessage.h; sourceTree = "<group>"; };
-		DCBA2CE21C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGABTestDesignerSnapshotResponseMessage.m; sourceTree = "<group>"; };
-		DCBA2CE31C05A35100F866E7 /* ZGApplicationStateSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGApplicationStateSerializer.h; sourceTree = "<group>"; };
-		DCBA2CE41C05A35100F866E7 /* ZGApplicationStateSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGApplicationStateSerializer.m; sourceTree = "<group>"; };
-		DCBA2CE51C05A35100F866E7 /* ZGBOOLToNSNumberValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGBOOLToNSNumberValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CE61C05A35100F866E7 /* ZGCategoryHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGCategoryHelpers.h; sourceTree = "<group>"; };
-		DCBA2CE71C05A35100F866E7 /* ZGCATransform3DToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGCATransform3DToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CE81C05A35100F866E7 /* ZGCGAffineTransformToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGCGAffineTransformToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CE91C05A35100F866E7 /* ZGCGColorRefToNSStringValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGCGColorRefToNSStringValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CEA1C05A35100F866E7 /* ZGCGPointToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGCGPointToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CEB1C05A35100F866E7 /* ZGCGRectToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGCGRectToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CEC1C05A35100F866E7 /* ZGCGSizeToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGCGSizeToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CED1C05A35100F866E7 /* ZGClassDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGClassDescription.h; sourceTree = "<group>"; };
-		DCBA2CEE1C05A35100F866E7 /* ZGClassDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGClassDescription.m; sourceTree = "<group>"; };
-		DCBA2CEF1C05A35100F866E7 /* ZGData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ZGData+Base64.h"; sourceTree = "<group>"; };
-		DCBA2CF01C05A35100F866E7 /* ZGData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ZGData+Base64.m"; sourceTree = "<group>"; };
-		DCBA2CF11C05A35100F866E7 /* ZGDesignerEventBindingMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGDesignerEventBindingMessage.h; sourceTree = "<group>"; };
-		DCBA2CF21C05A35100F866E7 /* ZGDesignerEventBindingRequestMesssage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGDesignerEventBindingRequestMesssage.m; sourceTree = "<group>"; };
-		DCBA2CF31C05A35100F866E7 /* ZGDesignerEventBindingResponseMesssage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGDesignerEventBindingResponseMesssage.m; sourceTree = "<group>"; };
-		DCBA2CF41C05A35100F866E7 /* ZGDesignerSessionCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGDesignerSessionCollection.h; sourceTree = "<group>"; };
-		DCBA2CF51C05A35100F866E7 /* ZGDesignerTrackMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGDesignerTrackMessage.m; sourceTree = "<group>"; };
-		DCBA2CF61C05A35100F866E7 /* ZGEnumDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGEnumDescription.h; sourceTree = "<group>"; };
-		DCBA2CF71C05A35100F866E7 /* ZGEnumDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGEnumDescription.m; sourceTree = "<group>"; };
-		DCBA2CF81C05A35100F866E7 /* ZGEventBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGEventBinding.h; sourceTree = "<group>"; };
-		DCBA2CF91C05A35100F866E7 /* ZGEventBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGEventBinding.m; sourceTree = "<group>"; };
 		DCBA2CFA1C05A35100F866E7 /* ZGLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGLog.h; sourceTree = "<group>"; };
-		DCBA2CFB1C05A35100F866E7 /* ZGNSAttributedStringToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGNSAttributedStringToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CFC1C05A35100F866E7 /* ZGNSNumberToCGFloatValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGNSNumberToCGFloatValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2CFD1C05A35100F866E7 /* ZGObjectIdentityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGObjectIdentityProvider.h; sourceTree = "<group>"; };
-		DCBA2CFE1C05A35100F866E7 /* ZGObjectIdentityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGObjectIdentityProvider.m; sourceTree = "<group>"; };
-		DCBA2CFF1C05A35100F866E7 /* ZGObjectSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGObjectSelector.h; sourceTree = "<group>"; };
-		DCBA2D001C05A35100F866E7 /* ZGObjectSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGObjectSelector.m; sourceTree = "<group>"; };
-		DCBA2D011C05A35100F866E7 /* ZGObjectSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGObjectSerializer.h; sourceTree = "<group>"; };
-		DCBA2D021C05A35100F866E7 /* ZGObjectSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGObjectSerializer.m; sourceTree = "<group>"; };
-		DCBA2D031C05A35100F866E7 /* ZGObjectSerializerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGObjectSerializerConfig.h; sourceTree = "<group>"; };
-		DCBA2D041C05A35100F866E7 /* ZGObjectSerializerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGObjectSerializerConfig.m; sourceTree = "<group>"; };
-		DCBA2D051C05A35100F866E7 /* ZGObjectSerializerContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGObjectSerializerContext.h; sourceTree = "<group>"; };
-		DCBA2D061C05A35100F866E7 /* ZGObjectSerializerContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGObjectSerializerContext.m; sourceTree = "<group>"; };
-		DCBA2D071C05A35100F866E7 /* ZGPassThroughValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGPassThroughValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2D081C05A35100F866E7 /* ZGPropertyDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGPropertyDescription.h; sourceTree = "<group>"; };
-		DCBA2D091C05A35100F866E7 /* ZGPropertyDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGPropertyDescription.m; sourceTree = "<group>"; };
-		DCBA2D0A1C05A35100F866E7 /* ZGSequenceGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGSequenceGenerator.h; sourceTree = "<group>"; };
-		DCBA2D0B1C05A35100F866E7 /* ZGSequenceGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGSequenceGenerator.m; sourceTree = "<group>"; };
-		DCBA2D0C1C05A35100F866E7 /* ZGSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGSwizzler.h; sourceTree = "<group>"; };
-		DCBA2D0D1C05A35100F866E7 /* ZGSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGSwizzler.m; sourceTree = "<group>"; };
-		DCBA2D0E1C05A35100F866E7 /* ZGTypeDescription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGTypeDescription.h; sourceTree = "<group>"; };
-		DCBA2D0F1C05A35100F866E7 /* ZGTypeDescription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGTypeDescription.m; sourceTree = "<group>"; };
-		DCBA2D101C05A35100F866E7 /* ZGUIColorToNSStringValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGUIColorToNSStringValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2D111C05A35100F866E7 /* ZGUIControlBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGUIControlBinding.h; sourceTree = "<group>"; };
-		DCBA2D121C05A35100F866E7 /* ZGUIControlBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGUIControlBinding.m; sourceTree = "<group>"; };
-		DCBA2D131C05A35100F866E7 /* ZGUIEdgeInsetsToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGUIEdgeInsetsToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2D141C05A35100F866E7 /* ZGUIFontToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGUIFontToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2D151C05A35100F866E7 /* ZGUIImageToNSDictionaryValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGUIImageToNSDictionaryValueTransformer.m; sourceTree = "<group>"; };
-		DCBA2D161C05A35100F866E7 /* ZGUITableViewBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGUITableViewBinding.h; sourceTree = "<group>"; };
-		DCBA2D171C05A35100F866E7 /* ZGUITableViewBinding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGUITableViewBinding.m; sourceTree = "<group>"; };
-		DCBA2D181C05A35100F866E7 /* ZGValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGValueTransformers.h; sourceTree = "<group>"; };
-		DCBA2D191C05A35100F866E7 /* ZGWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGWebSocket.h; sourceTree = "<group>"; };
-		DCBA2D1A1C05A35100F866E7 /* ZGWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZGWebSocket.m; sourceTree = "<group>"; };
 		DCBA2D1B1C05A35100F866E7 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zhuge.h; sourceTree = "<group>"; };
 		DCBA2D1C1C05A35100F866E7 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Zhuge.m; sourceTree = "<group>"; };
 		DCBA2D1D1C05A35100F866E7 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhugeConfig.h; sourceTree = "<group>"; };
 		DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhugeConfig.m; sourceTree = "<group>"; };
-		DCBA2D541C05A65600F866E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		DCBA2D561C05A65C00F866E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		DCBA2D5A1C05A67500F866E7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		DCBA2D5C1C05A68200F866E7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		DCBA2D5E1C05A68D00F866E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		DCBA2D601C05A69500F866E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		DCBA2D621C05A6A300F866E7 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		DCBA2D641C05A6AE00F866E7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		DCCB1A0D1B6632EA00B9E517 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -214,7 +71,6 @@
 		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
 		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		E5AC1F421AA97F6400A19577 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -222,17 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCBA2D671C05A6B800F866E7 /* CoreMotion.framework in Frameworks */,
-				DCBA2D651C05A6AE00F866E7 /* libz.tbd in Frameworks */,
-				DCBA2D631C05A6A300F866E7 /* libicucore.tbd in Frameworks */,
-				DCBA2D611C05A69500F866E7 /* QuartzCore.framework in Frameworks */,
-				DCBA2D5F1C05A68D00F866E7 /* CoreGraphics.framework in Frameworks */,
-				DCBA2D5D1C05A68200F866E7 /* Accelerate.framework in Frameworks */,
-				DCBA2D5B1C05A67500F866E7 /* CoreTelephony.framework in Frameworks */,
-				DCBA2D591C05A66C00F866E7 /* SystemConfiguration.framework in Frameworks */,
-				DCBA2D571C05A65C00F866E7 /* Foundation.framework in Frameworks */,
-				DCBA2D551C05A65600F866E7 /* UIKit.framework in Frameworks */,
-				E5AC1F431AA97F6400A19577 /* Security.framework in Frameworks */,
+				DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,98 +92,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC8AA27A1DDEF0910021559D /* Html */ = {
+			isa = PBXGroup;
+			children = (
+				DC8AA27B1DDEF0910021559D /* jquery.min.js */,
+				DC8AA27C1DDEF0910021559D /* JsDemo.html */,
+			);
+			path = Html;
+			sourceTree = "<group>";
+		};
+		DC8AA27F1DDEF0FC0021559D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC8AA2801DDEF0FC0021559D /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DCBA2CC11C05A35100F866E7 /* Zhuge */ = {
 			isa = PBXGroup;
 			children = (
+				DC8AA2771DDEF0410021559D /* ZhugeJS.h */,
+				DC8AA2781DDEF0410021559D /* ZhugeJS.m */,
 				DCBA2CC21C05A35100F866E7 /* Base64.h */,
 				DCBA2CC31C05A35100F866E7 /* Base64.m */,
 				DCBA2CC41C05A35100F866E7 /* Compres.h */,
 				DCBA2CC51C05A35100F866E7 /* Compres.m */,
-				DCBA2CC61C05A35100F866E7 /* NSInvocation+ZGHelpers.h */,
-				DCBA2CC71C05A35100F866E7 /* NSInvocation+ZGHelpers.m */,
-				DCBA2CC81C05A35100F866E7 /* ShakeGesture.h */,
-				DCBA2CC91C05A35100F866E7 /* ShakeGesture.m */,
-				DCBA2CCA1C05A35100F866E7 /* snapshot_config.json */,
-				DCBA2CCB1C05A35100F866E7 /* UIView+ZGHelpers.m */,
-				DCBA2CCC1C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.h */,
-				DCBA2CCD1C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.m */,
-				DCBA2CCE1C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.h */,
-				DCBA2CCF1C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.m */,
-				DCBA2CD01C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.h */,
-				DCBA2CD11C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.m */,
-				DCBA2CD21C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.h */,
-				DCBA2CD31C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.m */,
-				DCBA2CD41C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.h */,
-				DCBA2CD51C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.m */,
-				DCBA2CD61C05A35100F866E7 /* ZGABTestDesignerConnection.h */,
-				DCBA2CD71C05A35100F866E7 /* ZGABTestDesignerConnection.m */,
-				DCBA2CD81C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.h */,
-				DCBA2CD91C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.m */,
-				DCBA2CDA1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.h */,
-				DCBA2CDB1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.m */,
-				DCBA2CDC1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.h */,
-				DCBA2CDD1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.m */,
-				DCBA2CDE1C05A35100F866E7 /* ZGABTestDesignerMessage.h */,
-				DCBA2CDF1C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.h */,
-				DCBA2CE01C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.m */,
-				DCBA2CE11C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.h */,
-				DCBA2CE21C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.m */,
-				DCBA2CE31C05A35100F866E7 /* ZGApplicationStateSerializer.h */,
-				DCBA2CE41C05A35100F866E7 /* ZGApplicationStateSerializer.m */,
-				DCBA2CE51C05A35100F866E7 /* ZGBOOLToNSNumberValueTransformer.m */,
-				DCBA2CE61C05A35100F866E7 /* ZGCategoryHelpers.h */,
-				DCBA2CE71C05A35100F866E7 /* ZGCATransform3DToNSDictionaryValueTransformer.m */,
-				DCBA2CE81C05A35100F866E7 /* ZGCGAffineTransformToNSDictionaryValueTransformer.m */,
-				DCBA2CE91C05A35100F866E7 /* ZGCGColorRefToNSStringValueTransformer.m */,
-				DCBA2CEA1C05A35100F866E7 /* ZGCGPointToNSDictionaryValueTransformer.m */,
-				DCBA2CEB1C05A35100F866E7 /* ZGCGRectToNSDictionaryValueTransformer.m */,
-				DCBA2CEC1C05A35100F866E7 /* ZGCGSizeToNSDictionaryValueTransformer.m */,
-				DCBA2CED1C05A35100F866E7 /* ZGClassDescription.h */,
-				DCBA2CEE1C05A35100F866E7 /* ZGClassDescription.m */,
-				DCBA2CEF1C05A35100F866E7 /* ZGData+Base64.h */,
-				DCBA2CF01C05A35100F866E7 /* ZGData+Base64.m */,
-				DCBA2CF11C05A35100F866E7 /* ZGDesignerEventBindingMessage.h */,
-				DCBA2CF21C05A35100F866E7 /* ZGDesignerEventBindingRequestMesssage.m */,
-				DCBA2CF31C05A35100F866E7 /* ZGDesignerEventBindingResponseMesssage.m */,
-				DCBA2CF41C05A35100F866E7 /* ZGDesignerSessionCollection.h */,
-				DCBA2CF51C05A35100F866E7 /* ZGDesignerTrackMessage.m */,
-				DCBA2CF61C05A35100F866E7 /* ZGEnumDescription.h */,
-				DCBA2CF71C05A35100F866E7 /* ZGEnumDescription.m */,
-				DCBA2CF81C05A35100F866E7 /* ZGEventBinding.h */,
-				DCBA2CF91C05A35100F866E7 /* ZGEventBinding.m */,
 				DCBA2CFA1C05A35100F866E7 /* ZGLog.h */,
-				DCBA2CFB1C05A35100F866E7 /* ZGNSAttributedStringToNSDictionaryValueTransformer.m */,
-				DCBA2CFC1C05A35100F866E7 /* ZGNSNumberToCGFloatValueTransformer.m */,
-				DCBA2CFD1C05A35100F866E7 /* ZGObjectIdentityProvider.h */,
-				DCBA2CFE1C05A35100F866E7 /* ZGObjectIdentityProvider.m */,
-				DCBA2CFF1C05A35100F866E7 /* ZGObjectSelector.h */,
-				DCBA2D001C05A35100F866E7 /* ZGObjectSelector.m */,
-				DCBA2D011C05A35100F866E7 /* ZGObjectSerializer.h */,
-				DCBA2D021C05A35100F866E7 /* ZGObjectSerializer.m */,
-				DCBA2D031C05A35100F866E7 /* ZGObjectSerializerConfig.h */,
-				DCBA2D041C05A35100F866E7 /* ZGObjectSerializerConfig.m */,
-				DCBA2D051C05A35100F866E7 /* ZGObjectSerializerContext.h */,
-				DCBA2D061C05A35100F866E7 /* ZGObjectSerializerContext.m */,
-				DCBA2D071C05A35100F866E7 /* ZGPassThroughValueTransformer.m */,
-				DCBA2D081C05A35100F866E7 /* ZGPropertyDescription.h */,
-				DCBA2D091C05A35100F866E7 /* ZGPropertyDescription.m */,
-				DCBA2D0A1C05A35100F866E7 /* ZGSequenceGenerator.h */,
-				DCBA2D0B1C05A35100F866E7 /* ZGSequenceGenerator.m */,
-				DCBA2D0C1C05A35100F866E7 /* ZGSwizzler.h */,
-				DCBA2D0D1C05A35100F866E7 /* ZGSwizzler.m */,
-				DCBA2D0E1C05A35100F866E7 /* ZGTypeDescription.h */,
-				DCBA2D0F1C05A35100F866E7 /* ZGTypeDescription.m */,
-				DCBA2D101C05A35100F866E7 /* ZGUIColorToNSStringValueTransformer.m */,
-				DCBA2D111C05A35100F866E7 /* ZGUIControlBinding.h */,
-				DCBA2D121C05A35100F866E7 /* ZGUIControlBinding.m */,
-				DCBA2D131C05A35100F866E7 /* ZGUIEdgeInsetsToNSDictionaryValueTransformer.m */,
-				DCBA2D141C05A35100F866E7 /* ZGUIFontToNSDictionaryValueTransformer.m */,
-				DCBA2D151C05A35100F866E7 /* ZGUIImageToNSDictionaryValueTransformer.m */,
-				DCBA2D161C05A35100F866E7 /* ZGUITableViewBinding.h */,
-				DCBA2D171C05A35100F866E7 /* ZGUITableViewBinding.m */,
-				DCBA2D181C05A35100F866E7 /* ZGValueTransformers.h */,
-				DCBA2D191C05A35100F866E7 /* ZGWebSocket.h */,
-				DCBA2D1A1C05A35100F866E7 /* ZGWebSocket.m */,
 				DCBA2D1B1C05A35100F866E7 /* Zhuge.h */,
 				DCBA2D1C1C05A35100F866E7 /* Zhuge.m */,
 				DCBA2D1D1C05A35100F866E7 /* ZhugeConfig.h */,
@@ -349,21 +130,10 @@
 		E55E514B1A242BF100ED0263 = {
 			isa = PBXGroup;
 			children = (
-				DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */,
-				DCBA2D641C05A6AE00F866E7 /* libz.tbd */,
-				DCBA2D621C05A6A300F866E7 /* libicucore.tbd */,
-				DCBA2D601C05A69500F866E7 /* QuartzCore.framework */,
-				DCBA2D5E1C05A68D00F866E7 /* CoreGraphics.framework */,
-				DCBA2D5C1C05A68200F866E7 /* Accelerate.framework */,
-				DCBA2D5A1C05A67500F866E7 /* CoreTelephony.framework */,
-				DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */,
-				DCBA2D561C05A65C00F866E7 /* Foundation.framework */,
-				DCBA2D541C05A65600F866E7 /* UIKit.framework */,
-				DCCB1A0D1B6632EA00B9E517 /* libz.dylib */,
-				E5AC1F421AA97F6400A19577 /* Security.framework */,
 				E55E51561A242BF100ED0263 /* HelloZhuge */,
 				E55E51731A242BF100ED0263 /* HelloZhugeTests */,
 				E55E51551A242BF100ED0263 /* Products */,
+				DC8AA27F1DDEF0FC0021559D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -379,6 +149,7 @@
 		E55E51561A242BF100ED0263 /* HelloZhuge */ = {
 			isa = PBXGroup;
 			children = (
+				DC8AA27A1DDEF0910021559D /* Html */,
 				DCBA2CC11C05A35100F866E7 /* Zhuge */,
 				E55E515B1A242BF100ED0263 /* AppDelegate.h */,
 				E55E515C1A242BF100ED0263 /* AppDelegate.m */,
@@ -392,6 +163,8 @@
 				E55E51671A242BF100ED0263 /* Images.xcassets */,
 				E55E51691A242BF100ED0263 /* LaunchScreen.xib */,
 				E55E51571A242BF100ED0263 /* Supporting Files */,
+				DC8AA2741DDEF0110021559D /* JSDemo.h */,
+				DC8AA2751DDEF0110021559D /* JSDemo.m */,
 			);
 			path = HelloZhuge;
 			sourceTree = "<group>";
@@ -466,12 +239,12 @@
 		E55E514C1A242BF100ED0263 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = 37degree;
 				TargetAttributes = {
 					E55E51531A242BF100ED0263 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 7N7AX6B3LP;
+						DevelopmentTeam = S63Y8AL2QU;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -480,6 +253,7 @@
 					};
 					E55E516F1A242BF100ED0263 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = S63Y8AL2QU;
 						TestTargetID = E55E51531A242BF100ED0263;
 					};
 				};
@@ -509,9 +283,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E55E51661A242BF100ED0263 /* Main.storyboard in Resources */,
-				DCBA2D231C05A35100F866E7 /* snapshot_config.json in Resources */,
 				E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */,
+				DC8AA27D1DDEF0910021559D /* jquery.min.js in Resources */,
 				E55E51681A242BF100ED0263 /* Images.xcassets in Resources */,
+				DC8AA27E1DDEF0910021559D /* JsDemo.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,63 +304,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCBA2D3B1C05A35100F866E7 /* ZGDesignerEventBindingResponseMesssage.m in Sources */,
-				DCBA2D281C05A35100F866E7 /* ZGABTestDesignerClearRequestMessage.m in Sources */,
-				DCBA2D4C1C05A35100F866E7 /* ZGUIControlBinding.m in Sources */,
-				DCBA2D3D1C05A35100F866E7 /* ZGEnumDescription.m in Sources */,
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
-				DCBA2D381C05A35100F866E7 /* ZGClassDescription.m in Sources */,
-				DCBA2D371C05A35100F866E7 /* ZGCGSizeToNSDictionaryValueTransformer.m in Sources */,
-				DCBA2D4E1C05A35100F866E7 /* ZGUIFontToNSDictionaryValueTransformer.m in Sources */,
-				DCBA2D271C05A35100F866E7 /* ZGABTestDesignerChangeResponseMessage.m in Sources */,
-				DCBA2D3F1C05A35100F866E7 /* ZGNSAttributedStringToNSDictionaryValueTransformer.m in Sources */,
-				DCBA2D401C05A35100F866E7 /* ZGNSNumberToCGFloatValueTransformer.m in Sources */,
-				DCBA2D251C05A35100F866E7 /* ZGAbstractABTestDesignerMessage.m in Sources */,
-				DCBA2D501C05A35100F866E7 /* ZGUITableViewBinding.m in Sources */,
 				DCBA2D521C05A35100F866E7 /* Zhuge.m in Sources */,
-				DCBA2D2F1C05A35100F866E7 /* ZGABTestDesignerSnapshotResponseMessage.m in Sources */,
-				DCBA2D261C05A35100F866E7 /* ZGABTestDesignerChangeRequestMessage.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
+				DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */,
 				DCBA2D201C05A35100F866E7 /* Compres.m in Sources */,
-				DCBA2D2B1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoRequestMessage.m in Sources */,
-				DCBA2D4B1C05A35100F866E7 /* ZGUIColorToNSStringValueTransformer.m in Sources */,
-				DCBA2D461C05A35100F866E7 /* ZGPassThroughValueTransformer.m in Sources */,
-				DCBA2D311C05A35100F866E7 /* ZGBOOLToNSNumberValueTransformer.m in Sources */,
-				DCBA2D431C05A35100F866E7 /* ZGObjectSerializer.m in Sources */,
-				DCBA2D361C05A35100F866E7 /* ZGCGRectToNSDictionaryValueTransformer.m in Sources */,
-				DCBA2D301C05A35100F866E7 /* ZGApplicationStateSerializer.m in Sources */,
-				DCBA2D351C05A35100F866E7 /* ZGCGPointToNSDictionaryValueTransformer.m in Sources */,
-				DCBA2D4A1C05A35100F866E7 /* ZGTypeDescription.m in Sources */,
-				DCBA2D221C05A35100F866E7 /* ShakeGesture.m in Sources */,
-				DCBA2D331C05A35100F866E7 /* ZGCGAffineTransformToNSDictionaryValueTransformer.m in Sources */,
 				DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
-				DCBA2D3A1C05A35100F866E7 /* ZGDesignerEventBindingRequestMesssage.m in Sources */,
-				DCBA2D241C05A35100F866E7 /* UIView+ZGHelpers.m in Sources */,
+				DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
-				DCBA2D211C05A35100F866E7 /* NSInvocation+ZGHelpers.m in Sources */,
-				DCBA2D391C05A35100F866E7 /* ZGData+Base64.m in Sources */,
-				DCBA2D2A1C05A35100F866E7 /* ZGABTestDesignerConnection.m in Sources */,
-				DCBA2D2E1C05A35100F866E7 /* ZGABTestDesignerSnapshotRequestMessage.m in Sources */,
-				DCBA2D2D1C05A35100F866E7 /* ZGABTestDesignerDisconnectMessage.m in Sources */,
-				DCBA2D441C05A35100F866E7 /* ZGObjectSerializerConfig.m in Sources */,
-				DCBA2D481C05A35100F866E7 /* ZGSequenceGenerator.m in Sources */,
-				DCBA2D4D1C05A35100F866E7 /* ZGUIEdgeInsetsToNSDictionaryValueTransformer.m in Sources */,
 				DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */,
-				DCBA2D341C05A35100F866E7 /* ZGCGColorRefToNSStringValueTransformer.m in Sources */,
-				DCBA2D321C05A35100F866E7 /* ZGCATransform3DToNSDictionaryValueTransformer.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
-				DCBA2D471C05A35100F866E7 /* ZGPropertyDescription.m in Sources */,
-				DCBA2D291C05A35100F866E7 /* ZGABTestDesignerClearResponseMessage.m in Sources */,
-				DCBA2D3E1C05A35100F866E7 /* ZGEventBinding.m in Sources */,
-				DCBA2D4F1C05A35100F866E7 /* ZGUIImageToNSDictionaryValueTransformer.m in Sources */,
-				DCBA2D2C1C05A35100F866E7 /* ZGABTestDesignerDeviceInfoResponseMessage.m in Sources */,
-				DCBA2D411C05A35100F866E7 /* ZGObjectIdentityProvider.m in Sources */,
-				DCBA2D491C05A35100F866E7 /* ZGSwizzler.m in Sources */,
-				DCBA2D451C05A35100F866E7 /* ZGObjectSerializerContext.m in Sources */,
-				DCBA2D421C05A35100F866E7 /* ZGObjectSelector.m in Sources */,
-				DCBA2D3C1C05A35100F866E7 /* ZGDesignerTrackMessage.m in Sources */,
-				DCBA2D511C05A35100F866E7 /* ZGWebSocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,8 +369,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -650,6 +381,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -683,8 +415,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -692,6 +426,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -713,6 +448,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = S63Y8AL2QU;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"ZHUGE_NO_ADID=1",
@@ -733,6 +469,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = S63Y8AL2QU;
 				GCC_PREPROCESSOR_DEFINITIONS = "ZHUGE_NO_ADID=1";
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -748,6 +485,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = S63Y8AL2QU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -768,6 +506,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = S63Y8AL2QU;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
