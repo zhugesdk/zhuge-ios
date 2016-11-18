@@ -11,6 +11,6 @@
 
 // ZLIB
 
-- (NSData *) zlibDeflate;
+- (NSData *) zgZlibDeflate;
 
 @end

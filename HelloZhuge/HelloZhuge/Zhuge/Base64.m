@@ -44,7 +44,7 @@
 
 @implementation NSData (Base64)
 
-+ (NSData *)dataWithBase64EncodedString:(NSString *)string
++ (NSData *)zgDataWithBase64EncodedString:(NSString *)string
 {
     if (![string length]) return nil;
     
@@ -69,7 +69,7 @@
     return [decoded length]? decoded: nil;
 }
 
-- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
+- (NSString *)zgBase64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
 {
     if (![self length]) return nil;
     
@@ -125,9 +125,9 @@
     return result;
 }
 
-- (NSString *)base64EncodedString
+- (NSString *)zgBase64EncodedString
 {
-    return [self base64EncodedStringWithWrapWidth:0];
+    return [self zgBase64EncodedStringWithWrapWidth:0];
 }
 
 @end
@@ -135,9 +135,9 @@
 
 @implementation NSString (Base64)
 
-+ (NSString *)stringWithBase64EncodedString:(NSString *)string
++ (NSString *)zgStringWithBase64EncodedString:(NSString *)string
 {
-    NSData *data = [NSData dataWithBase64EncodedString:string];
+    NSData *data = [NSData zgDataWithBase64EncodedString:string];
     if (data)
     {
         return [[self alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -145,26 +145,26 @@
     return nil;
 }
 
-- (NSString *)base64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
+- (NSString *)zgBase64EncodedStringWithWrapWidth:(NSUInteger)wrapWidth
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    return [data base64EncodedStringWithWrapWidth:wrapWidth];
+    return [data zgBase64EncodedStringWithWrapWidth:wrapWidth];
 }
 
-- (NSString *)base64EncodedString
+- (NSString *)zgBase64EncodedString
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    return [data base64EncodedString];
+    return [data zgBase64EncodedString];
 }
 
-- (NSString *)base64DecodedString
+- (NSString *)zgBase64DecodedString
 {
-    return [NSString stringWithBase64EncodedString:self];
+    return [NSString zgStringWithBase64EncodedString:self];
 }
 
-- (NSData *)base64DecodedData
+- (NSData *)zgBase64DecodedData
 {
-    return [NSData dataWithBase64EncodedString:self];
+    return [NSData zgDataWithBase64EncodedString:self];
 }
 
 @end
