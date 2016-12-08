@@ -16,7 +16,6 @@
     Zhuge *zhuge = [Zhuge sharedInstance];
     NSData *data = [pro dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSLog(@"track name is %@,pro is %@",eventName,json);
     [zhuge track:eventName properties:json];
 
 }
@@ -26,7 +25,6 @@
     Zhuge *zhuge = [Zhuge sharedInstance];
     NSData *data = [pro dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSLog(@"identify name is %@,pro is %@",uid,json);
 
     [zhuge identify:uid properties:json];
 }

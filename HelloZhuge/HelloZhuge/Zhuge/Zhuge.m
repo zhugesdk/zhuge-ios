@@ -67,8 +67,7 @@ static Zhuge *sharedInstance = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             sharedInstance = [[super alloc] init];
-//            sharedInstance.apiURL = @"https://apipool.zhugeio.com";
-            sharedInstance.apiURL = @"http://zg2.zhugeio.com";
+            sharedInstance.apiURL = @"https://u.zhugeapi.com";
             sharedInstance.config = [[ZhugeConfig alloc] init];
             sharedInstance.eventTimeDic = [[NSMutableDictionary alloc]init];
         });
@@ -121,7 +120,7 @@ static Zhuge *sharedInstance = nil;
 }
 
 #pragma mark - 诸葛配置
--(void)setEventInfo:(NSDictionary *)info{
+-(void)setSuperProperty:(NSDictionary *)info{
 
     if (!self.envInfo) {
         self.envInfo = [NSMutableDictionary dictionary];
@@ -129,21 +128,21 @@ static Zhuge *sharedInstance = nil;
     self.envInfo[@"event"] = info;
 }
 
--(void)setDeviceInfo:(NSDictionary *)info{
+-(void)setPlatform:(NSDictionary *)info{
     if (!self.envInfo) {
         self.envInfo = [NSMutableDictionary dictionary];
     }
     self.envInfo[@"device"] = info;
 }
 
-- (NSString *)getDeviceId {
+- (NSString *)getDid {
     if (!self.deviceId) {
         self.deviceId = [self defaultDeviceId];
     }
     
     return self.deviceId;
 }
--(NSString *)getSessionID{
+-(NSString *)getSid{
     
     if (!self.sessionId) {
         self.sessionId = @0;
@@ -295,7 +294,6 @@ static Zhuge *sharedInstance = nil;
         adid = [uuid UUIDString];
     }
 #endif
-    NSLog(@"获取广告ID %@",adid);
     if (adid&&[adid isEqualToString:@"00000000-0000-0000-0000-000000000000"]) {
         //iOS10之后，当用户打开限制广告追踪选项时，所有的设备均返回这一个标示符，因此这是无效的。
         return nil;
@@ -461,7 +459,6 @@ static Zhuge *sharedInstance = nil;
 }
 
 - (void)reachabilityChanged:(SCNetworkReachabilityFlags)flags {
-    NSLog(@"开始检测当前网络");
     if (flags & kSCNetworkReachabilityFlagsReachable) {
         if (flags & kSCNetworkReachabilityFlagsIsWWAN) {
             self.net = @"0";//2G/3G/4G
@@ -485,7 +482,6 @@ static Zhuge *sharedInstance = nil;
 
 - (NSString *)currentRadio {
     NSString *radio = _telephonyInfo.currentRadioAccessTechnology;
-    NSLog(@"开始查询当前网络制式");
     if (!radio) {
         radio = @"None";
     } else if ([radio hasPrefix:@"CTRadioAccessTechnology"]) {
@@ -513,7 +509,6 @@ static Zhuge *sharedInstance = nil;
     }
     common[@"$cr"]  = self.cr;
     NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
-//    NSString *time = [NSString stringWithFormat:@"%lu",(unsigned long)ct];
     common[@"$ct"]  =  [NSNumber numberWithUnsignedInteger:ct];
     NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
     common[@"$tz"] = tz;
@@ -523,7 +518,6 @@ static Zhuge *sharedInstance = nil;
 // 会话开始
 - (void)sessionStart {
     @try {
-        NSLog(@"st sessionID is %@ ,是否为空%@",self.sessionId,self.sessionId?@"NO":@"YES");
         if (!self.sessionId) {
             NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
             self.sessionId = [NSNumber numberWithInteger:ct];
@@ -537,7 +531,6 @@ static Zhuge *sharedInstance = nil;
                 pr[@"$net"] = self.net;
                 pr[@"$mnet"]= self.radio;
                 pr[@"$ov"] = [[UIDevice currentDevice] systemVersion];
-                NSLog(@"session is %@",NSStringFromClass([self.sessionId class]));
                 pr[@"$sid"] = self.sessionId;
                 pr[@"$vn"] = self.config.appVersion;
                 e[@"pr"] = pr;
@@ -582,19 +575,17 @@ static Zhuge *sharedInstance = nil;
 
 // 上报设备信息
 - (void)uploadDeviceInfo {
-    [self trackDeviceInfo];
-    //TODO: 注释代码
-//    @try {
-//        NSNumber *zgInfoUploadTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgInfoUploadTime"];
-//        NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
-//        if (zgInfoUploadTime == nil ||[ts longValue] > [zgInfoUploadTime longValue] + 7*86400) {
-//            [self trackDeviceInfo];
-//            [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgInfoUploadTime"];
-//        }
-//    }
-//    @catch (NSException *exception) {
-//        ZhugeDebug(@"uploadDeviceInfo exception");
-//    }
+    @try {
+        NSNumber *zgInfoUploadTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"zgInfoUploadTime"];
+        NSNumber *ts = @(round([[NSDate date] timeIntervalSince1970]));
+        if (zgInfoUploadTime == nil ||[ts longValue] > [zgInfoUploadTime longValue] + 86400) {
+            [self trackDeviceInfo];
+            [[NSUserDefaults standardUserDefaults] setObject:ts forKey:@"zgInfoUploadTime"];
+        }
+    }
+    @catch (NSException *exception) {
+        ZhugeDebug(@"uploadDeviceInfo exception");
+    }
 }
 
 -(void)startTrack:(NSString *)eventName{
@@ -759,7 +750,6 @@ static Zhuge *sharedInstance = nil;
             NSMutableDictionary *e = [NSMutableDictionary dictionary];
             e[@"$mid"] = userInfo[@"mid"];
             NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
-//            NSString *time = [NSString stringWithFormat:@"%lu",(unsigned long)ct];
             NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
             e[@"$ct"] = [NSNumber numberWithUnsignedInteger:ct];
             e[@"$tz"] = tz;
@@ -788,7 +778,6 @@ static Zhuge *sharedInstance = nil;
         pr[@"$channel"] = [self nameForChannel:channel];
         pr[@"$user_id"] = userId;
         NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
-//        NSString *time = [NSString stringWithFormat:@"%lu",(unsigned long)ct];
         pr[@"$ct"]  =  [NSNumber numberWithUnsignedInteger:ct];
         NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
         pr[@"$tz"] = tz;
@@ -834,13 +823,12 @@ static Zhuge *sharedInstance = nil;
     batch[@"pl"]    = @"ios";
     batch[@"sdk"]   = @"zg-ios";
     batch[@"sdkv"]  = self.config.sdkVersion;
-    NSDictionary *dic = @{@"did":[self getDeviceId]};
+    NSDictionary *dic = @{@"did":[self getDid]};
     batch[@"usr"]   = dic;
     batch[@"ut"]    = [self currentDate];
     NSUInteger tz = [[NSTimeZone localTimeZone] secondsFromGMT]*1000;//取毫秒偏移量
     batch[@"tz"]    = [NSNumber numberWithUnsignedInteger:tz];
     batch[@"data"]  = events;
-//    NSLog(@"----发送数据---\n %@",batch);
     return batch;
 }
 #pragma mark - 编码&解码
@@ -1020,20 +1008,19 @@ static Zhuge *sharedInstance = nil;
     int  retry = 0;
     NSData *responseData = nil;
     while (!success && retry < 3) {
-//        NSURL *URL = nil;
-//        if (retry > 0) {
-//            URL = [NSURL URLWithString:@"https://apipoolback.zhugeio.com/upload"];
-//        }else{
-//            URL = [NSURL URLWithString:[self.apiURL stringByAppendingString:endpoint]];
-//        }
-        NSURL *URL = [NSURL URLWithString:[self.apiURL stringByAppendingString:endpoint]];
+        NSURL *URL = nil;
+        if (retry > 0) {
+            URL = [NSURL URLWithString:@"https://ubak.zhugeio.com/upload/"];
+        }else{
+            URL = [NSURL URLWithString:[self.apiURL stringByAppendingString:endpoint]];
+        }
 
         ZhugeDebug(@"api request url = %@ , retry = %d",URL,retry);
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
         [request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];
         [request setHTTPMethod:@"POST"];
         [request setHTTPBody:[[requestData stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding] dataUsingEncoding:NSUTF8StringEncoding]];
-        request.timeoutInterval =15;
+        request.timeoutInterval =30;
         [self updateNetworkActivityIndicator:YES];
         
         NSURLResponse *urlResponse = nil;
@@ -1045,11 +1032,15 @@ static Zhuge *sharedInstance = nil;
             continue;
         }
         [self updateNetworkActivityIndicator:NO];
-        
-        if (responseData != nil) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) urlResponse;
+        NSInteger code = [httpResponse statusCode];
+        if (code == 200 && responseData != nil) {
             NSString *response = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
             ZhugeDebug(@"API响应: %@",response);
+            [self updateNetworkActivityIndicator:NO];
             success = YES;
+        }else{
+            retry++;
         }
     }
     if (!success) {
@@ -1177,7 +1168,6 @@ static Zhuge *sharedInstance = nil;
 - (void)unarchiveProperties {
     NSDictionary *properties = (NSDictionary *)[self unarchiveFromFile:[self propertiesFilePath]];
     if (properties) {
-        NSLog(@"解压出的信息 is %@",properties);
         self.userId = properties[@"userId"] ? properties[@"userId"] : @"";
         self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
         self.sessionId = properties[@"sessionId"] ? properties[@"sessionId"] : nil;

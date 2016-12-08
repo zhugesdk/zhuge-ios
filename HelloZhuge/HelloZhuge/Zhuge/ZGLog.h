@@ -16,10 +16,10 @@ static inline void ZGLog(NSString *format, ...) {
     va_end(arg_list);
     NSLog(@"[Zhuge]: %@", formattedString);
 }
-//#ifdef ZHUGE_LOG
+#ifdef ZHUGE_LOG
 #define ZhugeDebug(...) ZGLog(__VA_ARGS__)
-//#else
-//#define ZhugeDebug(...)
-//#endif
+#else
+#define ZhugeDebug(...)
+#endif
 
 #endif /* ZGLog_h */

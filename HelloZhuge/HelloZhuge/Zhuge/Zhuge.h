@@ -24,8 +24,8 @@
 /**
  获得诸葛设备ID。
  */
-- (nonnull NSString *)getDeviceId;
--(nonnull NSString *)getSessionID;
+- (nonnull NSString *)getDid;
+-(nonnull NSString *)getSid;
 #pragma mark - 开启统计
 
 /**
@@ -53,9 +53,9 @@
 /**
  设置事件环境信息，通过这个地方存入的信息将会给之后传入的每一个事件添加环境信息
  */
--(void) setEventInfo:(nonnull NSDictionary *)info;
+-(void) setSuperProperty:(nonnull NSDictionary *)info;
 
--(void) setDeviceInfo:(nonnull NSDictionary *)info;
+-(void) setPlatform:(nonnull NSDictionary *)info;
 - (void)track:(nonnull NSString *)event;
 
 /**
