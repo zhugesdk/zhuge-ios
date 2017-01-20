@@ -22,7 +22,9 @@
     if ([self length] == 0) return self;
     
     z_stream strm;
-    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wconversion"
+
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
     strm.opaque = Z_NULL;
@@ -53,7 +55,7 @@
     } while (strm.avail_out == 0);
     
     deflateEnd(&strm);
-    
+#pragma clang diagnostic pop
     [compressed setLength: strm.total_out];
     return [NSData dataWithData: compressed];
 }

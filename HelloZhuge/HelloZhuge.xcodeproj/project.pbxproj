@@ -20,7 +20,6 @@
 		DCBA2D611C05A69500F866E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D601C05A69500F866E7 /* QuartzCore.framework */; };
 		DCBA2D631C05A6A300F866E7 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D621C05A6A300F866E7 /* libicucore.tbd */; };
 		DCBA2D651C05A6AE00F866E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D641C05A6AE00F866E7 /* libz.tbd */; };
-		DCBA2D671C05A6B800F866E7 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -63,7 +62,6 @@
 		DCBA2D621C05A6A300F866E7 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		DCBA2D641C05A6AE00F866E7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		DCCB1A0D1B6632EA00B9E517 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,7 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCBA2D671C05A6B800F866E7 /* CoreMotion.framework in Frameworks */,
 				DCBA2D651C05A6AE00F866E7 /* libz.tbd in Frameworks */,
 				DCBA2D631C05A6A300F866E7 /* libicucore.tbd in Frameworks */,
 				DCBA2D611C05A69500F866E7 /* QuartzCore.framework in Frameworks */,
@@ -142,7 +139,6 @@
 				DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */,
 				DCBA2D561C05A65C00F866E7 /* Foundation.framework */,
 				DCBA2D541C05A65600F866E7 /* UIKit.framework */,
-				DCCB1A0D1B6632EA00B9E517 /* libz.dylib */,
 				E5AC1F421AA97F6400A19577 /* Security.framework */,
 				E55E51561A242BF100ED0263 /* HelloZhuge */,
 				E55E51731A242BF100ED0263 /* HelloZhugeTests */,

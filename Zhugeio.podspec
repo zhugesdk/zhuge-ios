@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Zhugeio"
-  s.version      = "2.0.6"
+  s.version      = "2.1.1"
   s.summary      = "iOS tracking library for Zhugeio Analytics"
   s.homepage     = "http://zhugeio.com"
   s.license      = "MIT"
@@ -13,15 +13,7 @@ Pod::Spec.new do |s|
   
   s.subspec 'Zhugeio' do |ss|
     ss.source_files  = 'Zhuge/**/*.{m,h}'
-    ss.resources   = ['Zhuge/**/*.json']
-    ss.frameworks = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security','CoreMotion'
-    ss.libraries = 'icucore','z'
-  end
-
-  s.subspec 'AppExtension' do |ss|
-    ss.source_files  = ['Zhuge/Zhuge.{m,h}', 'Zhuge/ZGLog.h', 'Zhuge/*.{m,h}' ]
-    ss.xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) ZHUGE_APP_EXTENSION'}
-    ss.frameworks = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security','CoreMotion'
+    ss.frameworks = 'UIKit', 'Foundation', 'SystemConfiguration', 'CoreTelephony', 'Accelerate', 'CoreGraphics', 'QuartzCore', 'Security'
     ss.libraries = 'icucore','z'
   end
 end
