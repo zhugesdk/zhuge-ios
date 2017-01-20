@@ -7,7 +7,7 @@
 #import <Foundation/Foundation.h>
 
 /* SDK版本 */
-#define ZG_SDK_VERSION @"2.0.6"
+#define ZG_SDK_VERSION @"2.1.1"
 
 /* 默认应用版本 */
 #define ZG_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
@@ -38,8 +38,6 @@
 // 是否开启实时调试(默认:关闭)
 @property (nonatomic) BOOL debug;
 
-// 是否开启无码打点（默认：关闭）
-@property (nonatomic) BOOL openGestureBindingUI;
 
 // 是否推送到生产环境，默认YES(推送时指定deviceToken上传到开发环境或生产环境)
 @property (nonatomic) BOOL apsProduction;
