@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <JavaScriptCore/JavaScriptCore.h>
-@protocol ZhugeJSPro <JSExport>
+#import <WebKit/WebKit.h>
+@protocol ZhugeJSPro <JSExport,WKScriptMessageHandler>
 -(void)track:(NSString *)eventName Property:(NSString *)pro;
 -(void)identify:(NSString *)uid Properties:(NSString *)pro;
+-(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message;
 @end
 /** 
  
