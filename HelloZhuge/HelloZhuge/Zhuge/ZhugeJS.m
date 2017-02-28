@@ -16,7 +16,9 @@
     Zhuge *zhuge = [Zhuge sharedInstance];
     NSData *data = [pro dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    [zhuge track:eventName properties:json];
+    NSMutableDictionary *mutableJson = [json mutableCopy];
+    mutableJson[@"env_type"] = @"js";
+    [zhuge track:eventName properties:mutableJson];
 
 }
 

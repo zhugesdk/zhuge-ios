@@ -18,7 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString * did = [[Zhuge sharedInstance] getDeviceId];
+    NSString * did = [[Zhuge sharedInstance] getDid];
     if (did) {
         self.uid.text = [did substringToIndex:6];
     }
@@ -59,13 +59,13 @@
 }
 
 - (IBAction)getSessionID:(id)sender {
-    NSString *info = [[Zhuge sharedInstance]getSessionID];
+    NSString *info = [[Zhuge sharedInstance]getSid];
     [self.info setText:[NSString stringWithFormat:@"sessionID : %@",info]];
     
 }
 
 - (IBAction)getDeviceID:(id)sender {
-    NSString *info = [[Zhuge sharedInstance]getDeviceId];
+    NSString *info = [[Zhuge sharedInstance]getDid];
     [self.info setText:[NSString stringWithFormat:@"deviceID : %@",info]];
 }
 @end

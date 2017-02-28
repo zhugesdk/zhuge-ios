@@ -85,7 +85,7 @@
         [dic setObject:self.value2.text forKey:self.prop2.text];
     }
     if ([dic count]) {
-        [[Zhuge sharedInstance] setEventInfo:dic];
+        [[Zhuge sharedInstance] setSuperProperty:dic];
     }
     
     
@@ -100,7 +100,7 @@
         [dic setObject:self.value2.text forKey:self.prop2.text];
     }
     if ([dic count]) {
-        [[Zhuge sharedInstance] setDeviceInfo:dic];
+        [[Zhuge sharedInstance] setPlatform:dic];
     }
 }
 
