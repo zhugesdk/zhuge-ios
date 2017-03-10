@@ -512,6 +512,7 @@ static Zhuge *sharedInstance = nil;
     common[@"$ct"]  =  [NSNumber numberWithUnsignedInteger:ct];
     NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
     common[@"$tz"] = tz;
+    common[@"$os"] = @"iOS";
     return common;
 }
 
