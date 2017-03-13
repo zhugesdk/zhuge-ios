@@ -112,7 +112,7 @@ static Zhuge *sharedInstance = nil;
         if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
             [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
         }
-        [self sessionStart];
+//        [self sessionStart];
     }
     @catch (NSException *exception) {
         ZhugeDebug(@"startWithAppKey exception");
