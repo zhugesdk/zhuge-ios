@@ -31,7 +31,7 @@
 
     
     // 启动诸葛
-    [zhuge startWithAppKey:@"f05e0a67082f460f9fadb50b61040733" launchOptions:launchOptions];
+    [zhuge startWithAppKey:@"9f8bce20035a45848ae969d37922368c" launchOptions:launchOptions];
     [zhuge.config setDebug:YES]; // 默认关闭
 
     // 第三方推送(启用第三方推送时，请在startWithAppKey后调用)

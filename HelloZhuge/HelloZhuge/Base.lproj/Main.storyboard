@@ -65,10 +65,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d3f-0i-0ju">
-                                <rect key="frame" x="86" y="188" width="98" height="55"/>
+                                <rect key="frame" x="86" y="188" width="258" height="58"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                <state key="normal" title="购物">
+                                <state key="normal" title="结束朋友圈事件">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -76,7 +76,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="自定义事件" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9kC-g0-iV6">
-                                <rect key="frame" x="16" y="44" width="85" height="21"/>
+                                <rect key="frame" x="16" y="44" width="91" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -119,6 +119,22 @@
                                 </state>
                                 <connections>
                                     <action selector="scan:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="scF-Ir-OBm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j1X-iE-7Bw">
+                                <rect key="frame" x="61" y="403" width="160" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="setSuperProperty"/>
+                                <connections>
+                                    <action selector="setEventInfo:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="oKo-7H-gbx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3uI-4O-eCh">
+                                <rect key="frame" x="97" y="459" width="110" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="setPlatform"/>
+                                <connections>
+                                    <action selector="setDeviceInfo:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="xaq-U1-4sN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -218,12 +234,50 @@
                                     <action selector="identify:" destination="bV8-Ea-cGT" eventType="touchUpInside" id="bLd-hG-wFr"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Gm-OF-z3U">
+                                <rect key="frame" x="53" y="518" width="105" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="getSessionID"/>
+                                <connections>
+                                    <action selector="getSessionID:" destination="bV8-Ea-cGT" eventType="touchUpInside" id="aEH-DS-TgB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIH-gk-Hjd">
+                                <rect key="frame" x="232" y="518" width="101" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="getDeviceID"/>
+                                <connections>
+                                    <action selector="getDeviceID:" destination="bV8-Ea-cGT" eventType="touchUpInside" id="b5s-QL-j6e"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="EKf-Ft-vQS">
+                                <rect key="frame" x="69" y="342" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="2Pm-Ug-fPZ">
+                                <rect key="frame" x="53" y="342" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="0Os-a3-xIC">
+                                <rect key="frame" x="53" y="342" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="我" image="second" id="jPq-r5-6aY"/>
                     <connections>
                         <outlet property="email" destination="QCi-5e-vK1" id="srq-Sn-1Zu"/>
+                        <outlet property="info" destination="0Os-a3-xIC" id="011-Xx-pTj"/>
                         <outlet property="name" destination="rkf-Gj-sEi" id="FYx-eE-Svr"/>
                         <outlet property="uid" destination="PdU-yF-273" id="d45-Hg-ATV"/>
                     </connections>
