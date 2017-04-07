@@ -608,6 +608,9 @@ static Zhuge *sharedInstance = nil;
             ZhugeDebug(@"end track event name not found ,have you called startTrack already?");
             return;
         }
+        if (!self.sessionId) {
+            [self sessionStart];
+        }
         [self.eventTimeDic removeObjectForKey:eventName];
         NSNumber *end = @([[NSDate date] timeIntervalSince1970]);
         ZhugeDebug(@"endTrack %@ at time : %@",eventName,end);
