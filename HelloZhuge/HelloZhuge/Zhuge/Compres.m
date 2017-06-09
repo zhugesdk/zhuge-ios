@@ -17,7 +17,7 @@
 @implementation NSData (NSDataExtension)
 
 
-- (NSData *)zlibDeflate
+- (NSData *)zgZlibDeflate
 {
     if ([self length] == 0) return self;
     

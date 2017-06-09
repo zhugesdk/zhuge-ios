@@ -906,9 +906,9 @@ static Zhuge *sharedInstance = nil;
             
             ZhugeDebug(@"上传事件：%@",eventData);
             NSData *eventDataBefore = [eventData dataUsingEncoding:NSUTF8StringEncoding];
-            NSData *zlibedData = [eventDataBefore zlibDeflate];
+            NSData *zlibedData = [eventDataBefore zgZlibDeflate];
             
-            NSString *event = [zlibedData base64EncodedString];
+            NSString *event = [zlibedData zgBase64EncodedString];
             NSString *result = [[event stringByReplacingOccurrencesOfString:@"\r" withString:@""] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
             
             NSString *requestData = [NSString stringWithFormat:@"method=event_statis_srv.upload&compress=1&event=%@", result];
