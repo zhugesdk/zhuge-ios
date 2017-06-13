@@ -1153,7 +1153,7 @@ static Zhuge *sharedInstance = nil;
 }
 
 -(void)unarchiveEnvironmentInfo{
-    self.envInfo = (NSMutableDictionary *)[self unarchiveFromFile:[self environmentInfoFilePath]];
+    self.envInfo = (NSMutableDictionary *)[[self unarchiveFromFile:[self environmentInfoFilePath]] mutableCopy];
     if (self.envInfo) {
         if([self.envInfo objectForKey:@"event"]){
             ZhugeDebug(@"全局自定义事件信息：%@",self.envInfo[@"event"]);
@@ -1163,7 +1163,7 @@ static Zhuge *sharedInstance = nil;
     }
 }
 - (void)unarchiveEvents {
-    self.eventsQueue = (NSMutableArray *)[self unarchiveFromFile:[self eventsFilePath]];
+    self.eventsQueue = (NSMutableArray *)[[self unarchiveFromFile:[self eventsFilePath]] mutableCopy];
     if (!self.eventsQueue) {
         self.eventsQueue = [NSMutableArray array];
     }
