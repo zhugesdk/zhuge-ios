@@ -463,7 +463,7 @@ static Zhuge *sharedInstance = nil;
         if (flags & kSCNetworkReachabilityFlagsIsWWAN) {
             self.net = @"0";//2G/3G/4G
         } else {
-            self.net = @"1";//WIFI
+            self.net = @"4";//WIFI
         }
     } else {
         self.net = @"-1";//未知
