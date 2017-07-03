@@ -82,7 +82,6 @@
         encoded = [self base64Encoding];
     }
     else
-#pragma clang diagnostic pop
     
 #endif
 #pragma clang diagnostic pop
