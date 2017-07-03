@@ -9,14 +9,16 @@
 #import "Zhuge.h"
 
 @interface ProfileViewController ()
-
+- (IBAction)getSessionID:(id)sender;
+- (IBAction)getDeviceID:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextView *info;
 @end
 
 @implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString * did = [[Zhuge sharedInstance] getDeviceId];
+    NSString * did = [[Zhuge sharedInstance] getDid];
     if (did) {
         self.uid.text = [did substringToIndex:6];
     }
@@ -32,6 +34,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+
+    [self.view endEditing:YES];
 }
 
 - (IBAction)identify:(id)sender {
@@ -49,7 +55,17 @@
     user[@"weibo"] = [NSString stringWithFormat:@"wb%@", id];
     user[@"location"] = @"北京 朝阳区";
     user[@"公司"] = @"zhuge";
-    [[Zhuge sharedInstance] identify:self.uid.text properties:nil];
+    [[Zhuge sharedInstance] identify:self.uid.text properties:user];
 }
 
+- (IBAction)getSessionID:(id)sender {
+    NSString *info = [[Zhuge sharedInstance]getSid];
+    [self.info setText:[NSString stringWithFormat:@"sessionID : %@",info]];
+    
+}
+
+- (IBAction)getDeviceID:(id)sender {
+    NSString *info = [[Zhuge sharedInstance]getDid];
+    [self.info setText:[NSString stringWithFormat:@"deviceID : %@",info]];
+}
 @end

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <script src="jquery.min.js"></script>
+                    <style>
+                        *{
+                            -webkit-box-sizing: border-box;
+                            -moz-box-sizing: border-box;
+                            box-sizing: border-box;
+                        }
+                    html,body{
+                        width: 100%;
+                        height: 100%;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .form{
+                        border: 1px solid lightgray;
+                        padding: 5px;
+                        width: 90%;
+                        margin: 5px auto;
+                        max-width: 300px;
+                    }
+                    input[type='text']{
+                        width: 200px;
+                        height: 30px;
+                        line-height: 30px;
+                        margin-bottom: 5px;
+                    }
+                    fieldset{
+                        margin-bottom: 5px;
+                    }
+                    button{
+                        height: 30px;
+                        margin-bottom: 5px;
+                    }
+                    </style>
+    </head>
+    <body>
+        
+        <div class="form">
+            <input id="name" type="text" placeholder="事件名称/用户ID">
+                <button id="addProp">添加自定义属性</button>
+                <div id="toProp">
+                    
+                </div>
+                <button id="track">track</button>
+                <button id="identify">identify</button>
+        </div>
+        
+        <script>
+            $("#addProp").click(function () {
+                                $('#toProp').append('<fieldset>' +
+                                                    '<legend>prop</legend>' +
+                                                    '<input type="text" class="name" placeholder="name"/> ' +
+                                                    '<input type="text" class="value" placeholder="value">' +
+                                                    '</fieldset>');
+                                });
+                                function getProps() {
+                                    var props = {};
+                                    $('fieldset').each(function () {
+                                                       var key = $(this).find('.name').val().trim(),
+                                                       val = $(this).find('.value').val().trim();
+                                                       if(!key)return;
+                                                       props[key] = val;
+                                                       });
+                                                       return props;
+                                }
+        $("#track").click(function () {
+                          zhuge.trackProperty($("#name").val(), JSON.stringify(getProps()));
+                          });
+                          $('#identify').click(function () {
+                                               zhuge.identifyProperties($("#name").val(), JSON.stringify(getProps()));
+                                               });
+            </script>
+    </body>
+</html>

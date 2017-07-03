@@ -7,19 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2751DDEF0110021559D /* JSDemo.m */; };
+		DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2781DDEF0410021559D /* ZhugeJS.m */; };
+		DC8AA27D1DDEF0910021559D /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27B1DDEF0910021559D /* jquery.min.js */; };
+		DC8AA27E1DDEF0910021559D /* JsDemo.html in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27C1DDEF0910021559D /* JsDemo.html */; };
+		DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8AA2801DDEF0FC0021559D /* libz.tbd */; };
 		DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC31C05A35100F866E7 /* Base64.m */; };
 		DCBA2D201C05A35100F866E7 /* Compres.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC51C05A35100F866E7 /* Compres.m */; };
 		DCBA2D521C05A35100F866E7 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1C1C05A35100F866E7 /* Zhuge.m */; };
 		DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */; };
-		DCBA2D551C05A65600F866E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D541C05A65600F866E7 /* UIKit.framework */; };
-		DCBA2D571C05A65C00F866E7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D561C05A65C00F866E7 /* Foundation.framework */; };
-		DCBA2D591C05A66C00F866E7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */; };
-		DCBA2D5B1C05A67500F866E7 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D5A1C05A67500F866E7 /* CoreTelephony.framework */; };
-		DCBA2D5D1C05A68200F866E7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D5C1C05A68200F866E7 /* Accelerate.framework */; };
-		DCBA2D5F1C05A68D00F866E7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D5E1C05A68D00F866E7 /* CoreGraphics.framework */; };
-		DCBA2D611C05A69500F866E7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D601C05A69500F866E7 /* QuartzCore.framework */; };
-		DCBA2D631C05A6A300F866E7 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D621C05A6A300F866E7 /* libicucore.tbd */; };
-		DCBA2D651C05A6AE00F866E7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DCBA2D641C05A6AE00F866E7 /* libz.tbd */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
 		E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515F1A242BF100ED0263 /* HomeViewController.m */; };
@@ -29,7 +25,6 @@
 		E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E55E51691A242BF100ED0263 /* LaunchScreen.xib */; };
 		E55E51771A242BF100ED0263 /* HelloZhugeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51761A242BF100ED0263 /* HelloZhugeTests.m */; };
 		E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E518C1A24842E00ED0263 /* ProfileViewController.m */; };
-		E5AC1F431AA97F6400A19577 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5AC1F421AA97F6400A19577 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DC8AA2741DDEF0110021559D /* JSDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDemo.h; sourceTree = "<group>"; };
+		DC8AA2751DDEF0110021559D /* JSDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDemo.m; sourceTree = "<group>"; };
+		DC8AA2771DDEF0410021559D /* ZhugeJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhugeJS.h; sourceTree = "<group>"; };
+		DC8AA2781DDEF0410021559D /* ZhugeJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhugeJS.m; sourceTree = "<group>"; };
+		DC8AA27B1DDEF0910021559D /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
+		DC8AA27C1DDEF0910021559D /* JsDemo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = JsDemo.html; sourceTree = "<group>"; };
+		DC8AA2801DDEF0FC0021559D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		DCBA2CC21C05A35100F866E7 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		DCBA2CC31C05A35100F866E7 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		DCBA2CC41C05A35100F866E7 /* Compres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compres.h; sourceTree = "<group>"; };
@@ -52,16 +54,6 @@
 		DCBA2D1C1C05A35100F866E7 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Zhuge.m; sourceTree = "<group>"; };
 		DCBA2D1D1C05A35100F866E7 /* ZhugeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhugeConfig.h; sourceTree = "<group>"; };
 		DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZhugeConfig.m; sourceTree = "<group>"; };
-		DCBA2D541C05A65600F866E7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		DCBA2D561C05A65C00F866E7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		DCBA2D5A1C05A67500F866E7 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
-		DCBA2D5C1C05A68200F866E7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		DCBA2D5E1C05A68D00F866E7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		DCBA2D601C05A69500F866E7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		DCBA2D621C05A6A300F866E7 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
-		DCBA2D641C05A6AE00F866E7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		E55E51541A242BF100ED0263 /* HelloZhuge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloZhuge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E55E51581A242BF100ED0263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E55E51591A242BF100ED0263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -79,7 +71,6 @@
 		E55E51761A242BF100ED0263 /* HelloZhugeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloZhugeTests.m; sourceTree = "<group>"; };
 		E55E518B1A24842E00ED0263 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		E55E518C1A24842E00ED0263 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
-		E5AC1F421AA97F6400A19577 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,16 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCBA2D651C05A6AE00F866E7 /* libz.tbd in Frameworks */,
-				DCBA2D631C05A6A300F866E7 /* libicucore.tbd in Frameworks */,
-				DCBA2D611C05A69500F866E7 /* QuartzCore.framework in Frameworks */,
-				DCBA2D5F1C05A68D00F866E7 /* CoreGraphics.framework in Frameworks */,
-				DCBA2D5D1C05A68200F866E7 /* Accelerate.framework in Frameworks */,
-				DCBA2D5B1C05A67500F866E7 /* CoreTelephony.framework in Frameworks */,
-				DCBA2D591C05A66C00F866E7 /* SystemConfiguration.framework in Frameworks */,
-				DCBA2D571C05A65C00F866E7 /* Foundation.framework in Frameworks */,
-				DCBA2D551C05A65600F866E7 /* UIKit.framework in Frameworks */,
-				E5AC1F431AA97F6400A19577 /* Security.framework in Frameworks */,
+				DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,9 +92,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DC8AA27A1DDEF0910021559D /* Html */ = {
+			isa = PBXGroup;
+			children = (
+				DC8AA27B1DDEF0910021559D /* jquery.min.js */,
+				DC8AA27C1DDEF0910021559D /* JsDemo.html */,
+			);
+			path = Html;
+			sourceTree = "<group>";
+		};
+		DC8AA27F1DDEF0FC0021559D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DC8AA2801DDEF0FC0021559D /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DCBA2CC11C05A35100F866E7 /* Zhuge */ = {
 			isa = PBXGroup;
 			children = (
+				DC8AA2771DDEF0410021559D /* ZhugeJS.h */,
+				DC8AA2781DDEF0410021559D /* ZhugeJS.m */,
 				DCBA2CC21C05A35100F866E7 /* Base64.h */,
 				DCBA2CC31C05A35100F866E7 /* Base64.m */,
 				DCBA2CC41C05A35100F866E7 /* Compres.h */,
@@ -129,20 +130,10 @@
 		E55E514B1A242BF100ED0263 = {
 			isa = PBXGroup;
 			children = (
-				DCBA2D661C05A6B800F866E7 /* CoreMotion.framework */,
-				DCBA2D641C05A6AE00F866E7 /* libz.tbd */,
-				DCBA2D621C05A6A300F866E7 /* libicucore.tbd */,
-				DCBA2D601C05A69500F866E7 /* QuartzCore.framework */,
-				DCBA2D5E1C05A68D00F866E7 /* CoreGraphics.framework */,
-				DCBA2D5C1C05A68200F866E7 /* Accelerate.framework */,
-				DCBA2D5A1C05A67500F866E7 /* CoreTelephony.framework */,
-				DCBA2D581C05A66C00F866E7 /* SystemConfiguration.framework */,
-				DCBA2D561C05A65C00F866E7 /* Foundation.framework */,
-				DCBA2D541C05A65600F866E7 /* UIKit.framework */,
-				E5AC1F421AA97F6400A19577 /* Security.framework */,
 				E55E51561A242BF100ED0263 /* HelloZhuge */,
 				E55E51731A242BF100ED0263 /* HelloZhugeTests */,
 				E55E51551A242BF100ED0263 /* Products */,
+				DC8AA27F1DDEF0FC0021559D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -158,6 +149,7 @@
 		E55E51561A242BF100ED0263 /* HelloZhuge */ = {
 			isa = PBXGroup;
 			children = (
+				DC8AA27A1DDEF0910021559D /* Html */,
 				DCBA2CC11C05A35100F866E7 /* Zhuge */,
 				E55E515B1A242BF100ED0263 /* AppDelegate.h */,
 				E55E515C1A242BF100ED0263 /* AppDelegate.m */,
@@ -171,6 +163,8 @@
 				E55E51671A242BF100ED0263 /* Images.xcassets */,
 				E55E51691A242BF100ED0263 /* LaunchScreen.xib */,
 				E55E51571A242BF100ED0263 /* Supporting Files */,
+				DC8AA2741DDEF0110021559D /* JSDemo.h */,
+				DC8AA2751DDEF0110021559D /* JSDemo.m */,
 			);
 			path = HelloZhuge;
 			sourceTree = "<group>";
@@ -245,7 +239,7 @@
 		E55E514C1A242BF100ED0263 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = 37degree;
 				TargetAttributes = {
 					E55E51531A242BF100ED0263 = {
@@ -290,7 +284,9 @@
 			files = (
 				E55E51661A242BF100ED0263 /* Main.storyboard in Resources */,
 				E55E516B1A242BF100ED0263 /* LaunchScreen.xib in Resources */,
+				DC8AA27D1DDEF0910021559D /* jquery.min.js in Resources */,
 				E55E51681A242BF100ED0263 /* Images.xcassets in Resources */,
+				DC8AA27E1DDEF0910021559D /* JsDemo.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,9 +307,11 @@
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
 				DCBA2D521C05A35100F866E7 /* Zhuge.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
+				DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */,
 				DCBA2D201C05A35100F866E7 /* Compres.m in Sources */,
 				DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
+				DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
 				DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
@@ -371,8 +369,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -381,6 +381,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -414,8 +415,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -423,6 +426,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -482,10 +486,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = S63Y8AL2QU;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -503,10 +504,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = S63Y8AL2QU;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = HelloZhugeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.zhuge.$(PRODUCT_NAME:rfc1034identifier)";
