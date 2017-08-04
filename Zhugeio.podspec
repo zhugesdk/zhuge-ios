@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Zhugeio"
-  s.version      = "3.1.0"
+  s.version      = "3.1.2"
   s.summary      = "iOS tracking library for Zhugeio Analytics"
   s.homepage     = "http://zhugeio.com"
   s.license      = "MIT"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 
   
   s.subspec 'Zhugeio' do |ss|
-    ss.source_files  = 'Zhuge/**/*.{m,h}'
+    ss.source_files  = 'HelloZhuge/HelloZhuge/Zhuge/*.{m,h}'
     ss.frameworks = 'UIKit', 'Foundation', 'SystemConfiguration'
     ss.libraries = 'z'
   end
