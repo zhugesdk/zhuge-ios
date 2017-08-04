@@ -779,12 +779,8 @@ static Zhuge *sharedInstance = nil;
         }
         
         NSMutableDictionary *pr = [NSMutableDictionary dictionary];
-        pr[@"$channel"] = [self nameForChannel:channel];
-        pr[@"$user_id"] = userId;
-        NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
-        pr[@"$ct"]  =  [NSNumber numberWithUnsignedInteger:ct];
-        NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
-        pr[@"$tz"] = tz;
+        pr[@"$push_ch"] = [self nameForChannel:channel];
+        pr[@"$push_id"] = userId;
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"dt"] = @"um";
         e[@"pr"] = pr;
@@ -800,14 +796,6 @@ static Zhuge *sharedInstance = nil;
     switch (channel) {
         case ZG_PUSH_CHANNEL_JPUSH:
             return @"jpush";
-        case ZG_PUSH_CHANNEL_UMENG:
-            return @"umeng";
-        case ZG_PUSH_CHANNEL_BAIDU:
-            return @"baidu";
-        case ZG_PUSH_CHANNEL_XINGE:
-            return @"xinge";
-        case ZG_PUSH_CHANNEL_GETUI:
-            return @"getui";
         case ZG_PUSH_CHANNEL_XIAOMI:
             return @"xiaomi";
         default:

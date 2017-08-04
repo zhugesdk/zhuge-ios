@@ -22,7 +22,7 @@
 
 }
 
--(void)identify:(NSString *)uid Properties:(NSString *)pro{
+-(void)identify:(NSString *)uid Property:(NSString *)pro{
     
     Zhuge *zhuge = [Zhuge sharedInstance];
     NSData *data = [pro dataUsingEncoding:NSUTF8StringEncoding];
@@ -32,7 +32,7 @@
 }
 -(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
 
-    if ([@"zhuge" isEqualToString:message.name]) {
+    if ([@"zhugeTracker" isEqualToString:message.name]) {
         ZhugeDebug(@"H5传递消息：%@",message.body);
         NSDictionary *type = message.body;
         if (![type isKindOfClass:[NSDictionary class]] || ![type objectForKey:@"type"]) {

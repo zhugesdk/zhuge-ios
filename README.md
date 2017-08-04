@@ -154,7 +154,7 @@ pro[@"期数"] = @"2016-11-02";
 	-(void)webViewDidFinishLoad:(UIWebView *)webView{
 
     JSContext *jsContext = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
-    jsContext[@"zhuge"] = [[ZhugeJS alloc] init];
+    jsContext[@"zhugeTracker"] = [[ZhugeJS alloc] init];
     jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) {
         context.exception = exceptionValue;
         NSLog(@"异常信息：%@", exceptionValue);
@@ -165,26 +165,7 @@ pro[@"期数"] = @"2016-11-02";
   
 * js代码统计
 
-  集成了Object C代码之后，您就可以在js代码中进行统计：
-  
-  ```js
-  var name = 'click';
-  var pro = {'名称':'iPhone',
-  				'分类':'手机'
-  				};
-  zhuge.trackProperty(name,JSON.stringify(pro)); 
-  ```
-  
-  类似的，用户标识可以这样：
-  
-  ```
-  var uid = '123@11.com';
-  var pro = {'name':'Jack',
-  				'gender':'male'
-  				};
-  zhuge.identifyProperty(uid,JSON.stringify(pro));
-  
-  ```
+  集成了Object C代码之后，您就可以在js代码中进行统计。具体统计方式请参照JS集成文档。
 ##9. 在WKWebView中进行统计
 如果你的页面中使用了**WKWebView**嵌入HTML,js 的代码，并且希望统计HTML中的事件，那么可以通过下面的文档来进行跨平台的统计。注意如果你的HTML是运行在浏览器的，那么还是无法统计的，下文仅针对使用**WKWebView**加载网页的情况。
 
@@ -201,7 +182,7 @@ pro[@"期数"] = @"2016-11-02";
 	//初始化一个WKUserContentController
     WKUserContentController* userContent = [[WKUserContentController alloc] init];
     //给WKUserContentController设置一个js脚本控制器
-    [userContent addScriptMessageHandler:[[ZhugeJS alloc]init] name:@"zhuge"];
+    [userContent addScriptMessageHandler:[[ZhugeJS alloc]init] name:@"zhugeTracker"];
     //将配置过脚本控制器的WKUserContentController设置给WKWebViewConfiguration
     config.userContentController = userContent;
     //使用配置好的WKWebViewConfiguration，创建WKWebView
@@ -210,55 +191,9 @@ pro[@"期数"] = @"2016-11-02";
 
 * JS代码集成
 
-	Native端配置好之后，即可在html页面中通过js进行移动端的打点。
+	Native端配置好之后，即可在html页面中通过js进行移动端的打点，具体统计方式请参照JS集成文档。
 
-	js事件统计代码示例
-	
-	```
-	 var track = {
-              type: "track", 
-              name : "事件名称自定义",//事件名称,根据type的不同代表不同的含义
-              prop : { //事件属性，可以没有
-              "属性名称自定义" : "属性值",
-              "价格" : "50"
-              		}
-              };//传递给native的对象
-    //将上面生成的对象传递给诸葛
-	window.webkit.messageHandlers.zhuge.postMessage(track);	
-	```
-	
-	js标识用户代码示例
-	
-	```
-	 var iden = {
-              type: "identify",//类型：identify。
-              name : "1234",//userID,
-              prop : {//用户属性，可以没有
-              "name" : "小明",
-              "gender" : "male"
-              		}
-              };
-//将上面生成的对象传递给诸葛
-window.webkit.messageHandlers.zhuge.postMessage(iden);
 
-	
-	```
-**注意**：js端传递给移动端的数据必须依照固定的格式传递json对象，错误的格式会导致数据统计失败，一个格式完整的json对象如下：
-
-```
-	{
-		//此处的值为track 或者 identify。不可为其他的数据，否则会导致统计失败 
-		//track代表这是一条事件统计的数据，用来埋点；identify代表这是一条标识用户的数据，用来标识用户
-		type:"track"或者"identify", 
-		name :" 事件名称或者userID", //传递事件名称或者用户ID
-		prop : {//事件或者用户的属性，可以不传
-			"key1" : "value1",
-			"key2" : "value2",
-			...
-		}
-	}
-
-```
 ##10. 设置自定义属性
 
 * 事件自定义属性
