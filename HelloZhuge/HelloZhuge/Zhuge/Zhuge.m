@@ -508,8 +508,8 @@ static Zhuge *sharedInstance = nil;
         common[@"$cuid"] = self.userId;
     }
     common[@"$cr"]  = self.cr;
-    NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
-    common[@"$ct"]  =  [NSNumber numberWithUnsignedInteger:ct];
+    //毫秒偏移量
+    common[@"$ct"]  =  [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970] *1000];
     NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
     common[@"$tz"] = tz;
     common[@"$os"] = @"iOS";
@@ -520,8 +520,8 @@ static Zhuge *sharedInstance = nil;
 - (void)sessionStart {
     @try {
         if (!self.sessionId) {
-            NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
-            self.sessionId = [NSNumber numberWithInteger:ct];
+            //毫秒偏移量
+            self.sessionId = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] *1000];
             ZhugeDebug(@"会话开始(ID:%@)", self.sessionId);
             if (self.config.sessionEnable) {
                 NSMutableDictionary *e = [NSMutableDictionary dictionary];
@@ -555,7 +555,7 @@ static Zhuge *sharedInstance = nil;
                 e[@"dt"] = @"se";
                 NSMutableDictionary *pr = [self buildCommonData];
                 NSNumber *ts = pr[@"$ct"];
-                NSNumber *dru = @([ts unsignedIntegerValue] - [self.sessionId unsignedIntegerValue]);
+                NSNumber *dru = @([ts unsignedLongLongValue] - [self.sessionId unsignedLongLongValue]);
                 pr[@"$an"] = self.config.appName;
                 pr[@"$cn"]  = self.config.channel;
                 pr[@"$dru"] = dru;
@@ -615,8 +615,7 @@ static Zhuge *sharedInstance = nil;
         NSNumber *end = @([[NSDate date] timeIntervalSince1970]);
         ZhugeDebug(@"endTrack %@ at time : %@",eventName,end);
         NSMutableDictionary *dic = properties?[self addSymbloToDic:properties]:[NSMutableDictionary dictionary];
-        NSUInteger dru = (end.doubleValue - start.doubleValue)*1000;
-        dic[@"$dru"] = [NSNumber numberWithUnsignedInteger:dru];
+        dic[@"$dru"] = [NSNumber numberWithUnsignedLongLong:(end.doubleValue - start.doubleValue)*1000];
         dic[@"$eid"] = eventName;
         [dic addEntriesFromDictionary:[self eventData]];
         NSMutableDictionary *e = [NSMutableDictionary dictionaryWithCapacity:2];
@@ -753,9 +752,9 @@ static Zhuge *sharedInstance = nil;
         if (userInfo && userInfo[@"mid"]) {
             NSMutableDictionary *e = [NSMutableDictionary dictionary];
             e[@"$mid"] = userInfo[@"mid"];
-            NSUInteger ct = [[NSDate date] timeIntervalSince1970] *1000;//毫秒偏移量
+            //毫秒偏移量
+            e[@"$ct"] = [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970] *1000];
             NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
-            e[@"$ct"] = [NSNumber numberWithUnsignedInteger:ct];
             e[@"$tz"] = tz;
             e[@"$channel"] = @"";
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -818,8 +817,8 @@ static Zhuge *sharedInstance = nil;
     NSDictionary *dic = @{@"did":[self getDid]};
     batch[@"usr"]   = dic;
     batch[@"ut"]    = [self currentDate];
-    NSUInteger tz = [[NSTimeZone localTimeZone] secondsFromGMT]*1000;//取毫秒偏移量
-    batch[@"tz"]    = [NSNumber numberWithUnsignedInteger:tz];
+    //取毫秒偏移量
+    batch[@"tz"]    = [NSNumber numberWithUnsignedLongLong:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];
     batch[@"data"]  = events;
     return batch;
 }
