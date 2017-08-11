@@ -37,7 +37,7 @@
 
     NSLog(@"didFinish");
     self.jsContext = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
-    self.jsContext[@"zhuge"] = [[ZhugeJS alloc] init];
+    self.jsContext[@"zhugeTracker"] = [[ZhugeJS alloc] init];
     self.jsContext.exceptionHandler = ^(JSContext *context, JSValue *exceptionValue) {
         context.exception = exceptionValue;
         NSLog(@"异常信息：%@", exceptionValue);
