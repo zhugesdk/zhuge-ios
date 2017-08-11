@@ -510,8 +510,7 @@ static Zhuge *sharedInstance = nil;
     common[@"$cr"]  = self.cr;
     //毫秒偏移量
     common[@"$ct"]  =  [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] *1000];
-    NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
-    common[@"$tz"] = tz;
+    common[@"$tz"] = [NSNumber numberWithUnsignedLongLong:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
     common[@"$os"] = @"iOS";
     return common;
 }
@@ -752,9 +751,8 @@ static Zhuge *sharedInstance = nil;
         if (userInfo && userInfo[@"mid"]) {
             NSMutableDictionary *e = [NSMutableDictionary dictionary];
             e[@"$mid"] = userInfo[@"mid"];
-            NSNumber *tz = @([[NSTimeZone localTimeZone] secondsFromGMT]*1000);//取毫秒偏移量
             e[@"$ct"] = [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970] *1000];
-            e[@"$tz"] = tz;
+            e[@"$tz"] = [NSNumber numberWithUnsignedLongLong:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
             e[@"$channel"] = @"";
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             dic[@"dt"] = type;
