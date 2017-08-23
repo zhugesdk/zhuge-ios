@@ -452,6 +452,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"ZHUGE_NO_ADID=1",
+					"ZHUGE_LOG=1",
 				);
 				INFOPLIST_FILE = HelloZhuge/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
