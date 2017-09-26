@@ -27,6 +27,10 @@
 - (nonnull NSString *)getDid;
 -(nonnull NSString *)getSid;
 #pragma mark - 开启统计
+/**
+ 诸葛上传地址
+ */
+-(void)setUploadURL:(nonnull NSString*)url andBackupUrl:(nullable NSString *)backupUrl;
 
 /**
  开启诸葛统计。

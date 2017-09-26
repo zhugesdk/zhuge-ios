@@ -25,6 +25,7 @@
 
 @interface Zhuge ()
 @property (nonatomic, copy) NSString *apiURL;
+@property (nonatomic, copy) NSString *backupURL;
 @property (nonatomic, copy) NSString *appKey;
 @property (nonatomic, copy) NSString *userId;
 @property (nonatomic, copy) NSString *deviceId;
@@ -67,7 +68,6 @@ static Zhuge *sharedInstance = nil;
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             sharedInstance = [[super alloc] init];
-            sharedInstance.apiURL = @"https://u.zhugeapi.com";
             sharedInstance.config = [[ZhugeConfig alloc] init];
             sharedInstance.eventTimeDic = [[NSMutableDictionary alloc]init];
         });
@@ -106,7 +106,12 @@ static Zhuge *sharedInstance = nil;
         if (self.config.debug) {
             [self.config setSendInterval:2];
         }
-        
+        if (!self.apiURL || self.apiURL.length ==0) {
+            self.apiURL = @"https://u.zhugeapi.com";
+            self.backupURL = @"https://ubak.zhugeio.com/upload/";
+            ZhugeDebug(@"请调用[[Zhuge sharedInstance] setUploadURL:url backupUrl:backUrl]设置上传地址。");
+        }
+
         [self setupListeners];
         [self unarchive];
         if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
@@ -120,6 +125,15 @@ static Zhuge *sharedInstance = nil;
 }
 
 #pragma mark - 诸葛配置
+-(void)setUploadURL:(NSString *)url andBackupUrl:(NSString *)backupUrl{
+    
+    if (url && url.length>0) {
+        self.apiURL = url;
+        self.backupURL = backupUrl;
+    }else{
+        ZGLog(@"传入的url不合法，请检查:%@",url);
+    }
+}
 -(void)setSuperProperty:(NSDictionary *)info{
 
     if (!self.envInfo) {
@@ -455,7 +469,9 @@ static Zhuge *sharedInstance = nil;
 
 // 更新网络指示器
 - (void)updateNetworkActivityIndicator:(BOOL)on {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = on;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = on;
+    });
 }
 
 - (void)reachabilityChanged:(SCNetworkReachabilityFlags)flags {
@@ -562,6 +578,7 @@ static Zhuge *sharedInstance = nil;
                 pr[@"$mnet"]= self.radio;
                 pr[@"$sid"] = self.sessionId;
                 pr[@"$vn"] = self.config.appVersion;
+                pr[@"$ov"] = [[UIDevice currentDevice] systemVersion];
                 e[@"pr"] = pr;
                 [self enqueueEvent:e];
             }
@@ -997,10 +1014,10 @@ static Zhuge *sharedInstance = nil;
     NSData *responseData = nil;
     while (!success && retry < 3) {
         NSURL *URL = nil;
-        if (retry > 0) {
-            URL = [NSURL URLWithString:@"https://ubak.zhugeio.com/upload/"];
+        if (retry > 0 && self.backupURL) {
+            URL = [NSURL URLWithString:self.backupURL];
         }else{
-            URL = [NSURL URLWithString:[self.apiURL stringByAppendingString:endpoint]];
+            URL = [NSURL URLWithString:self.apiURL];
         }
 
         ZhugeDebug(@"api request url = %@ , retry = %d",URL,retry);
