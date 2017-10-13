@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E294F151F8F526900AC13DA /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1C1C05A35100F866E7 /* Zhuge.m */; };
 		DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2751DDEF0110021559D /* JSDemo.m */; };
 		DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2781DDEF0410021559D /* ZhugeJS.m */; };
 		DC8AA27D1DDEF0910021559D /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27B1DDEF0910021559D /* jquery.min.js */; };
@@ -14,7 +15,6 @@
 		DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8AA2801DDEF0FC0021559D /* libz.tbd */; };
 		DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC31C05A35100F866E7 /* Base64.m */; };
 		DCBA2D201C05A35100F866E7 /* Compres.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC51C05A35100F866E7 /* Compres.m */; };
-		DCBA2D521C05A35100F866E7 /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1C1C05A35100F866E7 /* Zhuge.m */; };
 		DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
@@ -304,8 +304,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E294F151F8F526900AC13DA /* Zhuge.m in Sources */,
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
-				DCBA2D521C05A35100F866E7 /* Zhuge.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
 				DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */,
 				DCBA2D201C05A35100F866E7 /* Compres.m in Sources */,

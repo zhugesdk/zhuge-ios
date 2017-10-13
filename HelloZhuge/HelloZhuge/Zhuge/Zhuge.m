@@ -1017,7 +1017,7 @@ static Zhuge *sharedInstance = nil;
         if (retry > 0 && self.backupURL) {
             URL = [NSURL URLWithString:self.backupURL];
         }else{
-            URL = [NSURL URLWithString:self.apiURL];
+            URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",self.apiURL,endpoint]];
         }
 
         ZhugeDebug(@"api request url = %@ , retry = %d",URL,retry);
