@@ -9,6 +9,7 @@
 #import "Zhuge.h"
 
 @interface DiscoveryViewController ()
+@property (weak, nonatomic) IBOutlet UITextField *upLoadText;
 
 @end
 
@@ -103,5 +104,10 @@
         [[Zhuge sharedInstance] setPlatform:dic];
     }
 }
+- (IBAction)upLoadWithURL:(UIButton *)sender
+{
+    [[Zhuge sharedInstance] setUploadURL:self.upLoadText.text andBackupUrl:@""];
+}
+
 
 @end
