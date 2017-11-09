@@ -606,39 +606,50 @@ static Zhuge *sharedInstance = nil;
 }
 
 -(void)startTrack:(NSString *)eventName{
-    if (!eventName) {
-        ZhugeDebug(@"startTrack event name must not be nil.");
-        return;
-    }
-    dispatch_async(self.serialQueue, ^{
-        NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
-        ZhugeDebug(@"startTrack %@ at time : %@",eventName,ts);
-        [self.eventTimeDic setValue:ts forKey:eventName];
-    });
-}
--(void)endTrack:(NSString *)eventName properties:(NSDictionary*)properties{
-    
-    dispatch_async(self.serialQueue, ^{
-        NSNumber *start = [self.eventTimeDic objectForKey:eventName];
-        if (!start) {
-            ZhugeDebug(@"end track event name not found ,have you called startTrack already?");
+    @try {
+        if (!eventName) {
+            ZhugeDebug(@"startTrack event name must not be nil.");
             return;
         }
-        if (!self.sessionId) {
-            [self sessionStart];
-        }
-        [self.eventTimeDic removeObjectForKey:eventName];
-        NSNumber *end = @([[NSDate date] timeIntervalSince1970]);
-        ZhugeDebug(@"endTrack %@ at time : %@",eventName,end);
-        NSMutableDictionary *dic = properties?[self addSymbloToDic:properties]:[NSMutableDictionary dictionary];
-        dic[@"$dru"] = [NSNumber numberWithUnsignedLongLong:(end.doubleValue - start.doubleValue)*1000];
-        dic[@"$eid"] = eventName;
-        [dic addEntriesFromDictionary:[self eventData]];
-        NSMutableDictionary *e = [NSMutableDictionary dictionaryWithCapacity:2];
-        [e setObject:dic forKey:@"pr"];
-        [e setObject:@"evt" forKey:@"dt"];
-        [self enqueueEvent:e];
-    });
+        dispatch_async(self.serialQueue, ^{
+            NSNumber *ts = @([[NSDate date] timeIntervalSince1970]);
+            ZhugeDebug(@"startTrack %@ at time : %@",eventName,ts);
+            [self.eventTimeDic setValue:ts forKey:eventName];
+        });
+    }
+    @catch (NSException *exception) {
+        ZhugeDebug(@"start track properties exception ,%@",exception);
+    }
+
+    
+}
+-(void)endTrack:(NSString *)eventName properties:(NSDictionary*)properties{
+    @try {
+        dispatch_async(self.serialQueue, ^{
+            NSNumber *start = [self.eventTimeDic objectForKey:eventName];
+            if (!start) {
+                ZhugeDebug(@"end track event name not found ,have you called startTrack already?");
+                return;
+            }
+            if (!self.sessionId) {
+                [self sessionStart];
+            }
+            [self.eventTimeDic removeObjectForKey:eventName];
+            NSNumber *end = @([[NSDate date] timeIntervalSince1970]);
+            ZhugeDebug(@"endTrack %@ at time : %@",eventName,end);
+            NSMutableDictionary *dic = properties?[self addSymbloToDic:properties]:[NSMutableDictionary dictionary];
+            dic[@"$dru"] = [NSNumber numberWithUnsignedLongLong:(end.doubleValue - start.doubleValue)*1000];
+            dic[@"$eid"] = eventName;
+            [dic addEntriesFromDictionary:[self eventData]];
+            NSMutableDictionary *e = [NSMutableDictionary dictionaryWithCapacity:2];
+            [e setObject:dic forKey:@"pr"];
+            [e setObject:@"evt" forKey:@"dt"];
+            [self enqueueEvent:e];
+        });
+    }
+    @catch (NSException *exception) {
+        ZhugeDebug(@"end track properties exception ,%@",exception);
+    }
 }
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
@@ -807,10 +818,18 @@ static Zhuge *sharedInstance = nil;
 
 -(NSString *)nameForChannel:(ZGPushChannel) channel {
     switch (channel) {
-        case ZG_PUSH_CHANNEL_JPUSH:
-            return @"jpush";
         case ZG_PUSH_CHANNEL_XIAOMI:
             return @"xiaomi";
+        case ZG_PUSH_CHANNEL_JPUSH:
+            return @"jpush";
+        case ZG_PUSH_CHANNEL_UMENG:
+            return @"umeng";
+        case ZG_PUSH_CHANNEL_BAIDU:
+            return @"baidu";
+        case ZG_PUSH_CHANNEL_XINGE:
+            return @"xinge";
+        case ZG_PUSH_CHANNEL_GETUI:
+            return @"getui";
         default:
             return @"";
     }

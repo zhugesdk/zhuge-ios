@@ -80,8 +80,12 @@
 #pragma mark - 推送
 // 支持的第三方推送渠道
 typedef enum {
-    ZG_PUSH_CHANNEL_XIAOMI = 1, // 个推
+    ZG_PUSH_CHANNEL_XIAOMI = 1, // 小米
     ZG_PUSH_CHANNEL_JPUSH = 2, // 极光推送
+    ZG_PUSH_CHANNEL_UMENG = 3, // 友盟
+    ZG_PUSH_CHANNEL_BAIDU = 4, // 百度云推送
+    ZG_PUSH_CHANNEL_XINGE = 5, // 信鸽
+    ZG_PUSH_CHANNEL_GETUI = 6 // 个推
 } ZGPushChannel;
 
 
