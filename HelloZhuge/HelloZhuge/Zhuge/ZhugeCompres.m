@@ -1,22 +1,16 @@
-#if ! __has_feature(objc_arc)
-#error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
-#endif
 //
-//  Compres.m
+//  ZhugeCompres.m
 //  HelloZhuge
 //
-//  Created by jiaokang on 15/7/27.
-//  Copyright (c) 2015年 37degree. All rights reserved.
+//  Created by 郭超 on 2017/11/22.
+//  Copyright © 2017年 37degree. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "ZhugeCompres.h"
 #import "zlib.h"
-#import "Compres.h"
+#import <Foundation/Foundation.h>
 
-
-@implementation NSData (NSDataExtension)
-
-
+@implementation NSData (ZhugeCompres)
 - (NSData *)zgZlibDeflate
 {
     if ([self length] == 0) return self;
@@ -24,7 +18,7 @@
     z_stream strm;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wconversion"
-
+    
     strm.zalloc = Z_NULL;
     strm.zfree = Z_NULL;
     strm.opaque = Z_NULL;
@@ -60,5 +54,6 @@
     [compressed setLength: strm.total_out];
     return [NSData dataWithData: compressed];
 }
+
 @end
 

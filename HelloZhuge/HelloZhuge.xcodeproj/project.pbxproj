@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		4E294F151F8F526900AC13DA /* Zhuge.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1C1C05A35100F866E7 /* Zhuge.m */; };
+		4E9120211FC57BE600404D8D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8AA2801DDEF0FC0021559D /* libz.tbd */; };
+		4E9120331FC585ED00404D8D /* ZhugeBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E9120321FC585ED00404D8D /* ZhugeBase64.m */; };
+		4E9120361FC586BA00404D8D /* ZhugeCompres.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E9120351FC586BA00404D8D /* ZhugeCompres.m */; };
 		DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2751DDEF0110021559D /* JSDemo.m */; };
 		DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */ = {isa = PBXBuildFile; fileRef = DC8AA2781DDEF0410021559D /* ZhugeJS.m */; };
 		DC8AA27D1DDEF0910021559D /* jquery.min.js in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27B1DDEF0910021559D /* jquery.min.js */; };
 		DC8AA27E1DDEF0910021559D /* JsDemo.html in Resources */ = {isa = PBXBuildFile; fileRef = DC8AA27C1DDEF0910021559D /* JsDemo.html */; };
-		DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = DC8AA2801DDEF0FC0021559D /* libz.tbd */; };
-		DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC31C05A35100F866E7 /* Base64.m */; };
-		DCBA2D201C05A35100F866E7 /* Compres.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2CC51C05A35100F866E7 /* Compres.m */; };
 		DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */; };
 		E55E515A1A242BF100ED0263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E51591A242BF100ED0263 /* main.m */; };
 		E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E55E515C1A242BF100ED0263 /* AppDelegate.m */; };
@@ -38,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E9120311FC585ED00404D8D /* ZhugeBase64.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZhugeBase64.h; sourceTree = "<group>"; };
+		4E9120321FC585ED00404D8D /* ZhugeBase64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZhugeBase64.m; sourceTree = "<group>"; };
+		4E9120341FC586BA00404D8D /* ZhugeCompres.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZhugeCompres.h; sourceTree = "<group>"; };
+		4E9120351FC586BA00404D8D /* ZhugeCompres.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZhugeCompres.m; sourceTree = "<group>"; };
 		DC8AA2741DDEF0110021559D /* JSDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDemo.h; sourceTree = "<group>"; };
 		DC8AA2751DDEF0110021559D /* JSDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDemo.m; sourceTree = "<group>"; };
 		DC8AA2771DDEF0410021559D /* ZhugeJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhugeJS.h; sourceTree = "<group>"; };
@@ -45,10 +49,6 @@
 		DC8AA27B1DDEF0910021559D /* jquery.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.min.js; sourceTree = "<group>"; };
 		DC8AA27C1DDEF0910021559D /* JsDemo.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = JsDemo.html; sourceTree = "<group>"; };
 		DC8AA2801DDEF0FC0021559D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
-		DCBA2CC21C05A35100F866E7 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
-		DCBA2CC31C05A35100F866E7 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
-		DCBA2CC41C05A35100F866E7 /* Compres.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Compres.h; sourceTree = "<group>"; };
-		DCBA2CC51C05A35100F866E7 /* Compres.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Compres.m; sourceTree = "<group>"; };
 		DCBA2CFA1C05A35100F866E7 /* ZGLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZGLog.h; sourceTree = "<group>"; };
 		DCBA2D1B1C05A35100F866E7 /* Zhuge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zhuge.h; sourceTree = "<group>"; };
 		DCBA2D1C1C05A35100F866E7 /* Zhuge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Zhuge.m; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC8AA2811DDEF0FC0021559D /* libz.tbd in Frameworks */,
+				4E9120211FC57BE600404D8D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,10 +114,10 @@
 			children = (
 				DC8AA2771DDEF0410021559D /* ZhugeJS.h */,
 				DC8AA2781DDEF0410021559D /* ZhugeJS.m */,
-				DCBA2CC21C05A35100F866E7 /* Base64.h */,
-				DCBA2CC31C05A35100F866E7 /* Base64.m */,
-				DCBA2CC41C05A35100F866E7 /* Compres.h */,
-				DCBA2CC51C05A35100F866E7 /* Compres.m */,
+				4E9120341FC586BA00404D8D /* ZhugeCompres.h */,
+				4E9120351FC586BA00404D8D /* ZhugeCompres.m */,
+				4E9120311FC585ED00404D8D /* ZhugeBase64.h */,
+				4E9120321FC585ED00404D8D /* ZhugeBase64.m */,
 				DCBA2CFA1C05A35100F866E7 /* ZGLog.h */,
 				DCBA2D1B1C05A35100F866E7 /* Zhuge.h */,
 				DCBA2D1C1C05A35100F866E7 /* Zhuge.m */,
@@ -306,14 +306,14 @@
 			files = (
 				4E294F151F8F526900AC13DA /* Zhuge.m in Sources */,
 				E55E51631A242BF100ED0263 /* DiscoveryViewController.m in Sources */,
+				4E9120361FC586BA00404D8D /* ZhugeCompres.m in Sources */,
 				E55E515D1A242BF100ED0263 /* AppDelegate.m in Sources */,
 				DC8AA2761DDEF0110021559D /* JSDemo.m in Sources */,
-				DCBA2D201C05A35100F866E7 /* Compres.m in Sources */,
 				DCBA2D531C05A35100F866E7 /* ZhugeConfig.m in Sources */,
 				E55E51601A242BF100ED0263 /* HomeViewController.m in Sources */,
 				DC8AA2791DDEF0410021559D /* ZhugeJS.m in Sources */,
 				E55E518D1A24842E00ED0263 /* ProfileViewController.m in Sources */,
-				DCBA2D1F1C05A35100F866E7 /* Base64.m in Sources */,
+				4E9120331FC585ED00404D8D /* ZhugeBase64.m in Sources */,
 				E55E515A1A242BF100ED0263 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

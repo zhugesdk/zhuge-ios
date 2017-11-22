@@ -17,9 +17,8 @@
 #include <net/if.h>
 #include <net/if_dl.h>
 
-
-#import "Base64.h"
-#import "Compres.h"
+#import "ZhugeCompres.h"
+#import "ZhugeBase64.h"
 #import "Zhuge.h"
 #import "ZGLog.h"
 
@@ -120,7 +119,7 @@ static Zhuge *sharedInstance = nil;
 //        [self sessionStart];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"startWithAppKey exception");
+        ZhugeDebug(@"startWithAppKey exception %@",exception);
     }
 }
 
@@ -227,7 +226,7 @@ static Zhuge *sharedInstance = nil;
     
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"applicationDidBecomeActive exception");
+        ZhugeDebug(@"applicationDidBecomeActive exception %@",exception);
     }
 }
 
@@ -237,7 +236,7 @@ static Zhuge *sharedInstance = nil;
         [self stopFlushTimer];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"applicationWillResignActive exception");
+        ZhugeDebug(@"applicationWillResignActive exception %@",exception);
     }
 }
 
@@ -260,7 +259,7 @@ static Zhuge *sharedInstance = nil;
         });
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"applicationDidEnterBackground exception");
+        ZhugeDebug(@"applicationDidEnterBackground exception %@",exception);
     }
 }
 
@@ -272,7 +271,7 @@ static Zhuge *sharedInstance = nil;
         });
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"applicationWillTerminate exception");
+        ZhugeDebug(@"applicationWillTerminate exception %@",exception);
     }
 }
 
@@ -555,7 +554,7 @@ static Zhuge *sharedInstance = nil;
         }
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"sessionStart exception");
+        ZhugeDebug(@"sessionStart exception %@",exception);
     }
 }
 
@@ -586,7 +585,7 @@ static Zhuge *sharedInstance = nil;
         }
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"sessionEnd exception");
+        ZhugeDebug(@"sessionEnd exception %@",exception);
     }
 }
 
@@ -601,7 +600,7 @@ static Zhuge *sharedInstance = nil;
         }
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"uploadDeviceInfo exception");
+        ZhugeDebug(@"uploadDeviceInfo exception %@",exception);
     }
 }
 
@@ -618,7 +617,7 @@ static Zhuge *sharedInstance = nil;
         });
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"start track properties exception ,%@",exception);
+        ZhugeDebug(@"start track properties exception %@",exception);
     }
 
     
@@ -648,7 +647,7 @@ static Zhuge *sharedInstance = nil;
         });
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"end track properties exception ,%@",exception);
+        ZhugeDebug(@"end track properties exception %@",exception);
     }
 }
 // 跟踪自定义事件
@@ -683,7 +682,7 @@ static Zhuge *sharedInstance = nil;
         [self enqueueEvent:e];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"track properties exception ,%@",exception);
+        ZhugeDebug(@"track properties exception %@",exception);
     }
 }
 -(NSMutableDictionary *)eventData{
@@ -723,7 +722,7 @@ static Zhuge *sharedInstance = nil;
         [self enqueueEvent:e];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"identify exception ,%@",exception);
+        ZhugeDebug(@"identify exception %@",exception);
     }
 }
 
@@ -790,7 +789,7 @@ static Zhuge *sharedInstance = nil;
         }
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"trackPush exception");
+        ZhugeDebug(@"trackPush exception %@",exception);
     }
 }
 
@@ -812,7 +811,7 @@ static Zhuge *sharedInstance = nil;
         [self enqueueEvent:e];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"track properties exception");
+        ZhugeDebug(@"track properties exception %@",exception);
     }
 }
 
@@ -1022,7 +1021,7 @@ static Zhuge *sharedInstance = nil;
         }
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"flushQueue exception");
+        ZhugeDebug(@"flushQueue exception %@",exception);
     }
 }
 
@@ -1101,7 +1100,7 @@ static Zhuge *sharedInstance = nil;
         [self archiveEnvironmentInfo];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"archive exception");
+        ZhugeDebug(@"archive exception %@",exception);
     }
 }
 - (void)archiveEvents {
@@ -1149,7 +1148,7 @@ static Zhuge *sharedInstance = nil;
         [self unarchiveEnvironmentInfo];
     }
     @catch (NSException *exception) {
-        ZhugeDebug(@"unarchive exception");
+        ZhugeDebug(@"unarchive exception %@",exception);
     }
 }
 
