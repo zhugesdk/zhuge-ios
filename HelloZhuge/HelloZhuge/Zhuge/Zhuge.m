@@ -107,8 +107,7 @@ static Zhuge *sharedInstance = nil;
         }
         if (!self.apiURL || self.apiURL.length ==0) {
             self.apiURL = @"https://u.zhugeapi.com";
-            self.backupURL = @"https://ubak.zhugeio.com/upload/";
-            ZhugeDebug(@"请调用[[Zhuge sharedInstance] setUploadURL:url backupUrl:backUrl]设置上传地址。");
+            self.backupURL = @"https://ubak.zhugeio.com";
         }
 
         [self setupListeners];
@@ -130,7 +129,7 @@ static Zhuge *sharedInstance = nil;
         self.apiURL = url;
         self.backupURL = backupUrl;
     }else{
-        ZGLog(@"传入的url不合法，请检查:%@",url);
+        ZhugeDebug(@"传入的url不合法，请检查:%@",url);
     }
 }
 -(void)setSuperProperty:(NSDictionary *)info{
@@ -188,7 +187,7 @@ static Zhuge *sharedInstance = nil;
         [notificationCenter addObserver:self
                                selector:@selector(setCurrentRadio)
                                    name:CTRadioAccessTechnologyDidChangeNotification
-                                 object:nil];
+                                    object:nil];
     }
 #endif
     
@@ -525,7 +524,7 @@ static Zhuge *sharedInstance = nil;
     common[@"$cr"]  = self.cr;
     //毫秒偏移量
     common[@"$ct"]  =  [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] *1000];
-    common[@"$tz"] = [NSNumber numberWithUnsignedLongLong:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
+    common[@"$tz"] = [NSNumber numberWithInteger:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
     common[@"$os"] = @"iOS";
     return common;
 }
@@ -779,7 +778,7 @@ static Zhuge *sharedInstance = nil;
             NSMutableDictionary *e = [NSMutableDictionary dictionary];
             e[@"$mid"] = userInfo[@"mid"];
             e[@"$ct"] = [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970] *1000];
-            e[@"$tz"] = [NSNumber numberWithUnsignedLongLong:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
+            e[@"$tz"] = [NSNumber numberWithInteger:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
             e[@"$channel"] = @"";
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             dic[@"dt"] = type;
@@ -850,7 +849,7 @@ static Zhuge *sharedInstance = nil;
     batch[@"usr"]   = dic;
     batch[@"ut"]    = [self currentDate];
     //取毫秒偏移量
-    batch[@"tz"]    = [NSNumber numberWithUnsignedLongLong:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];
+    batch[@"tz"]    = [NSNumber numberWithInteger:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];
     batch[@"data"]  = events;
     return batch;
 }
@@ -1033,7 +1032,7 @@ static Zhuge *sharedInstance = nil;
     while (!success && retry < 3) {
         NSURL *URL = nil;
         if (retry > 0 && self.backupURL) {
-            URL = [NSURL URLWithString:self.backupURL];
+            URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/upload/",self.backupURL]];
         }else{
             URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@",self.apiURL,endpoint]];
         }
