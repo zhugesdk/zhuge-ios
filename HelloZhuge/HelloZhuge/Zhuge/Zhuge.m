@@ -803,6 +803,9 @@ static Zhuge *sharedInstance = nil;
         NSMutableDictionary *pr = [NSMutableDictionary dictionary];
         pr[@"$push_ch"] = [self nameForChannel:channel];
         pr[@"$push_id"] = userId;
+        //取毫秒偏移量
+        pr[@"$tz"]    = [NSNumber numberWithInteger:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];
+        pr[@"$ct"]  =  [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] *1000];
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"dt"] = @"um";
         e[@"pr"] = pr;
