@@ -529,7 +529,7 @@ static Zhuge *sharedInstance = nil;
     }
     common[@"$cr"]  = self.cr;
     //毫秒偏移量
-    common[@"$ct"]  =  [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] *1000];
+    common[@"$ct"]  =  [NSNumber numberWithUnsignedLongLong:[[NSDate date] timeIntervalSince1970] *1000];
     common[@"$tz"] = [NSNumber numberWithInteger:[[NSTimeZone localTimeZone] secondsFromGMT]*1000];//取毫秒偏移量
     common[@"$os"] = @"iOS";
     return common;
