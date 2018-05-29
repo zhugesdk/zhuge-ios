@@ -79,6 +79,10 @@ static Zhuge *sharedInstance = nil;
 - (ZhugeConfig *)config {
     return _config;
 }
+-(void)startWithAppKey:(NSString *)appKey andDid:(NSString *)did launchOptions:(NSDictionary *)launchOptions{
+    self.deviceId = did;
+    [self startWithAppKey:appKey launchOptions:launchOptions];
+}
 - (void)startWithAppKey:(NSString *)appKey launchOptions:(NSDictionary *)launchOptions{
     @try {
         if (appKey == nil || [appKey length] == 0) {
@@ -87,7 +91,6 @@ static Zhuge *sharedInstance = nil;
         }
         self.appKey = appKey;
         self.userId = @"";
-        self.deviceId = [self defaultDeviceId];
         self.deviceToken = @"";
         self.sessionId = nil;
         self.net = @"";
@@ -116,6 +119,9 @@ static Zhuge *sharedInstance = nil;
             [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
         }
 //        [self sessionStart];
+        if (!self.deviceId) {
+            self.deviceId = [self defaultDeviceId];
+        }
     }
     @catch (NSException *exception) {
         ZhugeDebug(@"startWithAppKey exception %@",exception);
@@ -1154,7 +1160,7 @@ static Zhuge *sharedInstance = nil;
     }
 }
 
-- (id)unarchiveFromFile:(NSString *)filePath {
+- (id)unarchiveFromFile:(NSString *)filePath deleteFile:(BOOL) delete{
     id unarchivedData = nil;
     @try {
         unarchivedData = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
@@ -1163,18 +1169,20 @@ static Zhuge *sharedInstance = nil;
         ZhugeDebug(@"恢复数据失败");
         unarchivedData = nil;
     }
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+    if (delete && [[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
         NSError *error;
         BOOL removed = [[NSFileManager defaultManager] removeItemAtPath:filePath error:&error];
         if (!removed) {
             ZhugeDebug(@"删除数据失败 %@", error);
+        }else{
+            ZhugeDebug(@"删除缓存数据 %@",filePath);
         }
     }
     return unarchivedData;
 }
 
 -(void)unarchiveEnvironmentInfo{
-    self.envInfo = (NSMutableDictionary *)[[self unarchiveFromFile:[self environmentInfoFilePath]] mutableCopy];
+    self.envInfo = (NSMutableDictionary *)[[self unarchiveFromFile:[self environmentInfoFilePath] deleteFile:NO] mutableCopy];
     if (self.envInfo) {
         if([self.envInfo objectForKey:@"event"]){
             ZhugeDebug(@"全局自定义事件信息：%@",self.envInfo[@"event"]);
@@ -1184,17 +1192,19 @@ static Zhuge *sharedInstance = nil;
     }
 }
 - (void)unarchiveEvents {
-    self.eventsQueue = (NSMutableArray *)[[self unarchiveFromFile:[self eventsFilePath]] mutableCopy];
+    self.eventsQueue = (NSMutableArray *)[[self unarchiveFromFile:[self eventsFilePath] deleteFile:YES] mutableCopy];
     if (!self.eventsQueue) {
         self.eventsQueue = [NSMutableArray array];
     }
 }
 
 - (void)unarchiveProperties {
-    NSDictionary *properties = (NSDictionary *)[self unarchiveFromFile:[self propertiesFilePath]];
+    NSDictionary *properties = (NSDictionary *)[self unarchiveFromFile:[self propertiesFilePath] deleteFile:NO];
     if (properties) {
         self.userId = properties[@"userId"] ? properties[@"userId"] : @"";
-        self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
+        if (!self.deviceId) {
+            self.deviceId = properties[@"deviceId"] ? properties[@"deviceId"] : [self defaultDeviceId];
+        }
         self.sessionId = properties[@"sessionId"] ? properties[@"sessionId"] : nil;
         
         NSDateFormatter *DateFormatter=[[NSDateFormatter alloc] init];

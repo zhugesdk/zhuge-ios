@@ -39,6 +39,7 @@
  */
 - (void)startWithAppKey:(nonnull NSString*)appKey launchOptions:(nullable NSDictionary*)launchOptions;
 
+-(void)startWithAppKey:(nonnull NSString *)appKey andDid:(nonnull NSString*)did launchOptions:(NSDictionary *)launchOptions;
 #pragma mark - 追踪用户行为
 
 /**
