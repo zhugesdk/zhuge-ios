@@ -25,6 +25,12 @@
    ```
 	Build Settings > Apple LLVM 6.0 - Preprocessing > Processor Macros > Release : ZHUGE_NO_ADID=1
 	```
+ 3. 如果您想自己控制用户追踪ID，可以在初始化时传入did作为诸葛用户追踪的ID，此did将作为设备的ID进行统计。
+
+     ```
+     [zhuge startWithAppKey :@"Your App Key"  andDid:@"did" launchOptions:launchOptions];
+     ```
+
  
 
 ##4. 初始化
@@ -37,6 +43,7 @@
     [[Zhuge sharedInstance] startWithAppKey:@"Your App Key" launchOptions:launchOptions];
 }
 ```
+
 
 如果您需要修改SDK的默认设置，如设置版本渠道时，一定要在`startWithAppKey`前执行。参考代码：
 
