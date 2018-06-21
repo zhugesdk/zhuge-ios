@@ -645,6 +645,13 @@ static Zhuge *sharedInstance = nil;
             dic[@"$dru"] = [NSNumber numberWithUnsignedLongLong:(end.doubleValue - start.doubleValue)*1000];
             dic[@"$eid"] = eventName;
             [dic addEntriesFromDictionary:[self eventData]];
+            if (self.envInfo) {
+                NSDictionary *info = [self.envInfo objectForKey:@"event"];
+                if (info) {
+                    NSMutableDictionary *data = [self addSymbloToDic:info];
+                    [dic addEntriesFromDictionary:data];
+                }
+            }
             NSMutableDictionary *e = [NSMutableDictionary dictionaryWithCapacity:2];
             [e setObject:dic forKey:@"pr"];
             [e setObject:@"evt" forKey:@"dt"];
