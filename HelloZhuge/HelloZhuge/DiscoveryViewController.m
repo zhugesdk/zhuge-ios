@@ -10,7 +10,6 @@
 
 @interface DiscoveryViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *upLoadText;
-
 @end
 
 @implementation DiscoveryViewController
@@ -37,9 +36,11 @@
 }
 
 - (IBAction)scan:(id)sender {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[Zhuge sharedInstance] track:@"扫一扫"];
-    });
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [[Zhuge sharedInstance] track:@"扫一扫"];
+//    });
+    NSLog(@"scan");
+    [self performSelector:@selector(setTeamData)];
 }
 
 - (IBAction)feed:(id)sender {
@@ -52,11 +53,13 @@
 - (IBAction)shopping:(id)sender {
     
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[Zhuge sharedInstance] endTrack:@"朋友圈" properties: @{@"商家":@"京东"}];
-
-    });
-
+//    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//        [[Zhuge sharedInstance] endTrack:@"朋友圈" properties: @{@"商家":@"京东"}];
+//
+//    });
+    NSArray *array = [[NSArray alloc]initWithObjects:@"1",@"2",@"324", nil];
+    NSString *a = array[3];
+    NSLog(@"a is %@",a);
 }
 
 - (IBAction)invoke:(id)sender {

@@ -26,16 +26,16 @@
     [zhuge.config setAppVersion:@"2.0-dev"]; // 默认是info.plist中CFBundleShortVersionString值
     [zhuge.config setChannel:@"App Store"]; // 默认是@"App Store"
     
-    zhuge.config.sendInterval = 20; //上报时间间隔。
+//    zhuge.config.sendInterval = 20; //上报时间间隔。
     zhuge.config.cacheMaxSize = 300; //本地最大记录缓存数。
     zhuge.config.sendMaxSizePerDay = 1000; //每日最大上传记录数。
 
     // 推送指定deviceToken上传到开发环境或生产环境，默认YES，上传到生产环境
     [zhuge.config setApsProduction:NO];
 
-    [zhuge setUploadURL:@"https://dc.ajksosd.com" andBackupUrl:@""];
+//    [zhuge setUploadURL:@"https://dc.ajksosd.com" andBackupUrl:@""];
     // 启动诸葛
-    [zhuge startWithAppKey:@"067aefa9498e4f75b156d9eb378c1fe4" andDid:@"12314215" launchOptions:launchOptions];
+//    [zhuge startWithAppKey:@"067aefa9498e4f75b156d9eb378c1fe4" andDid:@"12314215" launchOptions:launchOptions];
     [[Zhuge sharedInstance]startWithAppKey:@"appkey" launchOptions:launchOptions];
     [zhuge.config setDebug:YES]; // 默认关闭
 

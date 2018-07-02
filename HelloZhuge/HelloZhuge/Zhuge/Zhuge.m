@@ -44,10 +44,10 @@
 @property (nonatomic, strong)NSMutableDictionary *eventTimeDic;
 @property (nonatomic, strong)NSMutableDictionary *envInfo;
 
-
 @end
 
 @implementation Zhuge
+static NSUncaughtExceptionHandler *previousHandler;
 
 static void ZhugeReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info) {
     if (info != NULL && [(__bridge NSObject*)info isKindOfClass:[Zhuge class]]) {
@@ -118,16 +118,75 @@ static Zhuge *sharedInstance = nil;
         if (launchOptions && launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]) {
             [self trackPush:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] type:@"launch"];
         }
-//        [self sessionStart];
         if (!self.deviceId) {
             self.deviceId = [self defaultDeviceId];
         }
+        previousHandler = NSGetUncaughtExceptionHandler();
+        NSSetUncaughtExceptionHandler(&ZhugeUncaughtExceptionHandler);
     }
     @catch (NSException *exception) {
         ZhugeDebug(@"startWithAppKey exception %@",exception);
     }
 }
+-(void)trackException:(NSException *) exception{
+    NSArray * arr = [exception callStackSymbols];
+    NSString * reason = [exception reason]; // 崩溃的原因  可以有崩溃的原因(数组越界,字典nil,调用未知方法...) 崩溃的控制器以及方法
+    NSString * name = [exception name];
+    NSMutableString *stack = [NSMutableString string];
+    id a = [arr objectAtIndex: 0];
+    long sum = 0;
+    for (NSString *ele in arr) {
+        sum = sum + ele.length;
+        if ((sum + 5) >256) {
+            break;
+        }
+        NSString *trimStr = [ele stringByReplacingOccurrencesOfString:@" " withString:@""];
+        NSLog(@"ele is %@ , %ld",ele,sum);
+        NSLog(@"trim is %@ %ld",trimStr,trimStr.length);
+        [stack appendString:[ele stringByReplacingOccurrencesOfString:@" " withString:@""]];
+        [stack appendString:@" \n "];
+    }
+    NSLog(@"element is %@",NSStringFromClass([a class]));
+    NSLog(@"symbols is %@",arr);
+    NSLog(@"reason is %@",reason);
+    NSLog(@"name is %@",name);
+    NSMutableDictionary *pr = [self eventData];
+    pr[@"_异常名称"]=name;
+    pr[@"_异常描述"]=reason;
+    pr[@"_发生时间"]=[self currentDate];
+    NSLog(@" process name is %@", [NSThread currentThread].name);
+    pr[@"_异常进程名称"]=[NSThread currentThread].name;
+    pr[@"_应用包名"] = [[NSBundle mainBundle] bundleIdentifier];
+    pr[@"_出错堆栈"] = stack;
+    pr[@"$eid"] = @"$崩溃";
+    NSMutableDictionary *e = [NSMutableDictionary dictionary];
+    e[@"dt"] = @"evt";
+    e[@"pr"] = pr;
+    NSArray *events = @[e];
+    NSString *eventData = [self encodeAPIData:[self wrapEvents:events]];
 
+    ZhugeDebug(@"上传崩溃事件：%@",eventData);
+    NSData *eventDataBefore = [eventData dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *zlibedData = [eventDataBefore zgZlibDeflate];
+
+    NSString *event = [zlibedData zgBase64EncodedString];
+    NSString *result = [[event stringByReplacingOccurrencesOfString:@"\r" withString:@""] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+
+    NSString *requestData = [NSString stringWithFormat:@"method=event_statis_srv.upload&compress=1&event=%@", result];
+
+    NSData *response = [self apiRequest:@"/APIPOOL/" WithData:requestData andError:nil];
+    if (!response) {
+        ZhugeDebug(@"上传事件失败");
+    }
+    if (previousHandler) {
+        previousHandler(exception);
+    }
+}
+// 出现崩溃时的回调函数
+void ZhugeUncaughtExceptionHandler(NSException * exception){
+    NSLog(@"uncaught exception zhuge");
+    [[Zhuge sharedInstance]trackException:exception];
+}
 #pragma mark - 诸葛配置
 -(void)setUploadURL:(NSString *)url andBackupUrl:(NSString *)backupUrl{
     
@@ -1203,6 +1262,7 @@ static Zhuge *sharedInstance = nil;
     if (!self.eventsQueue) {
         self.eventsQueue = [NSMutableArray array];
     }
+    NSLog(@"unarchive events is %@",self.eventsQueue);
 }
 
 - (void)unarchiveProperties {
