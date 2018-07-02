@@ -43,7 +43,7 @@
 @property (nonatomic, strong) NSString *cr;
 @property (nonatomic, strong)NSMutableDictionary *eventTimeDic;
 @property (nonatomic, strong)NSMutableDictionary *envInfo;
-
+@property (nonatomic) BOOL isForeground;
 @end
 
 @implementation Zhuge
@@ -155,9 +155,11 @@ static Zhuge *sharedInstance = nil;
     pr[@"_异常描述"]=reason;
     pr[@"_发生时间"]=[self currentDate];
     NSLog(@" process name is %@", [NSThread currentThread].name);
-    pr[@"_异常进程名称"]=[NSThread currentThread].name;
+    pr[@"_异常进程名称"]= [[NSProcessInfo processInfo] processName];
+
     pr[@"_应用包名"] = [[NSBundle mainBundle] bundleIdentifier];
     pr[@"_出错堆栈"] = stack;
+    pr[@"_前后台状态"] = self.isForeground?@"前台":@"后台";
     pr[@"$eid"] = @"$崩溃";
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
     e[@"dt"] = @"evt";
@@ -284,6 +286,7 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
 #pragma mark - 应用生命周期
 - (void)applicationDidBecomeActive:(NSNotification *)notification {
     @try {
+        self.isForeground = YES;
         [self sessionStart];
         [self uploadDeviceInfo];
         [self startFlushTimer];
@@ -296,6 +299,7 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
 
 - (void)applicationWillResignActive:(NSNotification *)notification {
     @try {
+        self.isForeground = NO;
         [self sessionEnd];
         [self stopFlushTimer];
     }
