@@ -55,6 +55,7 @@
     // 建议仅在需要时打开，调试完成后，请及时关闭
     [zhuge.config setDebug : NO];
 
+	 [zhuge.config setExceptionTrack:YES]; //开启崩溃统计
     
     // 自定义应用版本
     [zhuge.config setAppVersion:@"0.9-beta"]; // 默认是info.plist中CFBundleShortVersionString值
@@ -63,6 +64,27 @@
     [zhuge.config setChannel:@"My App Store"]; // 默认是@"App Store"
 
     // 开启行为追踪
+    [zhuge startWithAppKey:@"Your App Key" launchOptions:launchOptions];
+
+```
+
+### 4.1 崩溃统计
+
+崩溃统计功能默认关闭，要开启崩溃统计，请在初始化之前开启。
+
+```
+    Zhuge *zhuge = [Zhuge sharedInstance];
+	[zhuge.config setExceptionTrack:YES]; //开启崩溃统计
+    [zhuge startWithAppKey:@"Your App Key" launchOptions:launchOptions];
+
+```
+
+如果您自己有设置```UncaughtExceptionHandler```,那么请在启动诸葛之前，设置自己的```handler```。
+
+```
+    NSSetUncaughtExceptionHandler(&SelfUncaughtExceptionHandler);
+	Zhuge *zhuge = [Zhuge sharedInstance];
+	[zhuge.config setExceptionTrack:YES]; //开启崩溃统计
     [zhuge startWithAppKey:@"Your App Key" launchOptions:launchOptions];
 
 ```

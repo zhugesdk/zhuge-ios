@@ -45,6 +45,7 @@
 // 是否开启会话追踪(默认:开启)
 @property (nonatomic) BOOL sessionEnable;
 
+@property (nonatomic) BOOL exceptionTrack;
 // 是否开启实时调试(默认:关闭)
 @property (nonatomic) BOOL debug;
 

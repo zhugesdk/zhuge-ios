@@ -121,8 +121,10 @@ static Zhuge *sharedInstance = nil;
         if (!self.deviceId) {
             self.deviceId = [self defaultDeviceId];
         }
-        previousHandler = NSGetUncaughtExceptionHandler();
-        NSSetUncaughtExceptionHandler(&ZhugeUncaughtExceptionHandler);
+        if (self.config.exceptionTrack) {
+            previousHandler = NSGetUncaughtExceptionHandler();
+            NSSetUncaughtExceptionHandler(&ZhugeUncaughtExceptionHandler);
+        }
     }
     @catch (NSException *exception) {
         ZhugeDebug(@"startWithAppKey exception %@",exception);
@@ -133,28 +135,19 @@ static Zhuge *sharedInstance = nil;
     NSString * reason = [exception reason]; // 崩溃的原因  可以有崩溃的原因(数组越界,字典nil,调用未知方法...) 崩溃的控制器以及方法
     NSString * name = [exception name];
     NSMutableString *stack = [NSMutableString string];
-    id a = [arr objectAtIndex: 0];
     long sum = 0;
     for (NSString *ele in arr) {
         sum = sum + ele.length;
         if ((sum + 5) >256) {
             break;
         }
-        NSString *trimStr = [ele stringByReplacingOccurrencesOfString:@" " withString:@""];
-        NSLog(@"ele is %@ , %ld",ele,sum);
-        NSLog(@"trim is %@ %ld",trimStr,trimStr.length);
         [stack appendString:[ele stringByReplacingOccurrencesOfString:@" " withString:@""]];
         [stack appendString:@" \n "];
     }
-    NSLog(@"element is %@",NSStringFromClass([a class]));
-    NSLog(@"symbols is %@",arr);
-    NSLog(@"reason is %@",reason);
-    NSLog(@"name is %@",name);
     NSMutableDictionary *pr = [self eventData];
     pr[@"_异常名称"]=name;
     pr[@"_异常描述"]=reason;
     pr[@"_发生时间"]=[self currentDate];
-    NSLog(@" process name is %@", [NSThread currentThread].name);
     pr[@"_异常进程名称"]= [[NSProcessInfo processInfo] processName];
 
     pr[@"_应用包名"] = [[NSBundle mainBundle] bundleIdentifier];
