@@ -145,17 +145,17 @@ static Zhuge *sharedInstance = nil;
         [stack appendString:@" \n "];
     }
     NSMutableDictionary *pr = [self eventData];
-    pr[@"_异常名称"]=name;
-    pr[@"_异常描述"]=reason;
-    pr[@"_发生时间"]=[self currentDate];
-    pr[@"_异常进程名称"]= [[NSProcessInfo processInfo] processName];
+    pr[@"$异常名称"]=name;
+    pr[@"$异常描述"]=reason;
+    pr[@"$发生时间"]=[self currentDate];
+    pr[@"$异常进程名称"]= [[NSProcessInfo processInfo] processName];
 
-    pr[@"_应用包名"] = [[NSBundle mainBundle] bundleIdentifier];
-    pr[@"_出错堆栈"] = stack;
-    pr[@"_前后台状态"] = self.isForeground?@"前台":@"后台";
-    pr[@"$eid"] = @"$崩溃";
+    pr[@"$应用包名"] = [[NSBundle mainBundle] bundleIdentifier];
+    pr[@"$出错堆栈"] = stack;
+    pr[@"$前后台状态"] = self.isForeground?@"前台":@"后台";
+    pr[@"$eid"] = @"崩溃";
     NSMutableDictionary *e = [NSMutableDictionary dictionary];
-    e[@"dt"] = @"evt";
+    e[@"dt"] = @"abp";
     e[@"pr"] = pr;
     NSArray *events = @[e];
     NSString *eventData = [self encodeAPIData:[self wrapEvents:events]];
