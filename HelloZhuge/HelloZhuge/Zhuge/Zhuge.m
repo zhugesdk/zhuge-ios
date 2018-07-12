@@ -179,7 +179,6 @@ static Zhuge *sharedInstance = nil;
 }
 // 出现崩溃时的回调函数
 void ZhugeUncaughtExceptionHandler(NSException * exception){
-    NSLog(@"uncaught exception zhuge");
     [[Zhuge sharedInstance]trackException:exception];
 }
 #pragma mark - 诸葛配置
@@ -1259,7 +1258,6 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
     if (!self.eventsQueue) {
         self.eventsQueue = [NSMutableArray array];
     }
-    NSLog(@"unarchive events is %@",self.eventsQueue);
 }
 
 - (void)unarchiveProperties {
