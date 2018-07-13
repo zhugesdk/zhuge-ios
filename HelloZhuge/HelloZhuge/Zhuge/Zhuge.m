@@ -147,7 +147,6 @@ static Zhuge *sharedInstance = nil;
     NSMutableDictionary *pr = [self eventData];
     pr[@"$异常名称"]=name;
     pr[@"$异常描述"]=reason;
-    pr[@"$发生时间"]=[self currentDate];
     pr[@"$异常进程名称"]= [[NSProcessInfo processInfo] processName];
 
     pr[@"$应用包名"] = [[NSBundle mainBundle] bundleIdentifier];
