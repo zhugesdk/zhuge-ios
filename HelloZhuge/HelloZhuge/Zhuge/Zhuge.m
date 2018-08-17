@@ -16,6 +16,7 @@
 #include <sys/sysctl.h>
 #include <net/if.h>
 #include <net/if_dl.h>
+#include <libkern/OSAtomic.h>
 
 #import "ZhugeCompres.h"
 #import "ZhugeBase64.h"
@@ -44,6 +45,7 @@
 @property (nonatomic, strong)NSMutableDictionary *eventTimeDic;
 @property (nonatomic, strong)NSMutableDictionary *envInfo;
 @property (nonatomic) BOOL isForeground;
+@property (nonatomic) volatile int32_t sessionCount;
 @end
 
 @implementation Zhuge
@@ -594,6 +596,7 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
     @try {
         if (!self.sessionId) {
             //毫秒偏移量
+            self.sessionCount = 0;
             self.sessionId = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] *1000];
             ZhugeDebug(@"会话开始(ID:%@)", self.sessionId);
             if (self.config.sessionEnable) {
@@ -607,6 +610,7 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
                 pr[@"$ov"] = [[UIDevice currentDevice] systemVersion];
                 pr[@"$sid"] = self.sessionId;
                 pr[@"$vn"] = self.config.appVersion;
+                pr[@"$sc"]= @0;
                 e[@"pr"] = pr;
                 [self enqueueEvent:e];
             }
@@ -627,6 +631,7 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
                 NSMutableDictionary *e = [NSMutableDictionary dictionary];
                 e[@"dt"] = @"se";
                 NSMutableDictionary *pr = [self buildCommonData];
+                int32_t value =  OSAtomicIncrement32(&_sessionCount);
                 NSNumber *ts = pr[@"$ct"];
                 NSNumber *dru = @([ts unsignedLongLongValue] - [self.sessionId unsignedLongLongValue]);
                 pr[@"$an"] = self.config.appName;
@@ -637,6 +642,7 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
                 pr[@"$sid"] = self.sessionId;
                 pr[@"$vn"] = self.config.appVersion;
                 pr[@"$ov"] = [[UIDevice currentDevice] systemVersion];
+                pr[@"$sc"] = [NSNumber numberWithInt:value];
                 e[@"pr"] = pr;
                 [self enqueueEvent:e];
             }
@@ -698,6 +704,8 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
             NSMutableDictionary *dic = properties?[self addSymbloToDic:properties]:[NSMutableDictionary dictionary];
             dic[@"$dru"] = [NSNumber numberWithUnsignedLongLong:(end.doubleValue - start.doubleValue)*1000];
             dic[@"$eid"] = eventName;
+            int32_t value =  OSAtomicIncrement32(&_sessionCount);
+            dic[@"$sc"] = [NSNumber numberWithInt:value];
             [dic addEntriesFromDictionary:[self eventData]];
             if (self.envInfo) {
                 NSDictionary *info = [self.envInfo objectForKey:@"event"];
@@ -742,6 +750,8 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
             }
         }
         pr[@"$eid"] = event;
+        int32_t value =  OSAtomicIncrement32(&_sessionCount);
+        pr[@"$sc"] = [NSNumber numberWithInt:value];
         NSMutableDictionary *e = [NSMutableDictionary dictionary];
         e[@"dt"] = @"evt";
         e[@"pr"] = pr;
