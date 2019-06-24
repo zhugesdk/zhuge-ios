@@ -10,6 +10,7 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 #import <WebKit/WebKit.h>
 @protocol ZhugeJSPro <JSExport,WKScriptMessageHandler>
+@property (nonatomic) NSString *did;
 -(void)track:(NSString *)eventName Property:(NSString *)pro;
 -(void)identify:(NSString *)uid Property:(NSString *)pro;
 -(void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message;
@@ -18,5 +19,5 @@
  
 */
 @interface ZhugeJS : NSObject<ZhugeJSPro>
-
+- (NSString *)did;
 @end

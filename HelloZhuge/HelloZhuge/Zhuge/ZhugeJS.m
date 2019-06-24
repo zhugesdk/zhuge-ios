@@ -11,6 +11,10 @@
 #import "ZGLog.h"
 @implementation ZhugeJS
 
+-(NSString*) did{
+    return [[Zhuge sharedInstance] getDid];
+}
+
 -(void)track:(NSString *)eventName Property:(NSString *)pro{
 
     Zhuge *zhuge = [Zhuge sharedInstance];
