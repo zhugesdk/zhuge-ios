@@ -42,6 +42,7 @@
 		4E9120321FC585ED00404D8D /* ZhugeBase64.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZhugeBase64.m; sourceTree = "<group>"; };
 		4E9120341FC586BA00404D8D /* ZhugeCompres.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZhugeCompres.h; sourceTree = "<group>"; };
 		4E9120351FC586BA00404D8D /* ZhugeCompres.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZhugeCompres.m; sourceTree = "<group>"; };
+		5FBD2388234D93FC00926A25 /* ZhugeEventProperty.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZhugeEventProperty.h; sourceTree = "<group>"; };
 		DC8AA2741DDEF0110021559D /* JSDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSDemo.h; sourceTree = "<group>"; };
 		DC8AA2751DDEF0110021559D /* JSDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSDemo.m; sourceTree = "<group>"; };
 		DC8AA2771DDEF0410021559D /* ZhugeJS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZhugeJS.h; sourceTree = "<group>"; };
@@ -123,6 +124,7 @@
 				DCBA2D1C1C05A35100F866E7 /* Zhuge.m */,
 				DCBA2D1D1C05A35100F866E7 /* ZhugeConfig.h */,
 				DCBA2D1E1C05A35100F866E7 /* ZhugeConfig.m */,
+				5FBD2388234D93FC00926A25 /* ZhugeEventProperty.h */,
 			);
 			path = Zhuge;
 			sourceTree = "<group>";
@@ -264,6 +266,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

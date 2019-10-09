@@ -724,6 +724,57 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
         ZhugeDebug(@"end track properties exception %@",exception);
     }
 }
+
+// 跟踪收入事件
+static NSString *totalPrice;
+static double unitprice;
+static NSInteger productQuantity;
+
+- (void)trankRevenue:(NSDictionary *)properties {
+    NSMutableDictionary *pro = [[NSMutableDictionary alloc] initWithDictionary:properties];
+    unitprice = [properties[ZhugeEventRevenuePrice] floatValue];
+    productQuantity = [properties[ZhugeEventRevenueProductQuantity] integerValue];
+    NSString *totalPrice = [NSString stringWithFormat:@"%0.2f", unitprice * productQuantity];
+    [pro setObject:@([totalPrice doubleValue]) forKey:ZhugeEventRevenueTotalPrice];
+    [self trackRevenue:@"revenue" properties:pro];
+}
+
+- (void)trackRevenue:(NSString *)event properties:(NSMutableDictionary *)properties {
+    @try {
+        if (event == nil || [event length] == 0) {
+            ZhugeDebug(@"事件名不能为空");
+            return;
+        }
+        
+        if (!self.sessionId) {
+            [self sessionStart];
+        }
+        NSMutableDictionary *pr = [self eventData];
+        if (properties) {
+            [pr addEntriesFromDictionary:[self conversionRevenuePropertiesKey:properties]];
+        }
+        NSLog(@"pr ====== %@", pr);
+        if (self.envInfo) {
+            NSDictionary *info = [self.envInfo objectForKey:@"event"];
+            if (info) {
+                NSMutableDictionary *dic = [self addSymbloToDic:info];
+                [pr addEntriesFromDictionary:dic];
+            }
+        }
+        pr[@"$eid"] = event;
+        int32_t value =  OSAtomicIncrement32(&_sessionCount);
+        pr[@"$sc"] = [NSNumber numberWithInt:value];
+        NSMutableDictionary *e = [NSMutableDictionary dictionary];
+        e[@"dt"] = @"abp";
+        e[@"pr"] = pr;
+        [self enqueueEvent:e];
+    }
+    @catch (NSException *exception) {
+        ZhugeDebug(@"track properties exception %@",exception);
+    }
+}
+
+
 // 跟踪自定义事件
 - (void)track:(NSString *)event {
     [self track:event properties:nil];
@@ -942,6 +993,17 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
         NSString *newKey = [NSString stringWithFormat:@"_%@",key];
         [copy setValue:value forKey:newKey];
     }
+    return copy;
+}
+
+-(NSMutableDictionary *)conversionRevenuePropertiesKey:(NSDictionary *)dic{
+    __block NSMutableDictionary *copy = [NSMutableDictionary dictionaryWithCapacity:[dic count]];
+    for (NSString *key in dic) {
+        id value = dic[key];
+        NSString *newKey = [NSString stringWithFormat:@"$%@",key];
+        [copy setValue:value forKey:newKey];
+    }
+    
     return copy;
 }
 

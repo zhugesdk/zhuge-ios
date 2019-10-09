@@ -7,6 +7,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ZhugeConfig.h"
+#import "ZhugeEventProperty.h"
+
 @interface Zhuge : NSObject
 
 #pragma mark - 获取实例
@@ -62,6 +64,11 @@
 
 -(void) setPlatform:(nonnull NSDictionary *)info;
 - (void)track:(nonnull NSString *)event;
+
+/** 追踪收入事件
+ *  @param 事件属性
+ */
+- (void)trankRevenue:(nullable NSDictionary *)properties;
 
 /**
  追踪自定义事件。
