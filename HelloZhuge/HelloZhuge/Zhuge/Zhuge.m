@@ -44,6 +44,7 @@
 @property (nonatomic, strong) NSString *cr;
 @property (nonatomic, strong)NSMutableDictionary *eventTimeDic;
 @property (nonatomic, strong)NSMutableDictionary *envInfo;
+@property (nonatomic, strong)NSMutableDictionary *utmInfo;
 @property (nonatomic) BOOL isForeground;
 @property (nonatomic) volatile int32_t sessionCount;
 @end
@@ -183,6 +184,29 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
     [[Zhuge sharedInstance]trackException:exception];
 }
 #pragma mark - 诸葛配置
+
+-(void)setUtm:(NSDictionary *)utmInfo{
+    if(!utmInfo){
+        return;
+    }
+    self.utmInfo = [NSMutableDictionary dictionary];
+    if ([utmInfo objectForKey:@"utm_source"]) {
+        [self.utmInfo setValue:utmInfo[@"utm_source"] forKey:@"$utm_source"];
+    }
+    if ([utmInfo objectForKey:@"utm_medium"]) {
+        [self.utmInfo setValue:utmInfo[@"utm_medium"] forKey:@"$utm_medium"];
+    }
+    if ([utmInfo objectForKey:@"utm_campaign"]) {
+        [self.utmInfo setValue:utmInfo[@"utm_campaign"] forKey:@"$utm_campaign"];
+    }
+    if ([utmInfo objectForKey:@"utm_content"]) {
+        [self.utmInfo setValue:utmInfo[@"utm_content"] forKey:@"$utm_content"];
+    }
+    if ([utmInfo objectForKey:@"utm_term"]) {
+        [self.utmInfo setValue:utmInfo[@"utm_term"] forKey:@"$utm_term"];
+    }
+}
+
 -(void)setUploadURL:(NSString *)url andBackupUrl:(NSString *)backupUrl{
     
     if (url && url.length>0) {
@@ -579,7 +603,13 @@ void ZhugeUncaughtExceptionHandler(NSException * exception){
  @return 可变的环境信息Dictionary
  */
 -(NSMutableDictionary *)buildCommonData {
-    NSMutableDictionary *common = [NSMutableDictionary dictionary];
+    NSMutableDictionary *common = nil;
+    if (self.utmInfo) {
+        common = [NSMutableDictionary dictionaryWithDictionary:self.utmInfo];
+    } else {
+        common = [[NSMutableDictionary alloc] init];
+    }
+    
     if (self.userId.length > 0) {
         common[@"$cuid"] = self.userId;
     }
@@ -730,7 +760,7 @@ static NSString *totalPrice;
 static double unitprice;
 static NSInteger productQuantity;
 
-- (void)trankRevenue:(NSDictionary *)properties {
+- (void)trackRevenue:(NSDictionary *)properties {
     NSMutableDictionary *pro = [[NSMutableDictionary alloc] initWithDictionary:properties];
     unitprice = [properties[ZhugeEventRevenuePrice] floatValue];
     productQuantity = [properties[ZhugeEventRevenueProductQuantity] integerValue];

@@ -34,6 +34,8 @@
  */
 -(void)setUploadURL:(nonnull NSString*)url andBackupUrl:(nullable NSString *)backupUrl;
 
+-(void)setUtm:(nonnull NSDictionary *)utmInfo;
+
 /**
  开启诸葛统计。
  
@@ -41,7 +43,7 @@
  */
 - (void)startWithAppKey:(nonnull NSString*)appKey launchOptions:(nullable NSDictionary*)launchOptions;
 
--(void)startWithAppKey:(nonnull NSString *)appKey andDid:(nonnull NSString*)did launchOptions:(NSDictionary *)launchOptions;
+-(void)startWithAppKey:(nonnull NSString *)appKey andDid:(nonnull NSString*)did launchOptions:(nullable NSDictionary *)launchOptions;
 #pragma mark - 追踪用户行为
 
 /**
@@ -68,7 +70,7 @@
 /** 追踪收入事件
  *  @param 事件属性
  */
-- (void)trankRevenue:(nullable NSDictionary *)properties;
+- (void)trackRevenue:(nullable NSDictionary *)properties;
 
 /**
  追踪自定义事件。
